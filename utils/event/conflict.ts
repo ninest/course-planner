@@ -11,7 +11,8 @@ export const isConflict = (eventA: CalendarEvent, eventB: CalendarEvent) => {
   const startB = eventB.startTime.hour * 60 + eventB.startTime.minute;
   const endB = eventB.endTime.hour * 60 + eventB.endTime.minute;
 
-  // return(
-  //   startA > startB
-  // )
+  const durationA = endA - startA;
+  const durationB = endB - startB;
+
+  return Math.abs(endB - startA) < durationA + durationB;
 };
