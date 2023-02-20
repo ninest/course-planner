@@ -4,11 +4,11 @@ import Link from "next/link";
 import { ComponentProps } from "react";
 
 const buttonStyles = cva(
-  ["inline-flex font-medium tracking-wide", "rounded-lg", "border-4"],
+  ["inline-flex tracking-wide", "rounded-md", "border-4"],
   {
     variants: {
       intent: {
-        primary: ["bg-indigo-600 text-gray-200 hover:bg-indigo-500"],
+        primary: ["bg-indigo-600 text-white hover:bg-indigo-500"],
         secondary: ["bg-gray-200 text-gray-800 hover:bg-gray-300"],
       },
       outline: {
