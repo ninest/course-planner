@@ -10,10 +10,9 @@ export const BackButton = ({ text = "Back", href = "/" }: BackButtonProps) => {
   return (
     <Link
       href={href}
-      className="-mx-2 inline-flex items-center align-baseline space-x-0.5 text-sm hover:bg-gray-50"
+      className=" inline-flex items-center align-baseline space-x-0.5 text-sm hover:bg-gray-50"
     >
-
-      <ChevronLeft className="w-5" />
+      <ChevronLeft className="h-5 text-xs w-5" />
       <div>{text}</div>
     </Link>
   );

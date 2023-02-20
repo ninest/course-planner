@@ -25,7 +25,7 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     className={clsx(
       "inline-flex items-center h-7 py-1 px-3 text-sm bg-gray-100 rounded-md",
-      "data-[state=active]:bg-gray-200",
+      "data-[state=active]:bg-indigo-100",
       className
     )}
     {...props}

@@ -14,13 +14,15 @@ export default async function TermPage({ params }: TermPageProps) {
 
   return (
     <main>
-      <div className="px-5 pt-5">
-        <BackButton />
-      </div>
       <PlannerShell
         termCode={term.code}
         description={description}
         year={year!}
+        backButton={
+          <>
+            <BackButton />
+          </>
+        }
       />
     </main>
   );
