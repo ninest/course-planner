@@ -2,23 +2,24 @@ import { useState } from "react";
 import subjects from "../../../.data/subjects.json";
 import termCoursesMapping from "../../../.data/mappings/term-courses/202330.json";
 import allCourses from "../../../.data/all-courses.json";
+import { useRouter } from "next/navigation";
 
 interface CourseSearchProps {
   termCode: string;
 }
 
 export const CourseSearch = ({ termCode: string }: CourseSearchProps) => {
+  const router = useRouter();
   const [query, setQuery] = useState("");
-  const filteredSubjects =
-    query === ""
-      ? []
-      : subjects.filter((subject) => subject.code.includes(query));
+  const filteredSubjects = subjects.filter((subject) =>
+    subject.code.includes(query)
+  );
   // @ts-ignore
   const availableCourses = termCoursesMapping[query.split(" ")[0]] ?? [];
 
   return (
-    <div>
-      <fieldset>
+    <div className="relative p-5 lg:h-[calc(100vh-5rem)] overflow-y-scroll">
+      <fieldset className="sticky top-0">
         <input
           className="form-field w-full"
           type="text"
@@ -28,7 +29,7 @@ export const CourseSearch = ({ termCode: string }: CourseSearchProps) => {
         />
       </fieldset>
 
-      <div className="mt-4 space-y-2">
+      <div className="mt-4">
         {availableCourses.length > 0 ? (
           <>
             {availableCourses.map((partialCourse: any) => {
@@ -38,7 +39,10 @@ export const CourseSearch = ({ termCode: string }: CourseSearchProps) => {
                   course.number === partialCourse.number
               )!;
               return (
-                <div key={`${fullCourse.subject}${fullCourse.number}`}>
+                <div
+                  key={`${fullCourse.subject}${fullCourse.number}`}
+                  className="py-1 hover:bg-gray-100 rounded-md"
+                >
                   {fullCourse.subject} {fullCourse.number}
                 </div>
               );
@@ -50,7 +54,7 @@ export const CourseSearch = ({ termCode: string }: CourseSearchProps) => {
               <button
                 key={subject.code}
                 onClick={() => setQuery(`${subject.code} `)}
-                className="flex items-center w-full -m-2 p-2 hover:bg-gray-100 rounded-md"
+                className="flex items-center w-full py-1 hover:bg-gray-100 rounded-md"
               >
                 <div className="text-left w-[70px] text-bold">
                   {subject.code}

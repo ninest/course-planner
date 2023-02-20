@@ -48,5 +48,5 @@ export const ModalDescription = ({ children }: { children: ReactNode }) => (
 );
 
 export const ModalClose = ({ children }: { children: ReactNode }) => (
-  <Dialog.Close>{children}</Dialog.Close>
+  <Dialog.Close asChild>{children}</Dialog.Close>
 );

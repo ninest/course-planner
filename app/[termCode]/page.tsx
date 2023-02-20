@@ -6,24 +6,7 @@ import { PlannerShell } from "./components/planner-shell";
 interface TermPageProps {
   params: { termCode: string };
 }
+
 export default async function TermPage({ params }: TermPageProps) {
-  const term = terms.find((term) => term.code === params.termCode);
-  if (!term) throw Error("Invalid term");
-
-  const { year, description } = getValuesFromTerm(term);
-
-  return (
-    <main>
-      <PlannerShell
-        termCode={term.code}
-        description={description}
-        year={year!}
-        backButton={
-          <>
-            <BackButton />
-          </>
-        }
-      />
-    </main>
-  );
+  return <div className="p-5">Select a plan or create one!</div>;
 }

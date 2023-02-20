@@ -1,6 +1,5 @@
 "use client";
 
-import { BackButton } from "@/components/back-button";
 import { Button } from "@/components/button";
 import {
   Modal,
@@ -8,17 +7,9 @@ import {
   ModalDescription,
   ModalTitle,
 } from "@/components/modal";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/tabs";
 import { XButton } from "@/components/x-button";
 import { usePlans } from "@/hooks/use-plans";
-import {
-  CircleEllipsisIcon,
-  LucideCircleEllipsis,
-  MoreVertical,
-  Plus,
-  Share,
-  X,
-} from "lucide-react";
+import { MoreVertical, Plus, Share } from "lucide-react";
 import { ReactNode, useState } from "react";
 import { NewPlanForm } from "./new-plan-form";
 import { Planner } from "./planner";
@@ -40,80 +31,79 @@ export const PlannerShell = ({
   const [modalOpen, setModalOpen] = useState(false);
   const plans = plansForTerm(termCode);
 
-  const tabsList = (
-    <TabsList className="space-x-1 overflow-scroll">
-      {plans.map((plan, index) => {
-        return (
-          <TabsTrigger key={plan.id} value={plan.id} className="">
-            {plan.name}
-          </TabsTrigger>
-        );
-      })}
+  // const tabsList = (
+  //   <TabsList className="space-x-1 overflow-scroll">
+  //     {plans.map((plan, index) => {
+  //       return (
+  //         <TabsTrigger key={plan.id} value={plan.id} className="">
+  //           {plan.name}
+  //         </TabsTrigger>
+  //       );
+  //     })}
 
-      <button
-        onClick={() => setModalOpen(true)}
-        className="inline-flex items-center h-7 py-1 px-3 text-sm bg-gray-100 rounded-md hover:bg-gray-200"
-      >
-        <Plus className="h-3 w-3" />
-      </button>
-    </TabsList>
-  );
+  //     <button
+  //       onClick={() => setModalOpen(true)}
+  //       className="inline-flex items-center h-7 py-1 px-3 text-sm bg-gray-100 rounded-md hover:bg-gray-200"
+  //     >
+  //       <Plus className="h-3 w-3" />
+  //     </button>
+  //   </TabsList>
+  // );
 
   return (
     <>
-      <Tabs defaultValue="1">
-        <header className="border-b">
-          <div className="lg:hidden">
-            <div className="px-5 pt-5 flex justify-between items-center">
-              {backButton}
-              <div className="flex items-center space-x-3">
-                <h1 className="font-bold text-lg">
-                  {description} <span className="text-gray-400">{year}</span>
-                </h1>
-              </div>
-              <div className="flex items-center space-x-2">
-                <button>
-                  <Share className="w-4" />
-                </button>
-                <button>
-                  <MoreVertical className="w-4" />
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-3 mb-5 pl-5 overflow-auto">{tabsList}</div>
-          </div>
-
-          <div className="hidden p-5 lg:flex items-center justify-between">
-            <div className="flex items-center justify-center space-x-7">
-              {backButton}
+      <header className="border-b lg:h-20">
+        <div className="lg:hidden">
+          <div className="px-5 pt-5 flex justify-between items-center">
+            {backButton}
+            <div className="flex items-center space-x-3">
               <h1 className="font-bold text-lg">
                 {description} <span className="text-gray-400">{year}</span>
               </h1>
-              <div className="overflow-auto max-w-[70vw]">{tabsList}</div>
             </div>
-            <div className="flex items-center space-x-4">
-              <Button intent={"primary"}>Share</Button>
-              {/* <button>
+            <div className="flex items-center space-x-2">
+              <button>
+                <Share className="w-4" />
+              </button>
+              <button>
                 <MoreVertical className="w-4" />
-              </button> */}
-              <Button intent={'ghost'}>
-                <MoreVertical className="w-4" />
-              </Button>
+              </button>
             </div>
           </div>
-        </header>
 
-        <div className="">
-          {plans.map((plan, index) => {
+          {/* <div className="mt-3 mb-5 pl-5 overflow-auto">{tabsList}</div> */}
+        </div>
+
+        <div className="hidden p-5 lg:flex items-center justify-between">
+          <div className="flex items-center justify-center space-x-7">
+            {backButton}
+            <h1 className="font-bold text-lg">
+              {description} <span className="text-gray-400">{year}</span>
+            </h1>
+            {/* <div className="overflow-auto max-w-[70vw]">{tabsList}</div> */}
+          </div>
+          <div className="flex items-center space-x-4">
+            <Button intent={"primary"}>Share</Button>
+            {/* <button>
+                <MoreVertical className="w-4" />
+              </button> */}
+            <Button intent={"ghost"}>
+              <MoreVertical className="w-4" />
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      <div className="">
+        {/* {plans.map((plan, index) => {
             return (
               <TabsContent key={plan.id} value={plan.id}>
                 <Planner id={plan.id} />
               </TabsContent>
             );
-          })}
-        </div>
-      </Tabs>
+          })} */}
+        {/* {children} */}
+      </div>
 
       <Modal open={modalOpen} onOpenChange={setModalOpen}>
         <ModalClose>

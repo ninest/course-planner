@@ -15,11 +15,14 @@ export const usePlans = () => {
     termCode: string,
     name: string,
     description: string = ""
-  ) =>
+  ) => {
+    const newPlanId = `${termCode}-${name.replaceAll(" ", "-")}`; // TODO: better Ids
     setPlans((plans) => [
       ...plans,
-      { id: `${termCode}-${name}`, termCode, name, description, courses: [] },
+      { id: newPlanId, termCode, name, description, courses: [] },
     ]);
+    return newPlanId;
+  };
 
   const validPlanName = (termCode: string, name: string) => {
     const existingPlan = plans.find(
