@@ -4,20 +4,21 @@ import Link from "next/link";
 import { ComponentProps } from "react";
 
 const buttonStyles = cva(
-  ["inline-flex tracking-wide", "rounded-md", "border-4"],
+  ["inline-flex tracking-wide", "rounded-md", "border-2"],
   {
     variants: {
       intent: {
         primary: ["bg-indigo-600 text-white hover:bg-indigo-500"],
         secondary: ["bg-gray-200 text-gray-800 hover:bg-gray-300"],
+        ghost: ["bg-transparent text-gray-800 hover:bg-gray-100"],
       },
       outline: {
         true: "",
         false: "border-transparent",
       },
       size: {
-        sm: ["text-sm py-0.5 px-1"],
-        default: ["text-base py-0.5 px-4"],
+        sm: ["text-sm py-1 px-3"],
+        default: ["text-base py-1 px-5"],
       },
     },
     compoundVariants: [
@@ -27,6 +28,11 @@ const buttonStyles = cva(
         class: [
           "bg-transparent text-indigo-600 border-indigo-600 hover:bg-gray-100",
         ],
+      },
+      {
+        intent: "ghost",
+        size: "default",
+        class: "!p-0.5 HELP",
       },
     ],
     defaultVariants: {

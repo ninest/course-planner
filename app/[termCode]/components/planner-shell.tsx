@@ -1,6 +1,7 @@
 "use client";
 
 import { BackButton } from "@/components/back-button";
+import { Button } from "@/components/button";
 import {
   Modal,
   ModalClose,
@@ -15,6 +16,7 @@ import {
   LucideCircleEllipsis,
   MoreVertical,
   Plus,
+  Share,
   X,
 } from "lucide-react";
 import { ReactNode, useState } from "react";
@@ -40,26 +42,9 @@ export const PlannerShell = ({
 
   const tabsList = (
     <TabsList className="space-x-1 overflow-scroll">
-      {[
-        ...plans,
-        ...plans,
-        ...plans,
-        ...plans,
-        ...plans,
-        ...plans,
-        ...plans,
-        ...plans,
-        ...plans,
-        ...plans,
-        ...plans,
-        ...plans,
-      ].map((plan, index) => {
+      {plans.map((plan, index) => {
         return (
-          <TabsTrigger
-            key={`${plan.name}-${index}`}
-            value={String(index)}
-            className=""
-          >
+          <TabsTrigger key={plan.id} value={plan.id} className="">
             {plan.name}
           </TabsTrigger>
         );
@@ -86,9 +71,14 @@ export const PlannerShell = ({
                   {description} <span className="text-gray-400">{year}</span>
                 </h1>
               </div>
-              <button>
-                <MoreVertical className="w-4" />
-              </button>
+              <div className="flex items-center space-x-2">
+                <button>
+                  <Share className="w-4" />
+                </button>
+                <button>
+                  <MoreVertical className="w-4" />
+                </button>
+              </div>
             </div>
 
             <div className="mt-3 mb-5 pl-5 overflow-auto">{tabsList}</div>
@@ -102,16 +92,22 @@ export const PlannerShell = ({
               </h1>
               <div className="overflow-auto max-w-[70vw]">{tabsList}</div>
             </div>
-            <button>
-              <MoreVertical className="w-4" />
-            </button>
+            <div className="flex items-center space-x-4">
+              <Button intent={"primary"}>Share</Button>
+              {/* <button>
+                <MoreVertical className="w-4" />
+              </button> */}
+              <Button intent={'ghost'}>
+                <MoreVertical className="w-4" />
+              </Button>
+            </div>
           </div>
         </header>
 
         <div className="">
           {plans.map((plan, index) => {
             return (
-              <TabsContent key={`${plan.name}-${index}`} value={String(index)}>
+              <TabsContent key={plan.id} value={plan.id}>
                 <Planner id={plan.id} />
               </TabsContent>
             );
