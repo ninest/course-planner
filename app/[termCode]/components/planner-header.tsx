@@ -2,18 +2,10 @@
 
 import { BackButton } from "@/components/back-button";
 import { Button } from "@/components/button";
-import {
-  Modal,
-  ModalClose,
-  ModalDescription,
-  ModalTitle,
-} from "@/components/modal";
-import { XButton } from "@/components/x-button";
 import { usePlans } from "@/hooks/use-plans";
 import { MoreVertical, Plus, Share } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
-import { NewPlanForm } from "./new-plan-form";
+import { useRouter } from "next/navigation";
 
 interface PlannerHeaderProps {
   termCode: string;
@@ -27,7 +19,7 @@ export const PlannerHeader = ({
   year,
 }: PlannerHeaderProps) => {
   return (
-    <header className="border-b lg:h-20">
+    <header className="border-b lg:h-20 ">
       {/* MOBILE */}
       <div className="lg:hidden">
         <div className="px-5 pt-5 flex justify-between items-center">
@@ -82,20 +74,24 @@ const PlannerTabs = ({
   description: string;
 }) => {
   const { plansForTerm } = usePlans();
+  const router = useRouter();
+
   const plans = plansForTerm(termCode);
+
+  // console.log(router);
 
   return (
     <>
       <div className="overflow-scroll space-x-1">
         {plans.map((plan) => {
           return (
-            <button
+            <Link
               key={plan.id}
-              onClick={() => setModalOpen(true)}
+              href={`/${termCode}/${plan.id}`}
               className="h-7 py-1 px-3 text-sm bg-gray-100 rounded-md"
             >
               {plan.name}
-            </button>
+            </Link>
           );
         })}
         <Link

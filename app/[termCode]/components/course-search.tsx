@@ -3,6 +3,7 @@ import subjects from "../../../.data/subjects.json";
 import termCoursesMapping from "../../../.data/mappings/term-courses/202330.json";
 import allCourses from "../../../.data/all-courses.json";
 import { useRouter } from "next/navigation";
+import { useFocus } from "@/hooks/util/use-focus";
 
 interface CourseSearchProps {
   termCode: string;
@@ -17,10 +18,14 @@ export const CourseSearch = ({ termCode: string }: CourseSearchProps) => {
   // @ts-ignore
   const availableCourses = termCoursesMapping[query.split(" ")[0]] ?? [];
 
+  const [inputRef, setInputFocus] = useFocus();
+
   return (
     <div className="relative p-5 lg:h-[calc(100vh-5rem)] overflow-y-scroll">
       <fieldset className="sticky top-0">
         <input
+          autoFocus
+          ref={inputRef}
           className="form-field w-full"
           type="text"
           placeholder="Search courses ..."
@@ -53,7 +58,10 @@ export const CourseSearch = ({ termCode: string }: CourseSearchProps) => {
             return (
               <button
                 key={subject.code}
-                onClick={() => setQuery(`${subject.code} `)}
+                onClick={() => {
+                  setQuery(`${subject.code} `);
+                  setInputFocus();
+                }}
                 className="flex items-center w-full py-1 hover:bg-gray-100 rounded-md"
               >
                 <div className="text-left w-[70px] text-bold">

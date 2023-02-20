@@ -1,15 +1,16 @@
-"use client"
+"use client";
 
 import { usePlans } from "@/hooks/use-plans";
 import { CoursePlan } from "@/utils/plan/types";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { CourseSearch } from "../components/course-search";
 
-interface PlanPageProps {
+interface PlanLayoutProps {
   params: { planId: string };
+  children: ReactNode;
 }
 
-export default function PlanPage({ params }: PlanPageProps) {
+export default function PlanLayout({ params, children }: PlanLayoutProps) {
   const { plans, planById } = usePlans();
   const [currentPlan, setCurrentPlan] = useState<CoursePlan | null>(null);
 
@@ -21,9 +22,10 @@ export default function PlanPage({ params }: PlanPageProps) {
 
   return (
     currentPlan && (
-      <>
-        <CourseSearch termCode={currentPlan?.termCode} />
-      </>
+      <div className="flex">
+        <div className="md:border-r md:w-[350px]">{children}</div>
+        <div className="p-5">Planner</div>
+      </div>
     )
   );
 }

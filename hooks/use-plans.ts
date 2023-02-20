@@ -43,5 +43,5 @@ export const usePlans = () => {
     setPlans(newPlans);
   };
 
-  return { plansForTerm, createPlan, validPlanName, planById, savePlan };
+  return { plans, plansForTerm, createPlan, validPlanName, planById, savePlan };
 };

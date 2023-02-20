@@ -17,16 +17,6 @@ export default function TermLayout({ params, children }: TermLayoutProps) {
   const { year, description } = getValuesFromTerm(term);
   return (
     <main>
-      {/* <PlannerShell
-        termCode={term.code}
-        description={description}
-        year={year!}
-        backButton={
-          <>
-            <BackButton />
-          </>
-        }
-      /> */}
       <PlannerHeader
         termCode={term.code}
         description={description}
