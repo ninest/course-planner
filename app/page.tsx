@@ -1,4 +1,6 @@
 import { groupTermsByYear } from "@/utils/term/group";
+import { getValuesFromTerm } from "@/utils/term/string";
+import Link from "next/link";
 import terms from "../.data/terms.json";
 
 export default function HomePage() {
@@ -7,12 +9,6 @@ export default function HomePage() {
     <main className="">
       <header className="border-b p-5 flex justify-between items-center">
         <h1 className="text-lg font-bold">Course Planner</h1>
-        {/* <MenuButton items={terms.}>
-          <Button intent={"primary"}>
-            <Plus className="md:mr-2 w-5" />
-            <span className="hidden md:block">New Plan</span>
-          </Button>
-        </MenuButton> */}
       </header>
       <div className="p-5 space-y-4">
         {termsByYear.map((group) => {
@@ -21,19 +17,19 @@ export default function HomePage() {
               <h2 className="mb-1 font-bold">{group.year}</h2>
               <div>
                 {group.terms.map((term) => {
-                  const description = term.description
-                    .split(" ")
-                    .slice(0, -1)
-                    .join(" ");
-                  const year = term.description.split(" ").at(-1);
+                  const { description, year } = getValuesFromTerm(term);
 
                   return (
-                    <div key={term.code}>
+                    <Link
+                      href={`/${term.code}`}
+                      key={term.code}
+                      className="block hover:underline"
+                    >
                       <h3>
                         {description}{" "}
                         <span className="text-gray-400">{year}</span>
                       </h3>
-                    </div>
+                    </Link>
                   );
                 })}
               </div>
