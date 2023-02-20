@@ -1,7 +1,7 @@
-import { CalendarEvent } from "@/types";
 import { WEEK_DAYS } from "@/utils/date/display";
 import { LIGHT_BLUE } from "@/utils/event/colors";
 import { getConflictList } from "@/utils/event/conflict";
+import { CalendarEvent } from "@/utils/event/types";
 import { integerRange, integersBetween } from "@/utils/list";
 import { hourToCalendarDisplay } from "@/utils/time/display";
 import clsx from "clsx";
@@ -21,7 +21,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
     <>
       {/* Days */}
       <div
-        className="grid mb-3"
+        className="grid"
         style={{
           gridTemplateColumns: "4.5rem repeat(5, minmax(0, 1fr))",
         }}
@@ -30,7 +30,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
           <div
             key={index}
             style={{ gridColumn: index + 2 }}
-            className="text-center text-xs text-gray-500 font-medium uppercase pb-3"
+            className="text-center text-xs text-gray-500 font-medium uppercase pb-2"
           >
             {day.shortName}
           </div>

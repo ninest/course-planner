@@ -1,9 +1,5 @@
-import { EventColor } from "./utils/event/colors";
-
-export interface Time {
-  hour: number;
-  minute: number;
-}
+import { EventColor } from "../event/colors";
+import { Time } from "../time/types";
 
 export interface CalendarEvent {
   title: string;
