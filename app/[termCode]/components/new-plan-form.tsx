@@ -12,7 +12,7 @@ interface NewPlanFormProps {
 }
 
 export const NewPlanForm = ({ termCode, onSuccess }: NewPlanFormProps) => {
-  const { createPlan } = usePlans();
+  const { createPlan, validPlanName } = usePlans();
   const [error, setError] = useState("");
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -25,8 +25,12 @@ export const NewPlanForm = ({ termCode, onSuccess }: NewPlanFormProps) => {
     if (name === "") {
       setError("Invalid name! Please give this plan a name.");
       return;
-    } else {
-      setError("");
+    }
+    if (!validPlanName(termCode, name)) {
+      setError(
+        "This plan name is already taken. Please think of a different one."
+      );
+      return;
     }
 
     createPlan(termCode, name);

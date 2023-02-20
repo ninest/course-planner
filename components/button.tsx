@@ -17,7 +17,7 @@ const buttonStyles = cva(
       },
       size: {
         sm: ["text-sm py-0.5 px-1"],
-        default: ["text-base py-1 px-3"],
+        default: ["text-base py-0.5 px-4"],
       },
     },
     compoundVariants: [

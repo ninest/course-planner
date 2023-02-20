@@ -1,11 +1,18 @@
 "use client";
 
-import { Modal, ModalDescription, ModalTitle } from "@/components/modal";
+import {
+  Modal,
+  ModalClose,
+  ModalDescription,
+  ModalTitle,
+} from "@/components/modal";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/tabs";
+import { XButton } from "@/components/x-button";
 import { usePlans } from "@/hooks/use-plans";
-import { Plus } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { useState } from "react";
 import { NewPlanForm } from "./new-plan-form";
+import { Planner } from "./planner";
 
 interface PlannerShellProps {
   termCode: string;
@@ -58,17 +65,18 @@ export const PlannerShell = ({
           {plans.map((plan, index) => {
             return (
               <TabsContent key={`${plan.name}-${index}`} value={String(index)}>
-                {plan.name} content
+                <Planner id={plan.id} />
               </TabsContent>
             );
           })}
         </div>
       </Tabs>
-      <Modal open={modalOpen}>
-        <ModalTitle>
-          <h2 className="mb-4 font-bold text-xl">
-            New course plan for {description}
-          </h2>
+      <Modal open={modalOpen} onOpenChange={setModalOpen}>
+        <ModalClose>
+          <XButton action={() => setModalOpen(false)} />
+        </ModalClose>
+        <ModalTitle className="my-4 font-bold text-xl">
+          New course plan for {description}
         </ModalTitle>
         <ModalDescription>
           <p className="text-gray-700 mb-5">

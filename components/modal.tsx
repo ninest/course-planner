@@ -1,16 +1,22 @@
 import * as Dialog from "@radix-ui/react-dialog";
 import clsx from "clsx";
-import { ReactNode } from "react";
+import { HTMLProps, ReactNode } from "react";
 
 interface ModalProps {
   trigger?: ReactNode;
   children: ReactNode;
   open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export const Modal = ({ trigger, children, open = false }: ModalProps) => {
+export const Modal = ({
+  trigger,
+  children,
+  open = false,
+  onOpenChange,
+}: ModalProps) => {
   return (
-    <Dialog.Root open={open}>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
       {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
 
       <Dialog.Overlay className=" fixed m-0 inset-0 z-20 bg-black/50 backdrop-blur-sm" />
@@ -30,14 +36,17 @@ export const Modal = ({ trigger, children, open = false }: ModalProps) => {
   );
 };
 
-export const ModalTitle = ({ children }: { children: ReactNode }) => (
-  <Dialog.Title>{children}</Dialog.Title>
+export const ModalTitle = ({
+  children,
+  className,
+}: HTMLProps<HTMLTitleElement>) => (
+  <Dialog.Title className={className}>{children}</Dialog.Title>
 );
 
 export const ModalDescription = ({ children }: { children: ReactNode }) => (
-  <Dialog.Title>{children}</Dialog.Title>
+  <Dialog.Description>{children}</Dialog.Description>
 );
 
 export const ModalClose = ({ children }: { children: ReactNode }) => (
-  <Dialog.Close asChild>{children}</Dialog.Close>
+  <Dialog.Close>{children}</Dialog.Close>
 );
