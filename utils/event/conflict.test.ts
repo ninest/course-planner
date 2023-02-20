@@ -4,55 +4,55 @@ import { getConflictList, isConflict } from "./conflict";
 
 const eventA: CalendarEvent = {
   day: 0,
-  name: "Sunday A",
+  title: "Sunday A",
   startTime: { hour: 9, minute: 0 },
   endTime: { hour: 10, minute: 0 },
 };
 const eventB: CalendarEvent = {
   day: 0,
-  name: "Sunday B",
+  title: "Sunday B",
   startTime: { hour: 10, minute: 0 },
   endTime: { hour: 11, minute: 0 },
 };
 const eventC: CalendarEvent = {
   day: 1,
-  name: "Sunday C",
+  title: "Sunday C",
   startTime: { hour: 9, minute: 35 },
   endTime: { hour: 10, minute: 35 },
 };
 const eventD: CalendarEvent = {
   day: 0,
-  name: "Sunday D",
+  title: "Sunday D",
   startTime: { hour: 9, minute: 30 },
   endTime: { hour: 10, minute: 30 },
 };
 const eventE: CalendarEvent = {
   day: 0,
-  name: "Sunday E",
+  title: "Sunday E",
   startTime: { hour: 8, minute: 45 },
   endTime: { hour: 10, minute: 45 },
 };
 const eventF: CalendarEvent = {
   day: 0,
-  name: "Sunday F",
+  title: "Sunday F",
   startTime: { hour: 9, minute: 2 },
   endTime: { hour: 9, minute: 58 },
 };
 const eventG: CalendarEvent = {
   day: 0,
-  name: "Sunday G",
+  title: "Sunday G",
   startTime: { hour: 8, minute: 58 },
   endTime: { hour: 10, minute: 2 },
 };
 const eventH: CalendarEvent = {
   day: 0,
-  name: "Sunday H",
+  title: "Sunday H",
   startTime: { hour: 11, minute: 58 },
   endTime: { hour: 12, minute: 2 },
 };
 const eventI: CalendarEvent = {
   day: 1,
-  name: "Saturday I",
+  title: "Saturday I",
   startTime: { hour: 9, minute: 0 },
   endTime: { hour: 10, minute: 0 },
 };

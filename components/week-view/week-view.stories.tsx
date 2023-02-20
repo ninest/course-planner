@@ -7,39 +7,70 @@ export const WeekViewBasicDemo = () => {
         events={[
           {
             day: 2,
-            name: "Tuesday Morning",
+            title: "Tuesday Morning",
             startTime: { hour: 9, minute: 0 },
             endTime: { hour: 10, minute: 0 },
           },
           {
             day: 4,
-            name: "Thursday Morning",
+            title: "Thursday Morning",
+            subtitle: "Optional subtitle",
             startTime: { hour: 9, minute: 0 },
             endTime: { hour: 10, minute: 0 },
           },
           {
             day: 1,
-            name: "Monday Afternoon",
+            title: "Monday Afternoon",
             startTime: { hour: 12, minute: 5 },
             endTime: { hour: 13, minute: 15 },
           },
           {
             day: 3,
-            name: "Wednesday Afternoon",
+            title: "Wednesday Afternoon",
             startTime: { hour: 12, minute: 35 },
             endTime: { hour: 13, minute: 55 },
           },
           {
             day: 3,
-            name: "Early morning lab",
+            title: "Early morning lab",
             startTime: { hour: 8, minute: 0 },
             endTime: { hour: 9, minute: 0 },
           },
           {
             day: 3,
-            name: "Another morning lab",
+            title:
+              "Another morning lab with a super long title that may ruin the appearance of this class, but it is all for demonstration purposes so it is all okay and no harm is done",
             startTime: { hour: 9, minute: 15 },
             endTime: { hour: 11, minute: 15 },
+          },
+        ]}
+      />
+    </>
+  );
+};
+
+export const WeekViewWithConflicts = () => {
+  return (
+    <>
+      <WeekView
+        events={[
+          {
+            day: 3,
+            title: "Wednesday Morning",
+            startTime: { hour: 9, minute: 0 },
+            endTime: { hour: 10, minute: 0 },
+          },
+          {
+            day: 3,
+            title: "Wednesday Afternoon",
+            startTime: { hour: 11, minute: 30 },
+            endTime: { hour: 12, minute: 30 },
+          },
+          {
+            day: 3,
+            title: "Surprise class",
+            startTime: { hour: 12, minute: 0 },
+            endTime: { hour: 13, minute: 30 },
           },
         ]}
       />

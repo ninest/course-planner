@@ -1,16 +1,21 @@
 import { CalendarEvent } from "@/types";
 import { WEEK_DAYS } from "@/utils/date/display";
+import { LIGHT_BLUE } from "@/utils/event/colors";
+import { getConflictList } from "@/utils/event/conflict";
 import { integerRange, integersBetween } from "@/utils/list";
 import { hourToCalendarDisplay } from "@/utils/time/display";
+import clsx from "clsx";
 
 interface WeekViewProps {
   events: CalendarEvent[];
 }
 
 export const WeekView = ({ events }: WeekViewProps) => {
-  const minHour = Math.min(8, ...events.map((event) => event.startTime.hour));
-  const maxHour = Math.max(...events.map((event) => event.endTime.hour), 16);
+  const minHour = Math.min(9, ...events.map((event) => event.startTime.hour));
+  const maxHour = Math.max(...events.map((event) => event.endTime.hour), 14);
   const hours = integersBetween(minHour, maxHour);
+
+  const conflicts = getConflictList(events);
 
   return (
     <>
@@ -18,14 +23,14 @@ export const WeekView = ({ events }: WeekViewProps) => {
       <div
         className="grid mb-3"
         style={{
-          gridTemplateColumns: "5rem repeat(5, minmax(0, 1fr))",
+          gridTemplateColumns: "4.5rem repeat(5, minmax(0, 1fr))",
         }}
       >
         {WEEK_DAYS.map((day, index) => (
           <div
             key={index}
             style={{ gridColumn: index + 2 }}
-            className="text-center text-gray-500 font-medium uppercase pb-3"
+            className="text-center text-xs text-gray-500 font-medium uppercase pb-3"
           >
             {day.shortName}
           </div>
@@ -35,8 +40,8 @@ export const WeekView = ({ events }: WeekViewProps) => {
       <div
         className="grid"
         style={{
-          gridTemplateColumns: "5rem repeat(5, minmax(0, 1fr))",
-          gridAutoRows: "0.35rem",
+          gridTemplateColumns: "4.5rem repeat(5, minmax(0, 1fr))",
+          gridAutoRows: "0.45rem",
         }}
       >
         {/* Alternate table row colors */}
@@ -78,6 +83,12 @@ export const WeekView = ({ events }: WeekViewProps) => {
 
           const rowSpan = durationMinutes / 5;
 
+          // Get conflict and change style
+          const conflictingEvents = conflicts.get(event) ?? [];
+          const eventIsConflicting = conflictingEvents.length > 0;
+
+          const eventColor = event.color ?? LIGHT_BLUE;
+
           return (
             <div
               key={index}
@@ -87,8 +98,19 @@ export const WeekView = ({ events }: WeekViewProps) => {
               }}
               className="my-[0.1rem] mx-[0.05rem]"
             >
-              <div className="w-full h-full rounded p-2  bg-indigo-50 text-xs ">
-                {event.name}
+              <div
+                className={clsx(
+                  eventColor.className,
+                  "w-full h-full rounded-lg p-2 text-xs border-2",
+                  {
+                    "border-transparent": !eventIsConflicting,
+                    "border-red-300": eventIsConflicting,
+                  },
+                  "overflow-scroll"
+                )}
+              >
+                <div className="font-semibold">{event.title}</div>
+                <div>{event.subtitle}</div>
               </div>
             </div>
           );
