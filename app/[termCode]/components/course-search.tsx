@@ -4,12 +4,15 @@ import termCoursesMapping from "../../../.data/mappings/term-courses/202330.json
 import allCourses from "../../../.data/all-courses.json";
 import { useRouter } from "next/navigation";
 import { useFocus } from "@/hooks/util/use-focus";
+import Link from "next/link";
+import { courseToSlug } from "@/utils/course/course";
 
 interface CourseSearchProps {
   termCode: string;
+  planId: string;
 }
 
-export const CourseSearch = ({ termCode: string }: CourseSearchProps) => {
+export const CourseSearch = ({ termCode, planId }: CourseSearchProps) => {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const filteredSubjects = subjects.filter((subject) =>
@@ -18,10 +21,10 @@ export const CourseSearch = ({ termCode: string }: CourseSearchProps) => {
   // @ts-ignore
   const availableCourses = termCoursesMapping[query.split(" ")[0]] ?? [];
 
-  const [inputRef, setInputFocus] = useFocus();
+  const [inputRef, setInputFocus] = useFocus<HTMLInputElement>();
 
   return (
-    <div className="relative p-5 lg:h-[calc(100vh-5rem)] overflow-y-scroll">
+    <>
       <fieldset className="sticky top-0">
         <input
           autoFocus
@@ -44,12 +47,15 @@ export const CourseSearch = ({ termCode: string }: CourseSearchProps) => {
                   course.number === partialCourse.number
               )!;
               return (
-                <div
+                <Link
                   key={`${fullCourse.subject}${fullCourse.number}`}
-                  className="py-1 hover:bg-gray-100 rounded-md"
+                  href={`${termCode}/${planId}/${courseToSlug(
+                    `${fullCourse.subject} ${fullCourse.number}`
+                  )}`}
+                  className="block py-1 hover:bg-gray-100 rounded-md"
                 >
                   {fullCourse.subject} {fullCourse.number}
-                </div>
+                </Link>
               );
             })}
           </>
@@ -73,6 +79,6 @@ export const CourseSearch = ({ termCode: string }: CourseSearchProps) => {
           })
         )}
       </div>
-    </div>
+    </>
   );
 };

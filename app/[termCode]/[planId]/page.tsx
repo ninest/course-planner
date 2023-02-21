@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { usePlans } from "@/hooks/use-plans";
 import { CoursePlan } from "@/utils/plan/types";
@@ -9,6 +9,9 @@ interface PlanPageProps {
   params: { planId: string };
 }
 
+/* 
+This page only contains the course search, not the actual planner
+*/
 export default function PlanPage({ params }: PlanPageProps) {
   const { plans, planById } = usePlans();
   const [currentPlan, setCurrentPlan] = useState<CoursePlan | null>(null);
@@ -21,9 +24,9 @@ export default function PlanPage({ params }: PlanPageProps) {
 
   return (
     currentPlan && (
-      <>
-        <CourseSearch termCode={currentPlan?.termCode} />
-      </>
+      <div>
+        <CourseSearch termCode={currentPlan.termCode} planId={currentPlan.id} />
+      </div>
     )
   );
 }
