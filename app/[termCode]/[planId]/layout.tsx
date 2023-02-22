@@ -3,7 +3,6 @@
 import { usePlans } from "@/hooks/use-plans";
 import { CoursePlan } from "@/utils/plan/types";
 import { ReactNode, useEffect, useState } from "react";
-import { CourseSearch } from "../components/course-search";
 
 interface PlanLayoutProps {
   params: { planId: string };
