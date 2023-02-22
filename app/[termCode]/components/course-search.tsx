@@ -1,30 +1,31 @@
-import { useState } from "react";
-import subjects from "../../../.data/subjects.json";
-import termCoursesMapping from "../../../.data/mappings/term-courses/202330.json";
-import allCourses from "../../../.data/all-courses.json";
-import { useRouter } from "next/navigation";
+"use client";
+
+import { TermSubjectCourseMapping } from "@/.data/types";
 import { useFocus } from "@/hooks/util/use-focus";
-import Link from "next/link";
 import { courseToSlug } from "@/utils/course/course";
-import { getTermCourses } from "@/services/term-courses";
-import { useTermCourses } from "@/hooks/mapping/use-term-course";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { HTMLAttributes, HTMLProps, useState } from "react";
+import allCourses from "../../../.data/all-courses.json";
+import subjects from "../../../.data/subjects.json";
 
 interface CourseSearchProps {
   termCode: string;
+  termCourses: TermSubjectCourseMapping;
   planId: string;
 }
 
-export const CourseSearch = ({ termCode, planId }: CourseSearchProps) => {
-  // Get term course mapping for this term
-  const { isLoading, isError, isSuccess, termCoursesMapping } =
-    useTermCourses(termCode);
-
+export const CourseSearch = ({
+  termCode,
+  termCourses,
+  planId,
+}: CourseSearchProps) => {
   const [query, setQuery] = useState("");
   const filteredSubjects = subjects.filter((subject) =>
     subject.code.includes(query)
   );
-  // @ts-ignore
-  const availableCourses = termCoursesMapping?.[query.split(" ")[0]] ?? [];
+  const [maybeSubjectCode, maybeCourseNumber] = query.split(" ");
+  const availableCourses = termCourses?.[maybeSubjectCode] ?? [];
 
   const [inputRef, setInputFocus] = useFocus<HTMLInputElement>();
 
@@ -42,52 +43,87 @@ export const CourseSearch = ({ termCode, planId }: CourseSearchProps) => {
         />
       </fieldset>
 
-      {isLoading && <div>Loading ...</div>}
-      {isError && <div>Oh no, error!</div>}
-      {isSuccess && (
-        <div className="mt-4">
-          {availableCourses.length > 0 ? (
-            <>
-              {availableCourses.map((partialCourse: any) => {
-                const fullCourse = allCourses.find(
-                  (course) =>
-                    course.subject === query.split(" ")[0] &&
-                    course.number === partialCourse.number
-                )!;
-                return (
-                  <Link
-                    key={`${fullCourse.subject}${fullCourse.number}`}
-                    href={`${termCode}/${planId}/${courseToSlug(
-                      `${fullCourse.subject} ${fullCourse.number}`
-                    )}`}
-                    className="block py-1 hover:bg-gray-100 rounded-md"
-                  >
-                    {fullCourse.subject} {fullCourse.number}
-                  </Link>
-                );
-              })}
-            </>
-          ) : (
-            filteredSubjects.map((subject) => {
+      <div className="mt-4">
+        {availableCourses.length > 0 ? (
+          <>
+            {availableCourses.map((partialCourse) => {
+              const fullCourse = allCourses.find(
+                (course) =>
+                  course.subject === maybeSubjectCode &&
+                  course.number === partialCourse.number
+              )!;
               return (
-                <button
-                  key={subject.code}
-                  onClick={() => {
-                    setQuery(`${subject.code} `);
-                    setInputFocus();
-                  }}
-                  className="flex items-center w-full py-1 hover:bg-gray-100 rounded-md"
-                >
-                  <div className="text-left w-[70px] text-bold">
-                    {subject.code}
-                  </div>
-                  <p className="text-gray-600 text-sm">{subject.description}</p>
-                </button>
+                <CourseItem
+                  termCode={termCode}
+                  planId={planId}
+                  subjectCode={fullCourse.subject}
+                  courseNumber={fullCourse.number}
+                />
               );
-            })
-          )}
-        </div>
-      )}
+            })}
+          </>
+        ) : (
+          filteredSubjects.map((subject) => {
+            return (
+              <SubjectItem
+                key={subject.code}
+                onClick={() => {
+                  setQuery(`${subject.code} `);
+                  setInputFocus();
+                }}
+                code={subject.code}
+                description={subject.description}
+              />
+            );
+          })
+        )}
+      </div>
     </>
+  );
+};
+
+interface SubjectItemProps extends HTMLAttributes<HTMLButtonElement> {
+  code: string;
+  description: string;
+}
+const SubjectItem = ({
+  children,
+  code,
+  description,
+  ...props
+}: SubjectItemProps) => {
+  return (
+    <button
+      {...props}
+      className="flex items-center w-full py-1 hover:bg-gray-100 rounded-md"
+    >
+      <div className="text-left w-[65px] text-bold">{code}</div>
+      <p className="text-gray-600 text-sm">{description}</p>
+    </button>
+  );
+};
+
+interface CourseItemProps {
+  termCode: string;
+  planId: string;
+  subjectCode: string;
+  courseNumber: string;
+}
+const CourseItem = ({
+  termCode,
+  planId,
+  subjectCode,
+  courseNumber,
+}: CourseItemProps) => {
+  return (
+    <Link
+      key={`${subjectCode}${courseNumber}`}
+      href={`${termCode}/${planId}/${courseToSlug(
+        `${subjectCode} ${courseNumber}`
+      )}`}
+      className="block py-1 hover:bg-gray-100 rounded-md"
+    >
+      {subjectCode} {courseNumber}
+    </Link>
   );
 };

@@ -23,7 +23,9 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
     currentPlan && (
       <div className="flex">
         <div className="md:border-r md:w-[350px]">
-        <div className="relative p-5 lg:h-[calc(100vh-5rem)] overflow-y-scroll">{children}</div>
+          <div className="relative lg:h-[calc(100vh-5rem)] overflow-y-scroll">
+            {children}
+          </div>
         </div>
         <div className="p-5">Planner</div>
       </div>

@@ -17,6 +17,7 @@ const buttonStyles = cva(
         false: "border-transparent",
       },
       size: {
+        xs: ["text-xs py-0.5 px-1"],
         sm: ["text-sm py-1 px-3"],
         default: ["text-base py-1 px-5"],
       },
@@ -29,11 +30,7 @@ const buttonStyles = cva(
           "bg-transparent text-indigo-600 border-indigo-600 hover:bg-gray-100",
         ],
       },
-      {
-        intent: "ghost",
-        size: "default",
-        class: "!p-0.5 HELP",
-      },
+      { intent: "ghost", size: "default", class: "!p-0.5" },
     ],
     defaultVariants: {
       intent: "secondary",
