@@ -51,7 +51,7 @@ export const RequisiteDisplay = ({
                 <div
                   key={index}
                   className={clsx(
-                    "text-sm md:text-base font-medium",
+                    "text-xs font-medium",
                     {
                       // Non course pre-reqs
                       italic: !["And", "Or", "(", ")"].includes(reqItem),

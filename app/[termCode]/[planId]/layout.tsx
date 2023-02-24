@@ -21,9 +21,9 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
 
   return (
     currentPlan && (
-      <div className="flex">
-        <div className="md:border-r md:w-[350px]">
-          <div className="relative lg:h-[calc(100vh-5rem)] overflow-y-scroll">
+      <div className="flex flex-col-reverse md:flex-row">
+        <div className="border-t md:border-t-0 md:border-r md:w-[350px]">
+          <div className="relative md:h-[calc(100vh-5rem)] overflow-y-scroll">
             {children}
           </div>
         </div>

@@ -1,5 +1,5 @@
 import { Button } from "@/components/button";
-import { getCourse } from "@/services/courses";
+import { getCourse } from "@/api/courses";
 import { slugToCourse } from "@/utils/course/course";
 import { ChevronLeft } from "lucide-react";
 import { CourseInfo } from "./course-info";
