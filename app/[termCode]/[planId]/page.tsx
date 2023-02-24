@@ -1,6 +1,6 @@
 import { getSubjectsForTerm } from "@/api/courses";
 import { getTermCourses } from "@/api/term-courses";
-import { CourseSearch } from "../components/course-search";
+import { CourseSearch } from "./course-search";
 
 interface PlanPageProps {
   params: { termCode: string; planId: string };

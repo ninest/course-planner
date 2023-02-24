@@ -1,6 +1,6 @@
 "use client";
 
-import { SubjectWithCourseCount } from "@/.data/types";
+import { Course, SubjectWithCourseCount } from "@/.data/types";
 import { useCoursesForTerm } from "@/hooks/fetching/use-courses-for-term";
 import { useFocus } from "@/hooks/util/use-focus";
 import { courseToSlug } from "@/utils/course/course";
@@ -52,18 +52,20 @@ export const CourseSearch = ({
         {!showCourses ? (
           <>
             {/* Subjects */}
-            {filteredSubjects.map((subject) => {
-              return (
-                <SubjectItem
-                  key={subject.code}
-                  onClick={() => {
-                    setQuery(`${subject.code} `);
-                    setInputFocus();
-                  }}
-                  subjectWithCount={subject}
-                />
-              );
-            })}
+            <div className="space-y-1">
+              {filteredSubjects.map((subject) => {
+                return (
+                  <SubjectItem
+                    key={subject.code}
+                    onClick={() => {
+                      setQuery(`${subject.code} `);
+                      setInputFocus();
+                    }}
+                    subjectWithCount={subject}
+                  />
+                );
+              })}
+            </div>
           </>
         ) : (
           <>
@@ -79,54 +81,20 @@ export const CourseSearch = ({
                 Loading courses ...
               </div>
             )}
-            {courses?.map((course) => {
-              return (
-                <CourseItem
-                  termCode={termCode}
-                  planId={planId}
-                  subjectCode={course.subject}
-                  courseNumber={course.number}
-                />
-              );
-            })}
+            <div className="space-y-1">
+              {courses?.map((course) => {
+                return (
+                  <CourseItem
+                    termCode={termCode}
+                    planId={planId}
+                    course={course}
+                  />
+                );
+              })}
+            </div>
           </>
         )}
       </div>
-      {/* <div className="mt-4">
-        {availableCourses.length > 0 ? (
-          <>
-            {availableCourses.map((partialCourse) => {
-              const fullCourse = allCourses.find(
-                (course) =>
-                  course.subject === maybeSubjectCode &&
-                  course.number === partialCourse.number
-              )!;
-              return (
-                <CourseItem
-                  termCode={termCode}
-                  planId={planId}
-                  subjectCode={fullCourse.subject}
-                  courseNumber={fullCourse.number}
-                />
-              );
-            })}
-          </>
-        ) : (
-          filteredSubjects.map((subject) => {
-            return (
-              <SubjectItem
-                key={subject.code}
-                onClick={() => {
-                  setQuery(`${subject.code} `);
-                  setInputFocus();
-                }}
-                code={subject.code}
-                description={subject.description}
-              />
-            );
-          })
-        )}
-      </div> */}
     </>
   );
 };
@@ -145,7 +113,9 @@ const SubjectItem = ({ subjectWithCount, ...props }: SubjectItemProps) => {
           {subjectWithCount.numCourses} courses
         </div>
       </div>
-      <div className="text-left text-sm text-gray-700">{subjectWithCount.description}</div>
+      <div className="text-left text-sm text-gray-700">
+        {subjectWithCount.description}
+      </div>
     </button>
   );
 };
@@ -153,24 +123,19 @@ const SubjectItem = ({ subjectWithCount, ...props }: SubjectItemProps) => {
 interface CourseItemProps {
   termCode: string;
   planId: string;
-  subjectCode: string;
-  courseNumber: string;
+  course: Course;
 }
-const CourseItem = ({
-  termCode,
-  planId,
-  subjectCode,
-  courseNumber,
-}: CourseItemProps) => {
+const CourseItem = ({ termCode, planId, course }: CourseItemProps) => {
   return (
     <Link
-      key={`${subjectCode}${courseNumber}`}
+      key={`${course.subject}${course.number}`}
       href={`${termCode}/${planId}/${courseToSlug(
-        `${subjectCode} ${courseNumber}`
+        `${course.subject} ${course.number}`
       )}`}
       className="block py-1 hover:bg-gray-100 rounded-md"
     >
-      {subjectCode} {courseNumber}
+      {course.subject} {course.number}{" "}
+      <span className="text-gray-500">{course.title ?? "No title"}</span>
     </Link>
   );
 };
