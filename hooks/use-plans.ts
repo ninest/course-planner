@@ -2,6 +2,7 @@ import { CoursePlan } from "@/utils/plan/types";
 import { atom, useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
+import { nanoid } from "nanoid";
 
 const plansAtom = atomWithStorage<CoursePlan[]>("plans", []);
 
@@ -16,7 +17,7 @@ export const usePlans = () => {
     name: string,
     description: string = ""
   ) => {
-    const newPlanId = `${termCode}-${name.replaceAll(" ", "-")}`; // TODO: better Ids
+    const newPlanId = nanoid();
     setPlans((plans) => [
       ...plans,
       { id: newPlanId, termCode, name, description, courses: [] },
