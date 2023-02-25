@@ -7,12 +7,10 @@ interface PlanPageProps {
 }
 
 /* 
-This page only contains the course search, not the actual planner
+This page only contains the course search, not the actual planner. The planner is in the layout
 */
 export default async function PlanPage({ params }: PlanPageProps) {
   const { planId, termCode } = params;
-  // Fetch term mapping
-  // const termCourses = await getTermCourses(termCode);
   const subjectsWithCounts = await getSubjectsForTerm(termCode);
 
   return (

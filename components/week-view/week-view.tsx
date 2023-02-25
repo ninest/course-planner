@@ -1,5 +1,5 @@
 import { WEEK_DAYS } from "@/utils/date/display";
-import { LIGHT_BLUE } from "@/utils/event/colors";
+import { eventColorsMap } from "@/utils/event/colors";
 import { getConflictList } from "@/utils/event/conflict";
 import { CalendarEvent } from "@/utils/event/types";
 import { integerRange, integersBetween } from "@/utils/list";
@@ -12,7 +12,7 @@ interface WeekViewProps {
 
 export const WeekView = ({ events }: WeekViewProps) => {
   const minHour = Math.min(9, ...events.map((event) => event.startTime.hour));
-  const maxHour = Math.max(...events.map((event) => event.endTime.hour), 14);
+  const maxHour = Math.max(...events.map((event) => event.endTime.hour), 17);
   const hours = integersBetween(minHour, maxHour);
 
   const conflicts = getConflictList(events);
@@ -87,7 +87,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
           const conflictingEvents = conflicts.get(event) ?? [];
           const eventIsConflicting = conflictingEvents.length > 0;
 
-          const eventColor = event.color ?? LIGHT_BLUE;
+          const eventColor = event.color ?? eventColorsMap.GRAY;
 
           return (
             <div

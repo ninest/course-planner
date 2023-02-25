@@ -1,15 +1,6 @@
 import { DayOfWeek, daysOfWeek } from "@/.data/types";
+import { dayShortCodes } from "@/utils/date/days";
 import clsx from "clsx";
-
-const dayShortCodes: Record<DayOfWeek, string> = {
-  sunday: "S",
-  monday: "M",
-  tuesday: "T",
-  wednesday: "W",
-  thursday: "R",
-  friday: "F",
-  saturday: "S",
-};
 
 interface DayTableProps {
   days: DayOfWeek[];

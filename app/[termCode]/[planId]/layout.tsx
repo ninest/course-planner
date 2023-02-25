@@ -1,6 +1,8 @@
 "use client";
 
+import { WeekView } from "@/components/week-view/week-view";
 import { usePlans } from "@/hooks/use-plans";
+import { useWeekView } from "@/hooks/use-week-view";
 import { CoursePlan } from "@/utils/plan/types";
 import { ReactNode, useEffect, useState } from "react";
 
@@ -19,6 +21,8 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
     setCurrentPlan(plan);
   }, [params.planId, plans]);
 
+  const { previewEvents } = useWeekView();
+
   return (
     currentPlan && (
       <div className="flex flex-col-reverse md:flex-row">
@@ -27,7 +31,9 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
             {children}
           </div>
         </div>
-        <div className="p-5">Planner</div>
+        <div className="p-5 md:w-[calc(100vw-450px)]">
+          <WeekView events={[...previewEvents]} />
+        </div>
       </div>
     )
   );

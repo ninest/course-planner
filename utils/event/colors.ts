@@ -3,13 +3,26 @@ export interface EventColor {
   className: string;
 }
 
-export const LIGHT_BLUE: EventColor = {
-  name: "Light blue",
-  className: "bg-indigo-50 text-gray-600",
-};
-const LIGHT_GREEN = {
-  name: "Light green",
-  className: "bg-green-50 text-gray-800",
+const eventColorKeys = ["LIGHT_BLUE", "LIGHT_GREEN", "GRAY"];
+type EventColorKey = typeof eventColorKeys[number];
+
+export const eventColorsMap: Record<EventColorKey, EventColor> = {
+  LIGHT_BLUE: {
+    name: "Light blue",
+    className: "bg-indigo-50 text-gray-600",
+  },
+  LIGHT_GREEN: {
+    name: "Light green",
+    className: "bg-green-50 text-gray-800",
+  },
+  GRAY: {
+    name: "Gray",
+    className: "bg-gray-200 text-gray-800",
+  },
 };
 
-export const eventColors: EventColor[] = [LIGHT_BLUE, LIGHT_GREEN];
+export const eventColors: EventColor[] = [
+  eventColorsMap.LIGHT_BLUE,
+  eventColorsMap.LIGHT_GREEN,
+  eventColorsMap.GRAY,
+];

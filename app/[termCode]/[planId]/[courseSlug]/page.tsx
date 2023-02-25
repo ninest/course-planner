@@ -3,7 +3,7 @@ import { getCourse } from "@/api/courses";
 import { slugToCourse } from "@/utils/course/course";
 import { ChevronLeft } from "lucide-react";
 import { CourseInfo } from "./course-info";
-import { SectionsDisplay } from "./sections-display";
+import { SectionsList } from "./sections-list";
 
 interface CourseQueryProps {
   params: { termCode: string; planId: string; courseSlug: string };
@@ -34,10 +34,9 @@ export default async function CourseQueryPage({ params }: CourseQueryProps) {
       <hr />
 
       <div className="p-5">
-        <SectionsDisplay
+        <SectionsList
           termCode={params.termCode}
-          subjectCode={subject}
-          courseNumber={number}
+          course={course}
         />
       </div>
     </>
