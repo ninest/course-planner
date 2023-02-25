@@ -23,7 +23,7 @@ export const SectionsDisplay = async ({
   return (
     <div>
       <h3 className="font-bold mb-1">Sections</h3>
-      <div>
+      <div className="space-y-2 -mx-1">
         {sections.map((section) => {
           if (!section)
             return <div>Failed to fetch section. Try reloading</div>;
@@ -48,7 +48,7 @@ export const SectionsDisplay = async ({
             section?.seats.waitlist.capacity !== 0;
 
           return (
-            <div className="bg-gray-50 p-2 rounded">
+            <div className="bg-gray-50 p-3 rounded-md">
               <div className="flex items-center justify-between">
                 <div className="text-sm">
                   {professorsAvailable ? (
@@ -60,7 +60,7 @@ export const SectionsDisplay = async ({
                 <div className="font-mono text-xs">{section.crn}</div>
               </div>
 
-              <div className="mt-1.5 flex items-center justify-between">
+              <div className="mt-1.5 flex flex-col space-y-1.5">
                 <div className="flex items-center space-x-2">
                   {section.days && <DayTable days={section.days} />}
                   {showTime && (
