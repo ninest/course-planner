@@ -11,7 +11,7 @@ interface WeekViewProps {
 }
 
 export const WeekView = ({ events }: WeekViewProps) => {
-  const minHour = Math.min(9, ...events.map((event) => event.startTime.hour));
+  const minHour = Math.min(8, ...events.map((event) => event.startTime.hour));
   const maxHour = Math.max(...events.map((event) => event.endTime.hour), 17);
   const hours = integersBetween(minHour, maxHour);
 
@@ -20,12 +20,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
   return (
     <>
       {/* Days */}
-      <div
-        className="grid"
-        style={{
-          gridTemplateColumns: "4.5rem repeat(5, minmax(0, 1fr))",
-        }}
-      >
+      <div className="grid grid-cols-week-view-mobile md:grid-cols-week-view">
         {WEEK_DAYS.map((day, index) => (
           <div
             key={index}
@@ -38,11 +33,8 @@ export const WeekView = ({ events }: WeekViewProps) => {
       </div>
       {/* Times and events */}
       <div
-        className="grid"
-        style={{
-          gridTemplateColumns: "4.5rem repeat(5, minmax(0, 1fr))",
-          gridAutoRows: "0.45rem",
-        }}
+        className="grid grid-cols-week-view-mobile md:grid-cols-week-view"
+        style={{ gridAutoRows: "0.45rem" }}
       >
         {/* Alternate table row colors */}
         {integerRange(hours.length)
@@ -63,7 +55,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
           <div
             key={index}
             style={{ gridColumn: 1, gridRow: `${index * 12 + 1} / span 12` }}
-            className="text-right pr-2 tabular-nums text-xs font-medium text-gray-500 pt-1"
+            className="text-right pr-2 tabular-nums text-xs font-medium text-gray-500 pt-1 -mr-6 md:-mr-0 -rotate-90 whitespace-nowrap md:rotate-0"
           >
             {hourToCalendarDisplay(hour)}
           </div>
