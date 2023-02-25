@@ -12,11 +12,10 @@ export const RequisiteDisplay = ({
   prereqs,
 }: RequisiteDisplayProps) => {
   return (
-    <div className="grid gap-base grid-cols-[2fr_5fr] lg:grid-cols-[1fr_5fr]">
+    <div className="">
       {coreqs.length > 0 && (
         <>
-          {/* Center vertically */}
-          <div className="flex items-center text-xs">Co-reqs</div>
+          <div className="text-sm mb-1">Co-requisites</div>
           <div className="flex">
             {coreqs.map((reqItem, index) => (
               <Button key={index} intent={"secondary"} size={"xs"}>
@@ -30,7 +29,7 @@ export const RequisiteDisplay = ({
 
       {prereqs.length > 0 && (
         <>
-          <div className="flex md:items-center text-xs">Pre-reqs</div>
+          <div className="text-sm mb-1">Pre-requisites</div>
           <div className="-mt-xs flex flex-wrap items-baseline">
             {prereqs.map((reqItem, index) => {
               const marginClassNames = "mr-1 mt-xs";
@@ -55,8 +54,8 @@ export const RequisiteDisplay = ({
                     {
                       // Non course pre-reqs
                       italic: !["And", "Or", "(", ")"].includes(reqItem),
-                      // Show and/or in lower case
-                      lowercase: ["And", "Or"].includes(reqItem),
+                      // Show and/or in lower case and muted
+                      "lowercase text-gray-600": ["And", "Or"].includes(reqItem),
                       // Make brackets bolder
                       "scale-y-[1.4] md:scale-x-125": ["(", ")"].includes(
                         reqItem
