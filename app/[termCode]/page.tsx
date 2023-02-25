@@ -1,7 +1,5 @@
-import { BackButton } from "@/components/back-button";
-import { getValuesFromTerm } from "@/utils/term/string";
-import terms from "../../.data/terms.json";
-import { PlannerShell } from "./components/planner-shell";
+export const revalidate = 0; // no cache
+export const dynamic = "force-static";
 
 interface TermPageProps {
   params: { termCode: string };

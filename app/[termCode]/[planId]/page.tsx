@@ -1,6 +1,7 @@
 import { getSubjectsForTerm } from "@/api/courses";
-import { getTermCourses } from "@/api/term-courses";
 import { CourseSearch } from "./course-search";
+
+export const revalidate = 0; // no cache
 
 interface PlanPageProps {
   params: { termCode: string; planId: string };

@@ -1,4 +1,4 @@
-import { CalendarEvent } from "@/types";
+import { CalendarEvent } from "./types";
 
 // Return a list of a list of events that have conflicts
 export const getConflictList = (events: CalendarEvent[]) => {
