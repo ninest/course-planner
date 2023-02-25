@@ -31,7 +31,7 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
             {children}
           </div>
         </div>
-        <div className="p-5 md:w-[calc(100vw-450px)]">
+        <div className="p-5 pb-[75vh] md:w-[calc(100vw-450px)] md:h-[calc(100vh-5rem)] overflow-y-scroll">
           <WeekView events={[...previewEvents]} />
         </div>
       </div>
