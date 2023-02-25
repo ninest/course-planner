@@ -82,9 +82,10 @@ export const CourseSearch = ({
               </div>
             )}
             <div className="space-y-1">
-              {courses?.map((course) => {
+              {courses?.map((course, index) => {
                 return (
                   <CourseItem
+                    key={index}
                     termCode={termCode}
                     planId={planId}
                     course={course}

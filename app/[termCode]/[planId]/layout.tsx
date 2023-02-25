@@ -22,7 +22,7 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
   return (
     currentPlan && (
       <div className="flex flex-col-reverse md:flex-row">
-        <div className="border-t md:border-t-0 md:border-r md:w-[350px]">
+        <div className="border-t md:border-t-0 md:border-r md:w-[450px]">
           <div className="relative md:h-[calc(100vh-5rem)] overflow-y-scroll">
             {children}
           </div>
