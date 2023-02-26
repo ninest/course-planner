@@ -44,12 +44,12 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
             "md:h-[calc(100vh-4rem)] overflow-y-scroll"
           )}
         >
-          <aside className="h-full rounded-t-lg bg-white border-t md:border-t-0 md:border-r">
+          <aside className="overflow-y-scroll rounded-t-lg bg-white border-t md:rounded-t-none md:border-t-0 md:border-r">
             {/* Mobile: rounded top and "pill" to show it is a bottom sheet */}
             <div className="md:hidden flex justify-center items-center mt-3">
               <div className="h-1 w-7 bg-gray-300 rounded-full" />
             </div>
-            <div className="pt-3 py-5">{children}</div>
+            <div className="pt-3 pb-[70vh]">{children}</div>
           </aside>
         </div>
         <div
