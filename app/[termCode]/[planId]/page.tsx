@@ -15,12 +15,12 @@ export default async function PlanPage({ params }: PlanPageProps) {
   const subjectsWithCounts = await getSubjectsForTerm(termCode);
 
   return (
-    <div className="p-5">
+    <aside className="p-5">
       <CourseSearch
         termCode={termCode}
         subjectsWithCounts={subjectsWithCounts}
         planId={planId}
       />
-    </div>
+    </aside>
   );
 }

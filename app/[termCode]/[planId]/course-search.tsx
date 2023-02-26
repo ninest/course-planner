@@ -38,7 +38,6 @@ export const CourseSearch = ({
     <>
       <fieldset className="sticky top-5">
         <input
-          autoFocus
           ref={inputRef}
           className="form-field w-full"
           type="text"
