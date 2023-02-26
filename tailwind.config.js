@@ -9,7 +9,7 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        "week-view-mobile": "2rem repeat(5, minmax(0, 1fr))",
+        "week-view-mobile": "0.75rem repeat(5, minmax(0, 1fr))",
         "week-view": "4.5rem repeat(5, minmax(0, 1fr))",
       },
     },

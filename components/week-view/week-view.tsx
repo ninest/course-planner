@@ -55,9 +55,11 @@ export const WeekView = ({ events }: WeekViewProps) => {
           <div
             key={index}
             style={{ gridColumn: 1, gridRow: `${index * 12 + 1} / span 12` }}
-            className="text-right pr-2 tabular-nums text-xs font-medium text-gray-500 pt-1 -mr-6 md:-mr-0 -rotate-90 whitespace-nowrap md:rotate-0"
+            className="pr-2 tabular-nums text-xs font-medium text-gray-500 pt-1"
           >
-            {hourToCalendarDisplay(hour)}
+            <div className="whitespace-nowrap -rotate-90 mt-11 pb-1 origin-right md:rotate-0 md:mt-0 md:pb-0">
+              {hourToCalendarDisplay(hour)}
+            </div>
           </div>
         ))}
 
@@ -96,7 +98,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
                   "w-full h-full rounded-lg p-2 text-xs border-2",
                   {
                     "border-transparent": !eventIsConflicting,
-                    "border-red-300": eventIsConflicting,
+                    "border-red-300 opacity-70": eventIsConflicting,
                   },
                   "overflow-scroll"
                 )}
