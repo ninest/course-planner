@@ -67,7 +67,7 @@ export const SectionItem = ({ course, section }: SectionItemProps) => {
       </div>
 
       <div className="mt-2 flex items-center justify-between">
-        <div className="flex space-x-base">
+        <div className="flex space-x-3">
           <div className="text-sm flex items-center space-x-1 font-mono font-bold">
             <span
               className={clsx({
