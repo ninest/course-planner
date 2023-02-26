@@ -5,7 +5,6 @@ import { Button } from "@/components/button";
 import { usePlans } from "@/hooks/use-plans";
 import { MoreVertical, Plus, Share } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 interface PlannerHeaderProps {
   termCode: string;
@@ -19,10 +18,10 @@ export const PlannerHeader = ({
   year,
 }: PlannerHeaderProps) => {
   return (
-    <header className="border-b lg:h-18 flex items-center">
+    <header className="sticky top-0 border-b h-24 md:h-16 flex items-center">
       <div className="w-full">
         {/* MOBILE */}
-        <div className="lg:hidden">
+        <div className="md:hidden">
           <div className="px-5 pt-5 flex justify-between items-center">
             <BackButton />
             <div className="flex items-center space-x-3">
@@ -46,7 +45,7 @@ export const PlannerHeader = ({
         </div>
 
         {/* DESKTOP */}
-        <div className="hidden p-5 lg:flex items-center justify-between">
+        <div className="hidden p-5 md:flex items-center justify-between">
           <div className="flex items-center justify-center space-x-7">
             <BackButton />
             <h1 className="font-bold text-lg">

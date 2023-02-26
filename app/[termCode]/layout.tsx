@@ -1,7 +1,7 @@
 import { getValuesFromTerm } from "@/utils/term/string";
 import { ReactNode } from "react";
 import terms from "../../.data/terms.json";
-import { PlannerHeader } from "./components/planner-header";
+import { PlannerHeader } from "./planner-header";
 
 export const revalidate = 0; // no cache
 export const dynamic = "force-static";

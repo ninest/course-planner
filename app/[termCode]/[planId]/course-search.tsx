@@ -35,7 +35,7 @@ export const CourseSearch = ({
   const [inputRef, setInputFocus] = useFocus<HTMLInputElement>();
 
   return (
-    <>
+    <div className="px-5">
       <fieldset className="sticky top-5">
         <input
           ref={inputRef}
@@ -95,7 +95,7 @@ export const CourseSearch = ({
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

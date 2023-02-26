@@ -18,13 +18,13 @@ export default async function CourseQueryPage({ params }: CourseQueryProps) {
 
   return (
     <>
-      <div className="p-5">
+      <div className="px-5">
         <Button
           intent={"ghost"}
           href={`/${params.termCode}/${params.planId}`}
           className="-ml-2 flex items-center space-x-2"
         >
-          <ChevronLeft className="" />{" "}
+          <ChevronLeft className="" />
         </Button>
         <h3 className="my-1 font-bold">
           {course.subject} {course.number}: {course.title}
@@ -32,10 +32,8 @@ export default async function CourseQueryPage({ params }: CourseQueryProps) {
 
         <CourseInfo course={course} />
       </div>
-
-      <hr />
-
-      <div className="p-5">
+      <hr className="my-5" />
+      <div className="px-5">
         {/* @ts-expect-error Server Component */}
         <SectionsList termCode={params.termCode} course={course} />
       </div>
