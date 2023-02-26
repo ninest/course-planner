@@ -15,6 +15,8 @@ export default function TermLayout({ params, children }: TermLayoutProps) {
   const term = terms.find((term) => term.code === params.termCode);
   if (!term) throw Error("Invalid term");
 
+  console.log(params);
+
   const { year, description } = getValuesFromTerm(term);
   return (
     <main>

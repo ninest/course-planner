@@ -3,8 +3,11 @@
 import { BackButton } from "@/components/back-button";
 import { Button } from "@/components/button";
 import { usePlans } from "@/hooks/use-plans";
+import clsx from "clsx";
 import { MoreVertical, Plus, Share } from "lucide-react";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface PlannerHeaderProps {
   termCode: string;
@@ -77,6 +80,8 @@ const PlannerTabs = ({
   const { plansForTerm } = usePlans();
   const plans = plansForTerm(termCode);
 
+  const selectedPlanId = usePathname()?.split("/")[2];
+
   return (
     <>
       <div className="overflow-scroll flex space-x-1">
@@ -85,7 +90,13 @@ const PlannerTabs = ({
             <Link
               key={plan.id}
               href={`/${termCode}/${plan.id}`}
-              className="h-7 inline-flex items-center py-1 px-3 text-sm bg-gray-100 rounded-md"
+              className={clsx(
+                "h-7 inline-flex items-center py-1 px-3 text-sm  rounded-md",
+                {
+                  "bg-gray-100": selectedPlanId !== plan.id,
+                  "bg-indigo-100": selectedPlanId === plan.id,
+                }
+              )}
             >
               {plan.name}
             </Link>
