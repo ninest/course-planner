@@ -35,15 +35,22 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
         <div
           className={clsx(
             "md:w-[350px] lg:w-[450px] z-10",
-            "overflow-y-scroll"
+            "md:overflow-y-scroll", // Disabled on mobile because it affects sticky
+            // Mobile: max height to prevent bottom sheet from going too high
+            "h-[60vh] overflow-y-hidden md:h-auto"
           )}
         >
-          <aside className="rounded-t-lg bg-white border-t md:rounded-t-none md:border-t-0 md:border-r">
-            {/* Mobile: rounded top and "pill" to show it is a bottom sheet */}
-            <div className="md:hidden flex justify-center items-center mt-3">
-              <div className="h-1 w-7 bg-gray-300 rounded-full" />
+          <aside className="bg-white md:border-t-0 md:border-r">
+            {/* Mobile top border */}
+            <div className="h-5 md:hidden rounded-t-lg md:rounded-t-0 border-t md:border-t-0">
+              {/* Mobile: rounded top and "pill" to show it is a bottom sheet */}
+              <div className="h-5 md:hidden flex justify-center items-center">
+                <div className="h-1 w-7 bg-gray-300 rounded-full" />
+              </div>
             </div>
-            <div className="pt-3 pb-[70vh]">{children}</div>
+            <div className="overflow-y-scroll md:overflow-y-visible h-[calc(60vh-1.25rem)] md:h-auto pb-[30vh] md:pt-3">
+              {children}
+            </div>
           </aside>
         </div>
         <div
@@ -52,7 +59,7 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
             "md:w-[calc(100vw-350px)] lg:w-[calc(100vw-450px)]",
             "overflow-y-scroll",
             // Mobile: top should be planner header's mobile height
-            "sticky top-[6rem] h-[70vh] md:top-auto md:h-auto",
+            "sticky top-[6rem] h-[50vh] md:top-auto md:h-auto",
             // Extra height below
             "pb-[70vh]"
           )}

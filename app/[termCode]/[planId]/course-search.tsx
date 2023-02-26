@@ -36,7 +36,7 @@ export const CourseSearch = ({
 
   return (
     <div className="px-5">
-      <fieldset className="sticky top-5">
+      <fieldset className="sticky top-3">
         <input
           ref={inputRef}
           className="form-field w-full"
