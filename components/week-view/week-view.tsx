@@ -32,10 +32,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
         ))}
       </div>
       {/* Times and events */}
-      <div
-        className="grid grid-cols-week-view-mobile md:grid-cols-week-view"
-        style={{ gridAutoRows: "0.45rem" }}
-      >
+      <div className="grid grid-cols-week-view-mobile md:grid-cols-week-view auto-rows-[0.35rem] md:auto-rows-[0.4rem]">
         {/* Alternate table row colors */}
         {integerRange(hours.length)
           .filter((i) => i % 2 == 0)
@@ -55,9 +52,9 @@ export const WeekView = ({ events }: WeekViewProps) => {
           <div
             key={index}
             style={{ gridColumn: 1, gridRow: `${index * 12 + 1} / span 12` }}
-            className="pr-2 tabular-nums text-xs font-medium text-gray-500 pt-1"
+            className="pr-2 tabular-nums text-[0.6rem] md:text-xs font-medium text-gray-500 pt-1"
           >
-            <div className="whitespace-nowrap -rotate-90 mt-11 pb-1 origin-right md:rotate-0 md:mt-0 md:pb-0">
+            <div className="whitespace-nowrap -rotate-90 mt-9 pb-1 origin-right md:rotate-0 md:mt-0 md:pb-0">
               {hourToCalendarDisplay(hour)}
             </div>
           </div>
@@ -98,7 +95,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
               <div
                 className={clsx(
                   eventColorClassName,
-                  "w-full h-full rounded-lg p-2 text-xs border-2",
+                  "w-full h-full rounded-lg p-1 md:p-2 border-2",
                   {
                     "border-transparent": !eventIsConflicting,
                     "border-red-300 opacity-60": eventIsConflicting,
@@ -107,8 +104,8 @@ export const WeekView = ({ events }: WeekViewProps) => {
                   "overflow-scroll"
                 )}
               >
-                <div className="font-semibold">{event.title}</div>
-                <div>{event.subtitle}</div>
+                <div className="text-xs font-semibold">{event.title}</div>
+                <div className="text-[0.6rem]  md:text-xs">{event.subtitle}</div>
               </div>
             </div>
           );

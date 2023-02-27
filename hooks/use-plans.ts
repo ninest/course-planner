@@ -59,8 +59,6 @@ export const usePlans = () => {
       const startTime = stringTimeToTime(section.startTime);
       const endTime = stringTimeToTime(section.endTime);
 
-      console.log(randomColorKey);
-
       currentPlan.events.push({
         id: section.crn,
         title: courseShortTitle(course),
@@ -68,6 +66,7 @@ export const usePlans = () => {
         day: dayNum,
         startTime,
         endTime,
+        // @ts-ignore
         color: randomColorKey,
       });
     });

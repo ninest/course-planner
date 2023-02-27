@@ -34,7 +34,6 @@ export default async function CourseQueryPage({ params }: CourseQueryProps) {
       </div>
       <hr className="my-5" />
       <div className="px-5">
-        {/* @ts-expect-error Server Component */}
         <SectionsList termCode={params.termCode} course={course} />
       </div>
     </>

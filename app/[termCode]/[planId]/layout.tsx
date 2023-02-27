@@ -48,7 +48,7 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
                 <div className="h-1 w-7 bg-gray-300 rounded-full" />
               </div>
             </div>
-            <div className="overflow-y-scroll md:overflow-y-visible h-[calc(60vh-1.25rem)] md:h-auto pb-[30vh] md:pt-3">
+            <div className="overflow-y-scroll md:overflow-y-visible h-[calc(60vh-1.25rem)] md:h-full pb-[30vh] md:pt-3">
               {children}
             </div>
           </aside>

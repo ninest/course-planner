@@ -1,5 +1,7 @@
+"use client";
+
 import { Course } from "@/.data/types";
-import { getSectionsForCourse } from "@/api/sections";
+import { useSections } from "@/hooks/fetching/use-sections";
 import { SectionItem } from "./section-item";
 
 interface SectionsListProps {
@@ -7,8 +9,8 @@ interface SectionsListProps {
   course: Course;
 }
 
-export const SectionsList = async ({ termCode, course }: SectionsListProps) => {
-  const sections = await getSectionsForCourse(
+export const SectionsList = ({ termCode, course }: SectionsListProps) => {
+  const { isLoading, sections } = useSections(
     termCode,
     course.subject,
     course.number
@@ -18,7 +20,12 @@ export const SectionsList = async ({ termCode, course }: SectionsListProps) => {
     <div>
       <h3 className="font-bold mb-1">Sections</h3>
       <div className="space-y-2 -mx-1">
-        {sections.map((section, index) => {
+        {isLoading && (
+          <div className="text-center font-semibold text-gray-600">
+            Loading sections ...
+          </div>
+        )}
+        {sections?.map((section, index) => {
           if (!section)
             return (
               <div key={index}>Failed to fetch section. Try reloading</div>
