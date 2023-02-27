@@ -86,3 +86,54 @@ export const WeekViewWithConflicts = () => {
     </>
   );
 };
+
+export const WeekViewEventColors = () => {
+  return (
+    <>
+      <WeekView
+        events={[
+          {
+            id: "0",
+            day: 1,
+            title: "Monday",
+            startTime: { hour: 9, minute: 0 },
+            endTime: { hour: 10, minute: 15 },
+            color: "LIGHT_YELLOW",
+          },
+          {
+            id: "0",
+            day: 1,
+            title: "Orange",
+            startTime: { hour: 14, minute: 0 },
+            endTime: { hour: 15, minute: 0 },
+            color: "LIGHT_ORANGE",
+          },
+          {
+            id: "0",
+            day: 3,
+            title: "Wednesday Morning",
+            startTime: { hour: 9, minute: 0 },
+            endTime: { hour: 10, minute: 0 },
+            color: "GRAY",
+          },
+          {
+            id: "0",
+            day: 3,
+            title: "Wednesday Afternoon",
+            startTime: { hour: 11, minute: 30 },
+            endTime: { hour: 12, minute: 30 },
+            color: "LIGHT_BLUE",
+          },
+          {
+            id: "0",
+            day: 3,
+            title: "Surprise class",
+            startTime: { hour: 13, minute: 0 },
+            endTime: { hour: 13, minute: 55 },
+            color: "LIGHT_GREEN",
+          },
+        ]}
+      />
+    </>
+  );
+};

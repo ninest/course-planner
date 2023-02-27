@@ -1,7 +1,7 @@
 import { Course, Section } from "@/.data/types";
 import { courseShortTitle } from "@/utils/course/course";
 import { dayToNumber } from "@/utils/date/days";
-import { eventColorKeys } from "@/utils/event/colors";
+import { availableColorKeys, eventColorKeys } from "@/utils/event/colors";
 import { CoursePlan } from "@/utils/plan/types";
 import { randomFromList } from "@/utils/random";
 import { stringTimeToTime } from "@/utils/time/time";
@@ -51,8 +51,7 @@ export const usePlans = () => {
     const currentPlan = plans[currentPlanIndex];
     const newPlans = [...plans];
 
-    // @ts-ignore "as const" causing issues for list
-    const randomColorKey = randomFromList(eventColorKeys);
+    const randomColorKey = randomFromList(availableColorKeys);
 
     section.days.forEach((day) => {
       const dayNum = dayToNumber(day);
@@ -66,7 +65,6 @@ export const usePlans = () => {
         day: dayNum,
         startTime,
         endTime,
-        // @ts-ignore
         color: randomColorKey,
       });
     });
