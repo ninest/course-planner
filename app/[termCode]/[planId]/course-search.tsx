@@ -4,8 +4,10 @@ import { Course, SubjectWithCourseCount } from "@/.data/types";
 import { useCoursesForTerm } from "@/hooks/fetching/use-courses-for-term";
 import { useFocus } from "@/hooks/util/use-focus";
 import { courseToSlug } from "@/utils/course/course";
+import { useAtom } from "jotai";
+import { atomWithStorage, createJSONStorage } from "jotai/utils";
 import Link from "next/link";
-import { HTMLAttributes, useState } from "react";
+import { ChangeEvent, HTMLAttributes, useState } from "react";
 
 interface CourseSearchProps {
   termCode: string;
@@ -13,12 +15,14 @@ interface CourseSearchProps {
   planId: string;
 }
 
+const queryAtom = atomWithStorage<string>("query", "");
+
 export const CourseSearch = ({
   termCode,
   subjectsWithCounts,
   planId,
 }: CourseSearchProps) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useAtom(queryAtom);
   const filteredSubjects = subjectsWithCounts.filter((subject) =>
     subject.code.includes(query)
   );
@@ -32,7 +36,15 @@ export const CourseSearch = ({
     maybeSubjectCode
   );
 
-  const [inputRef, setInputFocus] = useFocus<HTMLInputElement>();
+  const [inputRef, setInputFocus, inputIsFocused] =
+    useFocus<HTMLInputElement>();
+
+  const onSubjectClick = (subjectCode: string) => {
+    // Set query to subject code
+    setQuery(`${subjectCode} `);
+    // Focus on input only if already focused previously
+    if (inputIsFocused) setInputFocus();
+  };
 
   return (
     <div className="px-5">
@@ -56,10 +68,7 @@ export const CourseSearch = ({
                 return (
                   <SubjectItem
                     key={subject.code}
-                    onClick={() => {
-                      setQuery(`${subject.code} `);
-                      setInputFocus();
-                    }}
+                    onClick={() => onSubjectClick(subject.code)}
                     subjectWithCount={subject}
                   />
                 );
