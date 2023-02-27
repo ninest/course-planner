@@ -15,7 +15,11 @@ interface CourseSearchProps {
   planId: string;
 }
 
-const queryAtom = atomWithStorage<string>("query", "");
+const queryAtom = atomWithStorage<string>(
+  "query",
+  "",
+  createJSONStorage(() => sessionStorage)
+);
 
 export const CourseSearch = ({
   termCode,
