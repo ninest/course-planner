@@ -9,4 +9,5 @@ export interface CalendarEvent {
   startTime: Time;
   endTime: Time;
   color?: EventColor;
+  possible?: boolean; // event not confirmed
 }

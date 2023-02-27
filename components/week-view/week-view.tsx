@@ -82,6 +82,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
           const eventIsConflicting = conflictingEvents.length > 0;
 
           const eventColor = event.color ?? eventColorsMap.GRAY;
+          console.log(event.possible);
 
           return (
             <div
@@ -98,7 +99,8 @@ export const WeekView = ({ events }: WeekViewProps) => {
                   "w-full h-full rounded-lg p-2 text-xs border-2",
                   {
                     "border-transparent": !eventIsConflicting,
-                    "border-red-300 opacity-70": eventIsConflicting,
+                    "border-red-300 opacity-60": eventIsConflicting,
+                    "opacity-60 animate-jiggle": event.possible,
                   },
                   "overflow-scroll"
                 )}

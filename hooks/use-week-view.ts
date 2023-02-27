@@ -7,12 +7,16 @@ const previewEventsAtom = atom<CalendarEvent[]>([]);
 
 export const useWeekView = () => {
   const [previewEvents, _setPreviewEvents] = useAtom(previewEventsAtom);
-  const router = useRouter()
+  const router = useRouter();
 
   // Set all preview events gray
   const setPreviewEvents = (events: CalendarEvent[]) => {
     _setPreviewEvents(
-      events.map((event) => ({ ...event, color: eventColorsMap.GRAY }))
+      events.map((event) => ({
+        ...event,
+        color: eventColorsMap.GRAY,
+        possible: true,
+      }))
     );
   };
 

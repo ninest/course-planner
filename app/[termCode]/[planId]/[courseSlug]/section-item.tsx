@@ -25,7 +25,7 @@ export const SectionItem = ({ course, section }: SectionItemProps) => {
   let location = section.online
     ? "Online"
     : `${section.building.description} ${section.building.room}`;
-  if (showCampus) location = `${location}, ${section.campus.description}</>`;
+  if (showCampus) location = `${location}, ${section.campus.description}`;
   const showWaitlist =
     section?.seats.waitlist.available !== 0 &&
     section?.seats.waitlist.capacity !== 0;
