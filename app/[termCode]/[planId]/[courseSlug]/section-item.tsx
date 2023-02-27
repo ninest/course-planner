@@ -97,7 +97,7 @@ export const SectionItem = ({ course, section }: SectionItemProps) => {
 
       <div className="mt-2 flex items-center justify-between">
         <div className="flex space-x-3">
-          <div className="text-sm flex items-center space-x-1 font-mono font-bold">
+          <div className="text-xs flex items-center space-x-1 font-mono font-bold">
             <span
               className={clsx({
                 "text-yellow-600":

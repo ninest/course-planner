@@ -37,10 +37,10 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
             "md:w-[350px] lg:w-[450px] z-10",
             "md:overflow-y-scroll", // Disabled on mobile because it affects sticky
             // Mobile: max height to prevent bottom sheet from going too high
-            "h-[60vh] overflow-y-hidden md:h-auto"
+            "h-[75vh] overflow-y-hidden md:h-full md:border-r"
           )}
         >
-          <aside className="bg-white md:border-t-0 md:border-r">
+          <aside className="bg-white md:border-t-0 md:h-full">
             {/* Mobile top border */}
             <div className="h-5 md:hidden rounded-t-lg md:rounded-t-0 border-t md:border-t-0">
               {/* Mobile: rounded top and "pill" to show it is a bottom sheet */}
@@ -48,7 +48,7 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
                 <div className="h-1 w-7 bg-gray-300 rounded-full" />
               </div>
             </div>
-            <div className="overflow-y-scroll md:overflow-y-visible h-[calc(60vh-1.25rem)] md:h-full pb-[30vh] md:pt-3">
+            <div className="overflow-y-scroll md:overflow-y-visible h-[calc(75vh-1.25rem)] pb-[30vh] md:pt-3">
               {children}
             </div>
           </aside>
@@ -59,9 +59,9 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
             "md:w-[calc(100vw-350px)] lg:w-[calc(100vw-450px)]",
             "overflow-y-scroll",
             // Mobile: top should be planner header's mobile height
-            "sticky top-[6rem] h-[50vh] md:top-auto md:h-auto",
+            "sticky top-[6rem] h-[40vh] md:top-auto md:h-auto",
             // Extra height below
-            "pb-[70vh]"
+            "pb-[50vh]"
           )}
         >
           <WeekView events={[...previewEvents, ...currentPlan.events]} />
