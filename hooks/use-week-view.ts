@@ -14,7 +14,7 @@ export const useWeekView = () => {
     _setPreviewEvents(
       events.map((event) => ({
         ...event,
-        color: eventColorsMap.GRAY,
+        color: "GRAY",
         possible: true,
       }))
     );

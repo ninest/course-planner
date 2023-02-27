@@ -64,7 +64,7 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
             "pb-[70vh]"
           )}
         >
-          <WeekView events={[...previewEvents]} />
+          <WeekView events={[...previewEvents, ...currentPlan.events]} />
         </div>
       </div>
     )

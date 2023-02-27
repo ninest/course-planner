@@ -3,6 +3,7 @@
 import { BackButton } from "@/components/back-button";
 import { Button } from "@/components/button";
 import { usePlans } from "@/hooks/use-plans";
+import { useCurrentPlanId } from "@/utils/route";
 import clsx from "clsx";
 import { MoreVertical, Plus, Share } from "lucide-react";
 import Link from "next/link";
@@ -80,7 +81,7 @@ const PlannerTabs = ({
   const { plansForTerm } = usePlans();
   const plans = plansForTerm(termCode);
 
-  const selectedPlanId = usePathname()?.split("/")[2];
+  const selectedPlanId = useCurrentPlanId()
 
   return (
     <>

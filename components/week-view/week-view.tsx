@@ -81,8 +81,10 @@ export const WeekView = ({ events }: WeekViewProps) => {
           const conflictingEvents = conflicts.get(event) ?? [];
           const eventIsConflicting = conflictingEvents.length > 0;
 
-          const eventColor = event.color ?? eventColorsMap.GRAY;
-          console.log(event.possible);
+          const eventColor = event.color ?? "GRAY";
+          console.log(eventColor);
+
+          const eventColorClassName = eventColorsMap[eventColor].className;
 
           return (
             <div
@@ -95,7 +97,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
             >
               <div
                 className={clsx(
-                  eventColor.className,
+                  eventColorClassName,
                   "w-full h-full rounded-lg p-2 text-xs border-2",
                   {
                     "border-transparent": !eventIsConflicting,

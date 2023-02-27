@@ -1,3 +1,5 @@
+import { Course } from "@/.data/types";
+
 export const courseToSlug = (courseSubjectNumber: string) => {
   return courseSubjectNumber.toUpperCase().replace(" ", "-");
 };
@@ -12,3 +14,6 @@ export const courseDescriptionToList = (description: string) => {
   // https://stackoverflow.com/a/18914855/8677167
   return description.replace(/([.?!])\s*(?=[A-Z])/g, "$1|").split("|");
 };
+
+export const courseShortTitle = (course: Course) =>
+  `${course.subject} ${course.number}`;

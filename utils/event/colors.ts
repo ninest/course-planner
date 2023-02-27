@@ -3,8 +3,8 @@ export interface EventColor {
   className: string;
 }
 
-const eventColorKeys = ["LIGHT_BLUE", "LIGHT_GREEN", "GRAY"];
-type EventColorKey = typeof eventColorKeys[number];
+export const eventColorKeys = ["LIGHT_BLUE", "LIGHT_GREEN", "GRAY"] as const;
+export type EventColorKey = typeof eventColorKeys[number];
 
 export const eventColorsMap: Record<EventColorKey, EventColor> = {
   LIGHT_BLUE: {

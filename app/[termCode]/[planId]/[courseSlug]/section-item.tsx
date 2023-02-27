@@ -1,11 +1,15 @@
 "use client";
 
 import { Course, Section } from "@/.data/types";
+import { Button } from "@/components/button";
+import { usePlans } from "@/hooks/use-plans";
 import { useWeekView } from "@/hooks/use-week-view";
 import { dayToNumber } from "@/utils/date/days";
 import { CalendarEvent } from "@/utils/event/types";
+import { useCurrentPlanId } from "@/utils/route";
 import { stringTimeToDisplayTime, stringTimeToTime } from "@/utils/time/time";
 import clsx from "clsx";
+import { usePathname, useSearchParams } from "next/navigation";
 import { DayTable } from "./DayTable";
 
 interface SectionItemProps {
@@ -31,6 +35,7 @@ export const SectionItem = ({ course, section }: SectionItemProps) => {
     section?.seats.waitlist.capacity !== 0;
 
   const calendarEvents: CalendarEvent[] = section.days.map((day) => ({
+    id: section.crn,
     day: dayToNumber(day),
     startTime: stringTimeToTime(section.startTime),
     endTime: stringTimeToTime(section.endTime),
@@ -38,13 +43,37 @@ export const SectionItem = ({ course, section }: SectionItemProps) => {
     subtitle: course.title,
   }));
 
+  const setPreview = () => {
+    // If this section is already in the plan, no need to preview it
+    if (sectionAlreadyInCurrentPlan) return;
+    setPreviewEvents(calendarEvents);
+  };
+  const clearPreview = () => {
+    setPreviewEvents([]);
+  };
+
+  const planId = useCurrentPlanId();
+
   const { setPreviewEvents } = useWeekView();
+  const { addCourseToPlan, removeCourseFromPlan, sectionInPlan } = usePlans();
+
+  const sectionAlreadyInCurrentPlan = sectionInPlan(planId!, section.crn);
+
+  const onAddClick = () => {
+    addCourseToPlan(planId!, course, section);
+    // Clear preview after adding course to prevent "ghost" conflicts between preview event and newly added event
+    clearPreview();
+  };
+
+  const onRemoveClick = () => {
+    removeCourseFromPlan(planId!, section.crn);
+  };
 
   return (
     <div
       className="bg-gray-50 p-3 rounded-md hover:bg-indigo-50"
-      onMouseEnter={() => setPreviewEvents(calendarEvents)}
-      onMouseLeave={() => setPreviewEvents([])}
+      onMouseEnter={setPreview}
+      onMouseLeave={clearPreview}
     >
       <div className="flex items-ce key={index}nter justify-between">
         <div className="text-sm">
@@ -91,6 +120,17 @@ export const SectionItem = ({ course, section }: SectionItemProps) => {
             </div>
           )}
         </div>
+      </div>
+      <div className="mt-2">
+        {sectionAlreadyInCurrentPlan ? (
+          <Button onClick={onRemoveClick} size={"sm"}>
+            Remove
+          </Button>
+        ) : (
+          <Button onClick={onAddClick} size={"sm"}>
+            Add
+          </Button>
+        )}
       </div>
     </div>
   );

@@ -1,56 +1,65 @@
-import { CalendarEvent } from "@/types";
+import { CalendarEvent } from "./types";
 import { describe, expect, test } from "vitest";
 import { getConflictList, isConflict } from "./conflict";
 
 const eventA: CalendarEvent = {
+  id: "0",
   day: 0,
   title: "Sunday A",
   startTime: { hour: 9, minute: 0 },
   endTime: { hour: 10, minute: 0 },
 };
 const eventB: CalendarEvent = {
+  id: "0",
   day: 0,
   title: "Sunday B",
   startTime: { hour: 10, minute: 0 },
   endTime: { hour: 11, minute: 0 },
 };
 const eventC: CalendarEvent = {
+  id: "0",
   day: 1,
   title: "Sunday C",
   startTime: { hour: 9, minute: 35 },
   endTime: { hour: 10, minute: 35 },
 };
 const eventD: CalendarEvent = {
+  id: "0",
   day: 0,
   title: "Sunday D",
   startTime: { hour: 9, minute: 30 },
   endTime: { hour: 10, minute: 30 },
 };
 const eventE: CalendarEvent = {
+  id: "0",
   day: 0,
   title: "Sunday E",
   startTime: { hour: 8, minute: 45 },
   endTime: { hour: 10, minute: 45 },
 };
 const eventF: CalendarEvent = {
+  id: "0",
   day: 0,
   title: "Sunday F",
   startTime: { hour: 9, minute: 2 },
   endTime: { hour: 9, minute: 58 },
 };
 const eventG: CalendarEvent = {
+  id: "0",
   day: 0,
   title: "Sunday G",
   startTime: { hour: 8, minute: 58 },
   endTime: { hour: 10, minute: 2 },
 };
 const eventH: CalendarEvent = {
+  id: "0",
   day: 0,
   title: "Sunday H",
   startTime: { hour: 11, minute: 58 },
   endTime: { hour: 12, minute: 2 },
 };
 const eventI: CalendarEvent = {
+  id: "0",
   day: 1,
   title: "Saturday I",
   startTime: { hour: 9, minute: 0 },
