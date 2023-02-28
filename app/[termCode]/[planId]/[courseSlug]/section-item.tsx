@@ -9,15 +9,19 @@ import { CalendarEvent } from "@/utils/event/types";
 import { useCurrentPlanId } from "@/utils/route";
 import { stringTimeToDisplayTime, stringTimeToTime } from "@/utils/time/time";
 import clsx from "clsx";
-import { usePathname, useSearchParams } from "next/navigation";
 import { DayTable } from "./DayTable";
 
 interface SectionItemProps {
+  highlighted?: boolean;
   course: Course;
   section: Section;
 }
 
-export const SectionItem = ({ course, section }: SectionItemProps) => {
+export const SectionItem = ({
+  highlighted = false,
+  course,
+  section,
+}: SectionItemProps) => {
   const professorsAvailable = section?.faculty && section.faculty.length > 0;
   const professors = section.faculty
     .map((professor) => professor.name)
@@ -71,7 +75,10 @@ export const SectionItem = ({ course, section }: SectionItemProps) => {
 
   return (
     <div
-      className="bg-gray-50 p-3 rounded-md hover:bg-indigo-50"
+      id={section.crn}
+      className={clsx("bg-gray-50 p-3 rounded-md hover:bg-indigo-50", {
+        "border-2 border-indigo-600": highlighted,
+      })}
       onMouseEnter={setPreview}
       onMouseLeave={clearPreview}
     >

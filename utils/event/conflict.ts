@@ -12,7 +12,6 @@ export const getConflictList = (events: CalendarEvent[]) => {
       }
     }
   }
-  // console.log(conflicts);
 
   return conflicts;
 };

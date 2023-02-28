@@ -3,8 +3,10 @@ import { eventColorsMap } from "@/utils/event/colors";
 import { getConflictList } from "@/utils/event/conflict";
 import { CalendarEvent } from "@/utils/event/types";
 import { integerRange, integersBetween } from "@/utils/list";
+import { useCurrentPlanId, useCurrentTermCode } from "@/utils/route";
 import { hourToCalendarDisplay } from "@/utils/time/display";
 import clsx from "clsx";
+import Link from "next/link";
 
 interface WeekViewProps {
   events: CalendarEvent[];
@@ -16,6 +18,9 @@ export const WeekView = ({ events }: WeekViewProps) => {
   const hours = integersBetween(minHour, maxHour);
 
   const conflicts = getConflictList(events);
+
+  const termCode = useCurrentTermCode();
+  const planId = useCurrentPlanId();
 
   return (
     <>
@@ -79,9 +84,15 @@ export const WeekView = ({ events }: WeekViewProps) => {
           const eventIsConflicting = conflictingEvents.length > 0;
 
           const eventColor = event.color ?? "GRAY";
-          console.log(eventColor);
 
           const eventColorClassName = eventColorsMap[eventColor].className;
+
+          // TODO: find a better way to do this. Perhaps pass in course with event
+          // event.title will always be `SUBJECTCODE NUMBER`, so we can do this
+          const hrefToCourse = `/${termCode}/${planId}/${event.title.replaceAll(
+            " ",
+            "-"
+          )}#${event.id}`;
 
           return (
             <div
@@ -92,10 +103,11 @@ export const WeekView = ({ events }: WeekViewProps) => {
               }}
               className="my-[0.1rem] mx-[0.05rem]"
             >
-              <div
+              <Link
+                href={hrefToCourse}
                 className={clsx(
                   eventColorClassName,
-                  "w-full h-full rounded-lg p-1 md:p-2 border-2",
+                  "block w-full h-full rounded-lg p-1 md:p-2 border-2",
                   {
                     "border-transparent": !eventIsConflicting,
                     "border-red-300 opacity-60": eventIsConflicting,
@@ -105,8 +117,10 @@ export const WeekView = ({ events }: WeekViewProps) => {
                 )}
               >
                 <div className="text-xs font-semibold">{event.title}</div>
-                <div className="text-[0.6rem]  md:text-xs">{event.subtitle}</div>
-              </div>
+                <div className="text-[0.6rem]  md:text-xs">
+                  {event.subtitle}
+                </div>
+              </Link>
             </div>
           );
         })}
