@@ -9,7 +9,7 @@ import { CalendarEvent } from "@/utils/event/types";
 import { useCurrentPlanId } from "@/utils/route";
 import { stringTimeToDisplayTime, stringTimeToTime } from "@/utils/time/time";
 import clsx from "clsx";
-import { DayTable } from "./day-table";
+import { DayTable } from "../../../../components/course/day-table";
 
 interface SectionItemProps {
   highlighted?: boolean;
@@ -76,9 +76,14 @@ export const SectionItem = ({
   return (
     <div
       id={section.crn}
-      className={clsx("bg-gray-50 p-3 rounded-md hover:bg-indigo-50", {
-        "border-2 border-indigo-600": highlighted,
-      })}
+      className={clsx(
+        "@container",
+        "bg-gray-50 p-3 rounded-md hover:bg-indigo-50 border-2",
+        {
+          "border-transparent": !highlighted,
+          "border-indigo-600": highlighted,
+        }
+      )}
       onMouseEnter={setPreview}
       onMouseLeave={clearPreview}
     >
@@ -89,7 +94,7 @@ export const SectionItem = ({
         <div className="font-mono text-xs">{section.crn}</div>
       </div>
 
-      <div className="mt-1.5 flex flex-col space-y-1.5">
+      <div className="mt-1.5 flex flex-col @sm:flex-row @sm:items-center space-y-1.5 @sm:space-y-0 @sm:justify-between">
         <div className="flex items-center space-x-2">
           {section.days && <DayTable days={section.days} />}
           {showTime && (

@@ -44,14 +44,11 @@ export const SectionsList = ({
 
   // If a planId is passed, show sections that are a part of the plan at the top
   const { planById, courseInPlan, sectionInPlan } = usePlans();
-  const currentPlan = planById(planId);
   const planContainsCourse = courseInPlan(
     planId,
     course.subject,
     course.number
   );
-
-  console.log(course.sections.filter((s) => sectionInPlan(planId, s.crn)));
 
   return (
     <div className="space-y-5">

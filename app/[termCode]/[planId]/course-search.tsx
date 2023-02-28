@@ -7,7 +7,7 @@ import { courseToSlug } from "@/utils/course/course";
 import { useAtom } from "jotai";
 import { atomWithStorage, createJSONStorage } from "jotai/utils";
 import Link from "next/link";
-import { ChangeEvent, HTMLAttributes, useState } from "react";
+import { HTMLAttributes } from "react";
 
 interface CourseSearchProps {
   termCode: string;
@@ -35,10 +35,6 @@ export const CourseSearch = ({
   const currentSubject = subjectsWithCounts.find(
     (subject) => subject.code === maybeSubjectCode
   );
-  const { courses, isLoading: coursesLoading } = useCoursesForTerm(
-    termCode,
-    maybeSubjectCode
-  );
 
   const [inputRef, setInputFocus, inputIsFocused] =
     useFocus<HTMLInputElement>();
@@ -50,9 +46,22 @@ export const CourseSearch = ({
     if (inputIsFocused) setInputFocus();
   };
 
+  const { courses, isLoading: coursesLoading } = useCoursesForTerm(
+    termCode,
+    maybeSubjectCode
+  );
+  // Use a fuzzy search library
+  const filteredCourses = maybeCourseNumber
+    ? courses?.filter(
+        (course) =>
+          course.number.includes(maybeCourseNumber) ||
+          course.title.toLowerCase().includes(maybeCourseNumber.toLowerCase())
+      )
+    : courses;
+
   return (
-    <div className="px-5">
-      <fieldset className="sticky top-3">
+    <div>
+      <fieldset className="sticky top-0 px-5 pt-2 pb-3 md:pt-3 md:pb-3  bg-white/90">
         <input
           ref={inputRef}
           className="form-field w-full"
@@ -63,7 +72,7 @@ export const CourseSearch = ({
         />
       </fieldset>
 
-      <div className="mt-4">
+      <div className="px-5">
         {!showCourses ? (
           <>
             {/* Subjects */}
@@ -85,7 +94,10 @@ export const CourseSearch = ({
             <div className="mb-2 flex items-center justify-between">
               <h3 className="font-bold">{currentSubject?.description}</h3>
               <div className="text-sm text-gray-600">
-                {currentSubject?.numCourses} courses
+                {currentSubject?.numCourses == filteredCourses?.length
+                  ? `${filteredCourses?.length}`
+                  : `${filteredCourses?.length} / ${currentSubject?.numCourses}`}{" "}
+                courses
               </div>
             </div>
             {coursesLoading && (
@@ -94,7 +106,7 @@ export const CourseSearch = ({
               </div>
             )}
             <div className="space-y-1">
-              {courses?.map((course, index) => {
+              {filteredCourses?.map((course, index) => {
                 return (
                   <CourseItem
                     key={index}

@@ -48,29 +48,44 @@ export const usePlans = () => {
     const currentPlanIndex = plans.findIndex((p) => p.id === planId);
     if (currentPlanIndex === -1) return;
 
+    console.log(planId, course, section);
+
     const currentPlan = plans[currentPlanIndex];
     const newPlans = [...plans];
 
     const randomColorKey = randomFromList(availableColorKeys);
 
-    section.days.forEach((day) => {
-      const dayNum = dayToNumber(day);
-      const startTime = stringTimeToTime(section.startTime);
-      const endTime = stringTimeToTime(section.endTime);
-
+    // Async online courses
+    if (section.online && section.days.length == 0) {
       currentPlan.items.push({
-        type: "course-section",
+        type: "async-online-course-section",
         id: section.crn,
         title: courseShortTitle(course),
         subtitle: course.title,
-        day: dayNum,
-        startTime,
-        endTime,
         color: randomColorKey,
         course,
         section,
       });
-    });
+    } else {
+      section.days.forEach((day) => {
+        const dayNum = dayToNumber(day);
+        const startTime = stringTimeToTime(section.startTime);
+        const endTime = stringTimeToTime(section.endTime);
+
+        currentPlan.items.push({
+          type: "course-section",
+          id: section.crn,
+          title: courseShortTitle(course),
+          subtitle: course.title,
+          day: dayNum,
+          startTime,
+          endTime,
+          color: randomColorKey,
+          course,
+          section,
+        });
+      });
+    }
 
     newPlans[currentPlanIndex] = currentPlan;
     setPlans(newPlans);
@@ -83,9 +98,7 @@ export const usePlans = () => {
     const currentPlan = plans[currentPlanIndex];
     const newPlans = [...plans];
 
-    currentPlan.items = currentPlan.items.filter(
-      (event) => event.type === "course-section" && event.id !== crn
-    );
+    currentPlan.items = currentPlan.items.filter((event) => event.id !== crn);
     newPlans[currentPlanIndex] = currentPlan;
     setPlans(newPlans);
   };
@@ -100,7 +113,8 @@ export const usePlans = () => {
 
     return currentPlan.items.some(
       (event) =>
-        event.type === "course-section" &&
+        (event.type === "course-section" ||
+          event.type === "async-online-course-section") &&
         event.course.subject === subjectCode &&
         event.course.number === courseNumber
     );
@@ -111,7 +125,10 @@ export const usePlans = () => {
     if (!currentPlan) return false;
 
     return currentPlan.items.some(
-      (event) => event.type === "course-section" && event.id === crn
+      (event) =>
+        (event.type === "course-section" ||
+          event.type === "async-online-course-section") &&
+        event.id === crn
     );
   };
 

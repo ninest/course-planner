@@ -7,9 +7,12 @@ interface DayTableProps {
 }
 
 export const DayTable = ({ days }: DayTableProps) => {
+  // Show weekends only if required
+  const containsWeekends = days.includes("sunday") || days.includes("saturday");
+  const daysOfWeekList = containsWeekends ? daysOfWeek : daysOfWeek.slice(1, 6);
   return (
     <div className="rounded-md inline-flex items-center border dark:border-gray-800 divide-x dark:divide-gray-800">
-      {daysOfWeek.map((day, index) => {
+      {daysOfWeekList.map((day, index) => {
         const highlighted = days.includes(day);
         return (
           <div key={index}>

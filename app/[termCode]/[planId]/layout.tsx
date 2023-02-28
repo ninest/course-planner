@@ -3,6 +3,7 @@
 import { WeekView } from "@/components/week-view/week-view";
 import { usePlans } from "@/hooks/use-plans";
 import { useWeekView } from "@/hooks/use-week-view";
+import { CalendarEvent } from "@/utils/event/types";
 import { CoursePlan } from "@/utils/plan/types";
 import clsx from "clsx";
 import { ReactNode, useEffect, useState } from "react";
@@ -23,6 +24,10 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
   }, [params.planId, plans]);
 
   const { previewEvents } = useWeekView();
+  const events: CalendarEvent[] =
+    (currentPlan?.items.filter(
+      (item) => item.type !== "async-online-course-section"
+    ) as CalendarEvent[]) ?? [];
 
   return (
     currentPlan && (
@@ -42,13 +47,13 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
         >
           <aside className="bg-white md:border-t-0 md:h-full">
             {/* Mobile top border */}
-            <div className="h-5 md:hidden rounded-t-lg md:rounded-t-0 border-t md:border-t-0">
+            <div className="h-7 md:hidden rounded-t-lg md:rounded-t-0 border-t md:border-t-0">
               {/* Mobile: rounded top and "pill" to show it is a bottom sheet */}
-              <div className="h-5 md:hidden flex justify-center items-center">
+              <div className="h-7 md:hidden flex justify-center items-center">
                 <div className="h-1 w-7 bg-gray-300 rounded-full" />
               </div>
             </div>
-            <div className="overflow-y-scroll md:overflow-y-visible h-[calc(75vh-1.25rem)] pb-[30vh] md:pt-3">
+            <div className="overflow-y-scroll md:overflow-y-visible h-[calc(75vh-1.25rem)] pb-[30vh]">
               {children}
             </div>
           </aside>
@@ -64,7 +69,7 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
             "pb-[50vh]"
           )}
         >
-          <WeekView events={[...previewEvents, ...currentPlan.items]} />
+          <WeekView events={[...previewEvents, ...events]} />
         </div>
       </div>
     )

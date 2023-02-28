@@ -2,7 +2,7 @@ import { getCourse } from "@/api/courses";
 import { Button } from "@/components/button";
 import { slugToCourse } from "@/utils/course/course";
 import { ChevronLeft } from "lucide-react";
-import { CourseInfo } from "./course-info";
+import { CourseInfo } from "../../../../components/course/course-info";
 import { SectionsList } from "./sections-list";
 
 export const revalidate = 0; // no cache
@@ -18,7 +18,7 @@ export default async function CourseQueryPage({ params }: CourseQueryProps) {
 
   return (
     <>
-      <div className="px-5">
+      <div className="px-5 mt-5">
         <Button
           intent={"ghost"}
           href={`/${params.termCode}/${params.planId}`}
