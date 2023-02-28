@@ -8,6 +8,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontSize: { xxs: "0.6rem" },
       gridTemplateColumns: {
         "week-view-mobile": "0.75rem repeat(5, minmax(0, 1fr))",
         "week-view": "4.5rem repeat(5, minmax(0, 1fr))",
@@ -19,8 +20,8 @@ module.exports = {
         },
       },
       animation: {
-        jiggle: 'jiggle 0.2s ease-in-out infinite',
-      }
+        jiggle: "jiggle 0.2s ease-in-out infinite",
+      },
     },
   },
   plugins: [],

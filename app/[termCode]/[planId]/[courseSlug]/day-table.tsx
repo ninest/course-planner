@@ -14,7 +14,7 @@ export const DayTable = ({ days }: DayTableProps) => {
         return (
           <div key={index}>
             <div
-              className={clsx("px-1.5 py-1 font-semibold text-xs", {
+              className={clsx("px-1.5 py-1 font-semibold text-xxs", {
                 "rounded bg-gray-300 dark:bg-primary-darker text-gray-600 dark:text-primary-lighter":
                   highlighted,
               })}

@@ -9,7 +9,7 @@ import { CalendarEvent } from "@/utils/event/types";
 import { useCurrentPlanId } from "@/utils/route";
 import { stringTimeToDisplayTime, stringTimeToTime } from "@/utils/time/time";
 import clsx from "clsx";
-import { DayTable } from "./DayTable";
+import { DayTable } from "./day-table";
 
 interface SectionItemProps {
   highlighted?: boolean;
@@ -82,7 +82,7 @@ export const SectionItem = ({
       onMouseEnter={setPreview}
       onMouseLeave={clearPreview}
     >
-      <div className="flex items-ce key={index}nter justify-between">
+      <div className="flex items-center justify-between">
         <div className="text-sm">
           {professorsAvailable ? professors : <i>Professors to be announced</i>}
         </div>

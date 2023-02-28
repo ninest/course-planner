@@ -25,7 +25,7 @@ export const usePlans = () => {
     const newPlanId = nanoid();
     setPlans((plans) => [
       ...plans,
-      { id: newPlanId, termCode, name, description, events: [] },
+      { id: newPlanId, termCode, name, description, items: [] },
     ]);
     return newPlanId;
   };
@@ -58,7 +58,8 @@ export const usePlans = () => {
       const startTime = stringTimeToTime(section.startTime);
       const endTime = stringTimeToTime(section.endTime);
 
-      currentPlan.events.push({
+      currentPlan.items.push({
+        type: "course-section",
         id: section.crn,
         title: courseShortTitle(course),
         subtitle: course.title,
@@ -66,6 +67,8 @@ export const usePlans = () => {
         startTime,
         endTime,
         color: randomColorKey,
+        course,
+        section,
       });
     });
 
@@ -80,16 +83,36 @@ export const usePlans = () => {
     const currentPlan = plans[currentPlanIndex];
     const newPlans = [...plans];
 
-    currentPlan.events = currentPlan.events.filter((e) => e.id !== crn);
+    currentPlan.items = currentPlan.items.filter(
+      (event) => event.type === "course-section" && event.id !== crn
+    );
     newPlans[currentPlanIndex] = currentPlan;
     setPlans(newPlans);
+  };
+
+  const courseInPlan = (
+    planId: string,
+    subjectCode: string,
+    courseNumber: string
+  ) => {
+    const currentPlan = plans.find((p) => p.id === planId);
+    if (!currentPlan) return false;
+
+    return currentPlan.items.some(
+      (event) =>
+        event.type === "course-section" &&
+        event.course.subject === subjectCode &&
+        event.course.number === courseNumber
+    );
   };
 
   const sectionInPlan = (planId: string, crn: string) => {
     const currentPlan = plans.find((p) => p.id === planId);
     if (!currentPlan) return false;
 
-    return currentPlan.events.some((event) => event.id === crn);
+    return currentPlan.items.some(
+      (event) => event.type === "course-section" && event.id === crn
+    );
   };
 
   const savePlan = (id: string, plan: CoursePlan) => {
@@ -109,6 +132,7 @@ export const usePlans = () => {
     planById,
     addCourseToPlan,
     removeCourseFromPlan,
+    courseInPlan,
     sectionInPlan,
   };
 };

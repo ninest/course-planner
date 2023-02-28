@@ -34,7 +34,11 @@ export default async function CourseQueryPage({ params }: CourseQueryProps) {
       </div>
       <hr className="my-5" />
       <div className="px-5">
-        <SectionsList termCode={params.termCode} course={course} />
+        <SectionsList
+          planId={params.planId}
+          termCode={params.termCode}
+          course={course}
+        />
       </div>
     </>
   );
