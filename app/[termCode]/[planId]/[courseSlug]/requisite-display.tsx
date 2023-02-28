@@ -1,5 +1,6 @@
 import { PrerequisiteItem, Requisite } from "@/.data/types";
 import { Button } from "@/components/button";
+import { useCurrentPlanId, useCurrentTermCode } from "@/utils/route";
 import clsx from "clsx";
 
 interface RequisiteDisplayProps {
@@ -11,18 +12,28 @@ export const RequisiteDisplay = ({
   coreqs,
   prereqs,
 }: RequisiteDisplayProps) => {
+  const termCode = useCurrentTermCode();
+  const planId = useCurrentPlanId();
   return (
     <div className="space-y-2">
       {coreqs.length > 0 && (
         <div>
           <div className="text-sm mb-1">Co-requisites</div>
           <div className="flex">
-            {coreqs.map((reqItem, index) => (
-              <Button key={index} intent={"secondary"} size={"xs"}>
-                {reqItem.subject}
-                {reqItem.number}
-              </Button>
-            ))}
+            {coreqs.map((reqItem, index) => {
+              const link = `/${termCode}/${planId}/${reqItem.subject}-${reqItem.number}`;
+              return (
+                <Button
+                  key={index}
+                  intent={"secondary"}
+                  size={"xs"}
+                  href={link}
+                >
+                  {reqItem.subject}
+                  {reqItem.number}
+                </Button>
+              );
+            })}
           </div>
         </div>
       )}
@@ -33,19 +44,21 @@ export const RequisiteDisplay = ({
           <div className="-mt-xs flex flex-wrap items-baseline">
             {prereqs.map((reqItem, index) => {
               const marginClassNames = "mr-1 mt-xs";
-              if (typeof reqItem === "object")
+              if (typeof reqItem === "object") {
+                const link = `/${termCode}/${planId}/${reqItem.subject}-${reqItem.number}`;
                 return (
                   <Button
                     key={index}
                     className={marginClassNames}
                     intent={"secondary"}
                     size={"xs"}
+                    href={link}
                   >
                     {reqItem.subject}
                     {reqItem.number}
                   </Button>
                 );
-
+              }
               return (
                 <div
                   key={index}
