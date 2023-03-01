@@ -7,6 +7,7 @@ import { useWeekView } from "@/hooks/use-week-view";
 import { dayToNumber } from "@/utils/date/days";
 import { CalendarEvent } from "@/utils/event/types";
 import { useCurrentPlanId } from "@/utils/route";
+import { sectionLocation } from "@/utils/section/section";
 import { stringTimeToDisplayTime, stringTimeToTime } from "@/utils/time/time";
 import clsx from "clsx";
 import { DayTable } from "../../../../components/course/day-table";
@@ -30,9 +31,7 @@ export const SectionItem = ({
   const showCampus = section?.campus?.description
     ? section?.campus.description !== "Boston"
     : false;
-  let location = section.online
-    ? "Online"
-    : `${section.building.description} ${section.building.room}`;
+  let location = sectionLocation(section);
   if (showCampus) location = `${location}, ${section.campus.description}`;
   const showWaitlist =
     section?.seats.waitlist.available !== 0 &&
@@ -44,7 +43,7 @@ export const SectionItem = ({
     startTime: stringTimeToTime(section.startTime),
     endTime: stringTimeToTime(section.endTime),
     title: `${course.subject} ${course.number}`,
-    subtitle: course.title,
+    subtitle: sectionLocation(section),
   }));
 
   const setPreview = () => {

@@ -4,6 +4,7 @@ import { dayToNumber } from "@/utils/date/days";
 import { availableColorKeys, eventColorKeys } from "@/utils/event/colors";
 import { CoursePlan } from "@/utils/plan/types";
 import { randomFromList } from "@/utils/random";
+import { sectionLocation } from "@/utils/section/section";
 import { stringTimeToTime } from "@/utils/time/time";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
@@ -76,7 +77,7 @@ export const usePlans = () => {
           type: "course-section",
           id: section.crn,
           title: courseShortTitle(course),
-          subtitle: course.title,
+          subtitle: sectionLocation(section),
           day: dayNum,
           startTime,
           endTime,
@@ -130,15 +131,6 @@ export const usePlans = () => {
           event.type === "async-online-course-section") &&
         event.id === crn
     );
-  };
-
-  const savePlan = (id: string, plan: CoursePlan) => {
-    const existingPlanIndex = plans.findIndex((plan) => plan.id === id);
-    if (!existingPlanIndex) return;
-    const newPlan: CoursePlan = { ...plans[existingPlanIndex], ...plan };
-    const newPlans = [...plans];
-    newPlans[existingPlanIndex] = newPlan;
-    setPlans(newPlans);
   };
 
   return {

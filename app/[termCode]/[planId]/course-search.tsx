@@ -94,9 +94,12 @@ export const CourseSearch = ({
             <div className="mb-2 flex items-center justify-between">
               <h3 className="font-bold">{currentSubject?.description}</h3>
               <div className="text-sm text-gray-600">
+                {/* TODO: fix */}
                 {currentSubject?.numCourses == filteredCourses?.length
                   ? `${filteredCourses?.length}`
-                  : `${filteredCourses?.length} / ${currentSubject?.numCourses}`}{" "}
+                  : `${filteredCourses?.length ?? "..."} / ${
+                      currentSubject?.numCourses
+                    }`}{" "}
                 courses
               </div>
             </div>
