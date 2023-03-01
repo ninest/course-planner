@@ -6,6 +6,7 @@ import { useFocus } from "@/hooks/util/use-focus";
 import { courseToSlug } from "@/utils/course/course";
 import { useAtom } from "jotai";
 import { atomWithStorage, createJSONStorage } from "jotai/utils";
+import { X } from "lucide-react";
 import Link from "next/link";
 import { HTMLAttributes } from "react";
 
@@ -39,6 +40,10 @@ export const CourseSearch = ({
   const [inputRef, setInputFocus, inputIsFocused] =
     useFocus<HTMLInputElement>();
 
+  const clearSearch = () => {
+    setQuery("");
+  };
+
   const onSubjectClick = (subjectCode: string) => {
     // Set query to subject code
     setQuery(`${subjectCode} `);
@@ -61,15 +66,25 @@ export const CourseSearch = ({
 
   return (
     <div>
-      <fieldset className="sticky top-0 px-5 pt-2 pb-3 md:pt-3 md:pb-3  bg-white/90">
-        <input
-          ref={inputRef}
-          className="form-field w-full"
-          type="text"
-          placeholder="Search courses ..."
-          value={query}
-          onChange={(e) => setQuery(e.currentTarget.value.toUpperCase())}
-        />
+      <fieldset className="sticky top-0 px-5 pt-2 pb-3 md:pt-3 md:pb-3 bg-white/90">
+        <div className="relative">
+          <input
+            ref={inputRef}
+            className="form-field w-full"
+            type="text"
+            placeholder="Search courses ..."
+            value={query}
+            onChange={(e) => setQuery(e.currentTarget.value.toUpperCase())}
+          />
+          {query && (
+            <button
+              onClick={clearSearch}
+              className="absolute top-[50%] right-2 -translate-y-1/2 hover:bg-gray-50"
+            >
+              <X className="w-5 text-gray-500" />
+            </button>
+          )}
+        </div>
       </fieldset>
 
       <div className="px-5">
