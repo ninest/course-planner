@@ -116,6 +116,11 @@ export const usePlans = () => {
     );
   };
 
+  const numMySections = (planId: string) => {
+    const plan = planById(planId);
+    return plan?.items.length ?? 0;
+  };
+
   return {
     plans,
     plansForTerm,
@@ -126,5 +131,6 @@ export const usePlans = () => {
     removeCourseFromPlan,
     courseInPlan,
     sectionInPlan,
+    numMySections
   };
 };

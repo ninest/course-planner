@@ -2,6 +2,7 @@
 
 import { Course, SubjectWithCourseCount } from "@/.data/types";
 import { useCoursesForTerm } from "@/hooks/fetching/use-courses-for-term";
+import { usePlans } from "@/hooks/use-plans";
 import { useFocus } from "@/hooks/util/use-focus";
 import { courseToSlug } from "@/utils/course/course";
 import { useAtom } from "jotai";
@@ -64,6 +65,8 @@ export const CourseSearch = ({
       )
     : courses;
 
+  const { numMySections } = usePlans();
+
   return (
     <div>
       <fieldset className="sticky top-0 px-5 pt-2 pb-3 md:pt-3 md:pb-3 bg-white/90">
@@ -92,6 +95,15 @@ export const CourseSearch = ({
           <>
             {/* Subjects */}
             <div className="space-y-1">
+              <Link
+                href={`/${termCode}/${planId}/my-sections`}
+                className="mb-2 w-full py-1 hover:bg-gray-100 rounded-md flex items-center justify-between"
+              >
+                <div>My sections</div>
+                <div className="text-gray-600 text-sm">
+                  {numMySections(planId)} sections
+                </div>
+              </Link>
               {filteredSubjects.map((subject) => {
                 return (
                   <SubjectItem
@@ -107,7 +119,7 @@ export const CourseSearch = ({
           <>
             {/* Courses */}
             <div className="mb-2 flex items-center justify-between">
-              <h3 className="font-bold">{currentSubject?.description}</h3>
+              <h2 className="font-bold">{currentSubject?.description}</h2>
               <div className="text-sm text-gray-600">
                 {/* TODO: fix */}
                 {currentSubject?.numCourses == filteredCourses?.length
