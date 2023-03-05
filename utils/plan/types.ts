@@ -1,6 +1,7 @@
 import type { Course, Section } from "../../.data/types";
 import { EventColorKey } from "../event/colors";
 import { CalendarEvent } from "../event/types";
+import { Time } from "../time/types";
 
 export interface CoursePlan {
   id: string;
@@ -14,23 +15,30 @@ export interface CoursePlan {
   )[];
 }
 
-interface CourseSectionCalendarEvent extends CalendarEvent {
+export interface PlanItem {
+  id: string;
+  type: string;
+  color: EventColorKey
+}
+
+export interface CourseSectionCalendarEvent extends PlanItem {
   type: "course-section";
   course: Course;
   section: Section;
 }
 
-interface AsyncOnlineSectionCalendarEvent {
-  id: string;
+export interface AsyncOnlineSectionCalendarEvent extends PlanItem {
   type: "async-online-course-section";
-  title: string;
-  subtitle?: string;
-  description?: string;
-  color?: EventColorKey;
   course: Course;
   section: Section;
 }
 
-interface OtherCalendarEvent extends CalendarEvent {
+export interface OtherCalendarEvent extends PlanItem {
   type: "other";
+  title: string;
+  description?: string;
+  location?: string;
+  days: number[];
+  startTime?: Time;
+  endTime?: Time;
 }

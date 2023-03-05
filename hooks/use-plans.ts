@@ -1,10 +1,8 @@
 import { Course, Section } from "@/.data/types";
-import { courseShortTitle } from "@/utils/course/course";
 import { dayToNumber } from "@/utils/date/days";
-import { availableColorKeys, eventColorKeys } from "@/utils/event/colors";
+import { availableColorKeys } from "@/utils/event/colors";
 import { CoursePlan } from "@/utils/plan/types";
 import { randomFromList } from "@/utils/random";
-import { sectionLocation } from "@/utils/section/section";
 import { stringTimeToTime } from "@/utils/time/time";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
@@ -49,8 +47,6 @@ export const usePlans = () => {
     const currentPlanIndex = plans.findIndex((p) => p.id === planId);
     if (currentPlanIndex === -1) return;
 
-    console.log(planId, course, section);
-
     const currentPlan = plans[currentPlanIndex];
     const newPlans = [...plans];
 
@@ -61,30 +57,17 @@ export const usePlans = () => {
       currentPlan.items.push({
         type: "async-online-course-section",
         id: section.crn,
-        title: courseShortTitle(course),
-        subtitle: course.title,
         color: randomColorKey,
         course,
         section,
       });
     } else {
-      section.days.forEach((day) => {
-        const dayNum = dayToNumber(day);
-        const startTime = stringTimeToTime(section.startTime);
-        const endTime = stringTimeToTime(section.endTime);
-
-        currentPlan.items.push({
-          type: "course-section",
-          id: section.crn,
-          title: courseShortTitle(course),
-          subtitle: sectionLocation(section),
-          day: dayNum,
-          startTime,
-          endTime,
-          color: randomColorKey,
-          course,
-          section,
-        });
+      currentPlan.items.push({
+        type: "course-section",
+        id: section.crn,
+        color: randomColorKey,
+        course,
+        section,
       });
     }
 

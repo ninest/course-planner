@@ -6,7 +6,6 @@ import { integerRange, integersBetween } from "@/utils/list";
 import { useCurrentPlanId, useCurrentTermCode } from "@/utils/route";
 import { hourToCalendarDisplay } from "@/utils/time/display";
 import clsx from "clsx";
-import Link from "next/link";
 
 interface WeekViewProps {
   events: CalendarEvent[];
@@ -103,7 +102,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
               }}
               className="my-[0.1rem] mx-[0.05rem]"
             >
-              <Link
+              <a
                 href={hrefToCourse}
                 className={clsx(
                   eventColorClassName,
@@ -120,7 +119,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
                 <div className="text-[0.6rem]  md:text-xs">
                   {event.subtitle}
                 </div>
-              </Link>
+              </a>
             </div>
           );
         })}
