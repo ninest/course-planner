@@ -110,7 +110,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
                   {
                     "border-transparent": !eventIsConflicting,
                     "border-red-300 opacity-60": eventIsConflicting,
-                    "opacity-60 animate-jiggle": event.possible,
+                    "opacity-75 animate-jiggle": event.possible,
                   },
                   "overflow-scroll"
                 )}

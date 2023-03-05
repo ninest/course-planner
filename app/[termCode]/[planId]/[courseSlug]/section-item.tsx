@@ -46,18 +46,10 @@ export const SectionItem = ({
     subtitle: sectionLocation(section),
   }));
 
-  const setPreview = () => {
-    // If this section is already in the plan, no need to preview it
-    if (sectionAlreadyInCurrentPlan) return;
-    setPreviewEvents(calendarEvents);
-  };
-  const clearPreview = () => {
-    setPreviewEvents([]);
-  };
-
   const planId = useCurrentPlanId();
 
-  const { setPreviewEvents } = useWeekView();
+  const { setPreviewEvents, addSectionToPreview, removeSectionsFromPreview } =
+    useWeekView();
   const { addCourseToPlan, removeCourseFromPlan, sectionInPlan } = usePlans();
 
   const sectionAlreadyInCurrentPlan = sectionInPlan(planId!, section.crn);
@@ -72,6 +64,18 @@ export const SectionItem = ({
     removeCourseFromPlan(planId!, section.crn);
   };
 
+  const setPreview = (crn: string) => {
+    if (sectionAlreadyInCurrentPlan) {
+      addSectionToPreview(crn);
+      return;
+    }
+    setPreviewEvents(calendarEvents);
+  };
+  const clearPreview = () => {
+    setPreviewEvents([]);
+    removeSectionsFromPreview();
+  };
+
   return (
     <div
       id={section.crn}
@@ -83,7 +87,7 @@ export const SectionItem = ({
           "border-indigo-600": highlighted,
         }
       )}
-      onMouseEnter={setPreview}
+      onMouseEnter={() => setPreview(section.crn)}
       onMouseLeave={clearPreview}
     >
       <div className="flex items-center justify-between">

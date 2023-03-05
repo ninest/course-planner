@@ -1,13 +1,14 @@
-import { eventColorsMap } from "@/utils/event/colors";
 import { CalendarEvent } from "@/utils/event/types";
 import { atom, useAtom } from "jotai";
-import { useRouter } from "next/navigation";
 
 const previewEventsAtom = atom<CalendarEvent[]>([]);
+const sectionsInPlanPreviewAtom = atom<string[]>([]);
 
 export const useWeekView = () => {
   const [previewEvents, _setPreviewEvents] = useAtom(previewEventsAtom);
-  const router = useRouter();
+  const [sectionsInPlanPreview, setSectionsInPlanPreview] = useAtom(
+    sectionsInPlanPreviewAtom
+  );
 
   // Set all preview events gray
   const setPreviewEvents = (events: CalendarEvent[]) => {
@@ -20,5 +21,15 @@ export const useWeekView = () => {
     );
   };
 
-  return { previewEvents, setPreviewEvents };
+  // If section already in the plan is hover, set it to possible too so it jiggles
+  const addSectionToPreview = (crn: string) => setSectionsInPlanPreview([crn]);
+  const removeSectionsFromPreview = () => setSectionsInPlanPreview([]);
+
+  return {
+    previewEvents,
+    setPreviewEvents,
+    sectionsInPlanPreview,
+    addSectionToPreview,
+    removeSectionsFromPreview,
+  };
 };

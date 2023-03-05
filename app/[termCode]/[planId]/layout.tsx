@@ -6,11 +6,7 @@ import { useWeekView } from "@/hooks/use-week-view";
 import { courseShortTitle } from "@/utils/course/course";
 import { dayToNumber } from "@/utils/date/days";
 import { CalendarEvent } from "@/utils/event/types";
-import {
-  CoursePlan,
-  CourseSectionCalendarEvent,
-  PlanItem,
-} from "@/utils/plan/types";
+import { CoursePlan, CourseSectionCalendarEvent } from "@/utils/plan/types";
 import { sectionLocation } from "@/utils/section/section";
 import { stringTimeToTime } from "@/utils/time/time";
 import clsx from "clsx";
@@ -31,7 +27,7 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
     setCurrentPlan(plan);
   }, [params.planId, plans]);
 
-  const { previewEvents } = useWeekView();
+  const { previewEvents, sectionsInPlanPreview } = useWeekView();
 
   const events: CalendarEvent[] = [
     ...(currentPlan?.items
@@ -48,6 +44,7 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
           title: courseShortTitle(item.course),
           subtitle: sectionLocation(item.section),
           color: item.color,
+          possible: sectionsInPlanPreview.includes(item.section.crn),
         }));
       })
       .flat() ?? []),
