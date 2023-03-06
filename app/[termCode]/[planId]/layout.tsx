@@ -3,13 +3,9 @@
 import { WeekView } from "@/components/week-view/week-view";
 import { usePlans } from "@/hooks/use-plans";
 import { useWeekView } from "@/hooks/use-week-view";
-import { courseShortTitle } from "@/utils/course/course";
-import { dayToNumber } from "@/utils/date/days";
 import { CalendarEvent } from "@/utils/event/types";
 import { getPlanTimedEvents } from "@/utils/plan/functions";
-import { CoursePlan, CourseSectionCalendarEvent } from "@/utils/plan/types";
-import { sectionLocation } from "@/utils/section/section";
-import { stringTimeToTime } from "@/utils/time/time";
+import { CoursePlan } from "@/utils/plan/types";
 import clsx from "clsx";
 import { ReactNode, useEffect, useState } from "react";
 

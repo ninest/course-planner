@@ -10,7 +10,7 @@ import { CalendarEvent } from "@/utils/event/types";
 import { getPlanTimedEvents } from "@/utils/plan/functions";
 import { useCurrentPlanId } from "@/utils/route";
 import { allMapValues } from "@/utils/map";
-import { sectionLocation } from "@/utils/section/section";
+import { getSectionLocation } from "@/utils/section/section";
 import { stringTimeToDisplayTime, stringTimeToTime } from "@/utils/time/time";
 import clsx from "clsx";
 import { DayTable } from "../../../../components/course/day-table";
@@ -34,7 +34,7 @@ export const SectionItem = ({
   const showCampus = section?.campus?.description
     ? section?.campus.description !== "Boston"
     : false;
-  let location = sectionLocation(section);
+  let location = getSectionLocation(section);
   if (showCampus) location = `${location}, ${section.campus.description}`;
   const showWaitlist =
     section?.seats.waitlist.available !== 0 &&
@@ -47,7 +47,7 @@ export const SectionItem = ({
     startTime: stringTimeToTime(section.startTime),
     endTime: stringTimeToTime(section.endTime),
     title: `${course.subject} ${course.number}`,
-    subtitle: sectionLocation(section),
+    subtitle: getSectionLocation(section),
   }));
 
   const planId = useCurrentPlanId();

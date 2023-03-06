@@ -2,7 +2,7 @@ import { nanoid } from "nanoid";
 import { courseShortTitle } from "../course/course";
 import { dayToNumber } from "../date/days";
 import { CalendarEvent } from "../event/types";
-import { sectionLocation } from "../section/section";
+import { getSectionLocation } from "../section/section";
 import { stringTimeToTime } from "../time/time";
 import { CoursePlan, CourseSectionCalendarEvent } from "./types";
 
@@ -38,7 +38,7 @@ export const getPlanTimedEvents = (plan: CoursePlan): CalendarEvent[] => {
           startTime: stringTimeToTime(item.section.startTime),
           endTime: stringTimeToTime(item.section.endTime),
           title: courseShortTitle(item.course),
-          subtitle: sectionLocation(item.section),
+          subtitle: getSectionLocation(item.section),
           color: item.color,
         }));
       })

@@ -4,7 +4,6 @@ import { Course } from "@/.data/types";
 import { Empty } from "@/components/Empty";
 import { useSections } from "@/hooks/fetching/use-sections";
 import { usePlans } from "@/hooks/use-plans";
-import { useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { SectionItem } from "./section-item";
