@@ -1,10 +1,13 @@
 import { CalendarEvent } from "@/utils/event/types";
 import { atom, useAtom } from "jotai";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 const previewEventsAtom = atom<CalendarEvent[]>([]);
 const sectionsInPlanPreviewAtom = atom<string[]>([]);
 
 export const useWeekView = () => {
+  const pathname = usePathname();
   const [previewEvents, _setPreviewEvents] = useAtom(previewEventsAtom);
   const [sectionsInPlanPreview, setSectionsInPlanPreview] = useAtom(
     sectionsInPlanPreviewAtom
@@ -24,6 +27,12 @@ export const useWeekView = () => {
   // If section already in the plan is hover, set it to possible too so it jiggles
   const addSectionToPreview = (crn: string) => setSectionsInPlanPreview([crn]);
   const removeSectionsFromPreview = () => setSectionsInPlanPreview([]);
+
+  // Clear preview when route changes
+  useEffect(() => {
+    setPreviewEvents([]);
+    removeSectionsFromPreview();
+  }, [pathname]);
 
   return {
     previewEvents,
