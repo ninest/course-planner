@@ -1,12 +1,12 @@
 import { Course, Section } from "@/.data/types";
-import { dayToNumber } from "@/utils/date/days";
 import { availableColorKeys } from "@/utils/event/colors";
-import { CoursePlan } from "@/utils/plan/types";
+import { newPlan } from "@/utils/plan/functions";
+import {
+  CoursePlan
+} from "@/utils/plan/types";
 import { randomFromList } from "@/utils/random";
-import { stringTimeToTime } from "@/utils/time/time";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
-import { nanoid } from "nanoid";
 
 const plansAtom = atomWithStorage<CoursePlan[]>("plans", []);
 
@@ -21,12 +21,9 @@ export const usePlans = () => {
     name: string,
     description: string = ""
   ) => {
-    const newPlanId = nanoid();
-    setPlans((plans) => [
-      ...plans,
-      { id: newPlanId, termCode, name, description, items: [] },
-    ]);
-    return newPlanId;
+    const plan = newPlan({ termCode, name, description });
+    setPlans((plans) => [...plans, plan]);
+    return plan.id;
   };
 
   const validPlanName = (termCode: string, name: string) => {
@@ -131,6 +128,6 @@ export const usePlans = () => {
     removeCourseFromPlan,
     courseInPlan,
     sectionInPlan,
-    numMySections
+    numMySections,
   };
 };

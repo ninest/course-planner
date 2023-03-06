@@ -5,8 +5,11 @@ import { Button } from "@/components/button";
 import { usePlans } from "@/hooks/use-plans";
 import { useWeekView } from "@/hooks/use-week-view";
 import { dayToNumber } from "@/utils/date/days";
+import { getConflictList } from "@/utils/event/conflict";
 import { CalendarEvent } from "@/utils/event/types";
+import { getPlanTimedEvents } from "@/utils/plan/functions";
 import { useCurrentPlanId } from "@/utils/route";
+import { allMapValues } from "@/utils/map";
 import { sectionLocation } from "@/utils/section/section";
 import { stringTimeToDisplayTime, stringTimeToTime } from "@/utils/time/time";
 import clsx from "clsx";
@@ -37,6 +40,7 @@ export const SectionItem = ({
     section?.seats.waitlist.available !== 0 &&
     section?.seats.waitlist.capacity !== 0;
 
+  // Events for this course for preview and checking if there are any conflicts
   const calendarEvents: CalendarEvent[] = section.days.map((day) => ({
     id: section.crn,
     day: dayToNumber(day),
@@ -50,7 +54,9 @@ export const SectionItem = ({
 
   const { setPreviewEvents, addSectionToPreview, removeSectionsFromPreview } =
     useWeekView();
-  const { addCourseToPlan, removeCourseFromPlan, sectionInPlan } = usePlans();
+  const { planById, addCourseToPlan, removeCourseFromPlan, sectionInPlan } =
+    usePlans();
+  const plan = planById(planId!);
 
   const sectionAlreadyInCurrentPlan = sectionInPlan(planId!, section.crn);
 
@@ -75,6 +81,15 @@ export const SectionItem = ({
     setPreviewEvents([]);
     removeSectionsFromPreview();
   };
+
+  // If the section timing conflicts with any section already in the plan, show in red
+  const eventsInCalendar = getPlanTimedEvents(plan!);
+
+  const conflictMap = getConflictList([...calendarEvents, ...eventsInCalendar]);
+  const allValues = allMapValues(conflictMap);
+  // A plan does not conflict with itself!
+  const isConflictingWithAny =
+    !sectionAlreadyInCurrentPlan && allValues.length > 0;
 
   return (
     <div
@@ -101,7 +116,11 @@ export const SectionItem = ({
         <div className="flex items-center space-x-2">
           {section.days && <DayTable days={section.days} />}
           {showTime && (
-            <div className="font-mono text-xs">
+            <div
+              className={clsx("font-mono text-xs", {
+                "text-red-500": isConflictingWithAny,
+              })}
+            >
               {stringTimeToDisplayTime(section.startTime)}-
               {stringTimeToDisplayTime(section.endTime)}
             </div>
