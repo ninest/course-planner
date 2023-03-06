@@ -86,10 +86,16 @@ export const SectionItem = ({
   const eventsInCalendar = getPlanTimedEvents(plan!);
 
   const conflictMap = getConflictList([...calendarEvents, ...eventsInCalendar]);
-  const allValues = allMapValues(conflictMap);
-  // A plan does not conflict with itself!
-  const isConflictingWithAny =
-    !sectionAlreadyInCurrentPlan && allValues.length > 0;
+
+  // A course should not ever be highlighted red if it conflicts with itself, so remove itself
+  // from the list
+  const conflictsWithCurrentSection = (
+    calendarEvents?.map((event) => conflictMap.get(event)).flat() ?? []
+  )
+    // Remove current
+    .filter((event) => event?.id !== section.crn);
+
+  let isConflictingWithAny = conflictsWithCurrentSection.length > 0;
 
   return (
     <div
