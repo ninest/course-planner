@@ -9,7 +9,6 @@ import { getConflictList } from "@/utils/event/conflict";
 import { CalendarEvent } from "@/utils/event/types";
 import { getPlanTimedEvents } from "@/utils/plan/functions";
 import { useCurrentPlanId } from "@/utils/route";
-import { allMapValues } from "@/utils/map";
 import { getSectionLocation } from "@/utils/section/section";
 import { stringTimeToDisplayTime, stringTimeToTime } from "@/utils/time/time";
 import clsx from "clsx";

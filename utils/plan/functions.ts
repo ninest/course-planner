@@ -1,10 +1,16 @@
+import { Course, Section } from "@/.data/types";
 import { nanoid } from "nanoid";
 import { courseShortTitle } from "../course/course";
+import { courseContainsSection } from "../course/functions";
 import { dayToNumber } from "../date/days";
 import { CalendarEvent } from "../event/types";
 import { getSectionLocation } from "../section/section";
 import { stringTimeToTime } from "../time/time";
-import { CoursePlan, CourseSectionCalendarEvent } from "./types";
+import {
+  AsyncOnlineSectionCalendarEvent,
+  CoursePlan,
+  CourseSectionCalendarEvent,
+} from "./types";
 
 // Create a new plan
 interface NewPlanParams {
@@ -44,4 +50,49 @@ export const getPlanTimedEvents = (plan: CoursePlan): CalendarEvent[] => {
       })
       .flat() ?? []
   );
+};
+
+export const getPlanSectionCrns = (plan: CoursePlan): string[] => {
+  return plan.items
+    .filter(
+      (
+        planItem
+      ): planItem is
+        | CourseSectionCalendarEvent
+        | AsyncOnlineSectionCalendarEvent =>
+        planItem.type === "async-online-course-section" ||
+        planItem.type === "course-section"
+    )
+    .map((courseItem) => courseItem.section.crn);
+};
+
+export const getPlanCourses = (plan: CoursePlan): Course[] => {
+  return plan.items
+    .filter(
+      (
+        planItem
+      ): planItem is
+        | CourseSectionCalendarEvent
+        | AsyncOnlineSectionCalendarEvent =>
+        planItem.type === "async-online-course-section" ||
+        planItem.type === "course-section"
+    )
+    .map((courseItem) => courseItem.course);
+};
+
+export const getPlanCourseSectionsFromSections = (
+  plan: CoursePlan,
+  sections: Section[]
+): { course: Course; section: Section }[] => {
+  const planCourses = getPlanCourses(plan);
+
+  return sections.map((section) => {
+    const course = planCourses.find((course) =>
+      courseContainsSection(course, section)
+    );
+    return {
+      course: course!,
+      section,
+    };
+  });
 };

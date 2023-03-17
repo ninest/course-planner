@@ -1,4 +1,4 @@
-import { getSectionsForCourse } from "@/api/sections";
+import { getMultipleSections, getSectionsForCourse } from "@/api/sections";
 import { useQuery } from "@tanstack/react-query";
 
 export const useSections = (
@@ -12,4 +12,13 @@ export const useSections = (
   );
 
   return { isLoading, isError, isSuccess, sections: data };
+};
+
+export const useMultipleSections = (termCode: string, crns: string[]) => {
+  const { isLoading, isError, isSuccess, data } = useQuery(
+    ["sections-multiple", termCode, crns],
+    () => getMultipleSections(termCode, crns)
+  );
+
+  return { isLoading, isError, isSuccess, sections:data };
 };
