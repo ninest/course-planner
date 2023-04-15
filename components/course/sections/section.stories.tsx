@@ -256,10 +256,11 @@ export const SectionDemo = () => {
     section,
   }));
   return (
-    <SectionsList
-      termCode="202310"
-      isLoading={false}
-      courseSections={courseSections}
-    />
+    <></>
+    // <SectionsList
+    //   termCode="202310"
+    //   isLoading={false}
+    //   courseSections={courseSections}
+    // />
   );
 };
