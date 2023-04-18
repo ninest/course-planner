@@ -2,15 +2,15 @@
 
 import { useState } from "react";
 import { CourseSearchBar } from "./course-search-bar";
-import { SearchGroup } from "./search-bar-logic";
+import { useSearchBar } from "./hooks/use-search-bar";
 
 export default function SearchPage() {
-  const [searchGroups, setSearchGroups] = useState<SearchGroup[] | null>(null);
+  const {searchGroups} = useSearchBar()
   return (
     <h1>
       Search page
       <div>
-        <CourseSearchBar setSearchGroups={setSearchGroups} />
+        <CourseSearchBar  />
       </div>
       <div>
         {JSON.stringify(searchGroups,null,2)}

@@ -1,37 +1,35 @@
 "use client";
 
-import { useSubjects } from "@/hooks/fetching/use-subjects";
+import { SearchGroup } from "@/.data/types";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-import { getSearchGroups, SearchGroup } from "./search-bar-logic";
+import { useSearchBar } from "./hooks/use-search-bar";
 
 interface CourseSearchBarProps {
-  setSearchGroups: Dispatch<SetStateAction<SearchGroup[]|null>>
+
 }
 
-export function CourseSearchBar({setSearchGroups }: CourseSearchBarProps) {
-  const { subjects, isLoading } = useSubjects();
-  const [text, setText] = useState("");
+export function CourseSearchBar({ }: CourseSearchBarProps) {
+  
+  // const [text, setText] = useState("");
+  const {setCourseSearchQuery, value} = useSearchBar()
 
 
   const onKey = (e: ChangeEvent<HTMLInputElement>) => {
-    const subjectCodes = subjects!.map(subject => subject.code)
+    
     const query = e.currentTarget.value
-    const {value, searchGroups} = getSearchGroups({query, subjectCodes})
-
-    setText(value)
-    setSearchGroups(searchGroups)
+    setCourseSearchQuery(query)
   }
 
   return (
     <>
-      {subjects && (
+
         <input
           type="text"
           placeholder="Search courses, CRNs, ..."
-          value={text}
+          value={value}
           onChange={onKey}
         />
-      )}
+
     </>
   );
 }

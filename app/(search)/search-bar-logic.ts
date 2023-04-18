@@ -1,11 +1,4 @@
-type SubjectGroup = {subjectCode:string}
-type CourseGroup = {subjectCode:string, courseNumber:string}
-type CRNGroup = {crn:string}
-export type SearchGroup = SubjectGroup|CourseGroup|CRNGroup
-// export interface SearchGroup {
-//   subjectCode?: string;
-//   courseNumber?: string;
-// }
+import { SearchGroup } from "@/.data/types";
 
 interface GetSearchGroupsParams {
   query: string;
@@ -24,17 +17,26 @@ export function getSearchGroups({ query, subjectCodes }: GetSearchGroupsParams):
 
   parts.forEach((part) => {
     let newPart: null | string = null;
-    let searchGroup: SearchGroup|null = null;
+    let searchGroup: SearchGroup | null = null;
 
     // Check if subject code and number (ex. `CS3400`)
     subjectCodes.forEach((code) => {
       if (part.toLowerCase().startsWith(code.toLowerCase())) {
         newPart = part.toUpperCase();
-        // searchGroup.subjectCode = code;
-        // searchGroup.courseNumber = part.replaceAll(code, "");
-        searchGroup = {
-subjectCode:code    ,
-courseNumber : part.replaceAll(code, "")
+
+        // Check if there's any number in the string
+        const hasNumberRe = /\d/;
+        if (hasNumberRe.test(part)) {
+          searchGroup = {
+            type: "course",
+            subjectCode: code,
+            courseNumber: part.replaceAll(code, ""),
+          };
+        } else {
+          searchGroup = {
+            type: "subject",
+            subjectCode: code,
+          };
         }
       }
     });
@@ -43,13 +45,14 @@ courseNumber : part.replaceAll(code, "")
     if (!Number.isNaN(maybeCrn)) {
       console.log("s number");
       searchGroup = {
-        crn: maybeCrn
-      }
+        type: "crn",
+        crn: maybeCrn.toString(),
+      };
     }
 
     if (newPart === null) newPart = part;
     textGroups.push(newPart);
-    searchGroups.push(searchGroup);
+    if (searchGroup) searchGroups.push(searchGroup);
   });
 
   const value = textGroups.join(",");

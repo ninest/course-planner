@@ -129,3 +129,9 @@ export interface Section extends SectionInfo, FacultyMeetingTime {
 export interface TermSubjectCourseMapping {
   [subjectCode: string]: { number: string; crns: string[] }[];
 }
+
+// Search
+type SubjectGroup = { type: "subject"; subjectCode: string };
+type CourseGroup = { type: "course"; subjectCode: string; courseNumber: string };
+type CRNGroup = { type: "crn"; crn: string };
+export type SearchGroup = SubjectGroup | CourseGroup | CRNGroup;
