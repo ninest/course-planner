@@ -3,7 +3,7 @@ import { Button } from "@/components/button";
 import { SubPageBackButton } from "@/components/sub-page-back-button";
 import { slugToCourse } from "@/utils/course/course";
 import { ChevronLeft } from "lucide-react";
-import { CourseInfo } from "../../../../components/course/course-info";
+import { CourseInfo } from "../../../../../components/course/course-info";
 import { SectionsList } from "./sections-list";
 
 export const revalidate = 0; // no cache

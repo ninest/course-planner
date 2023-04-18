@@ -12,7 +12,7 @@ import { useCurrentPlanId } from "@/utils/route";
 import { getSectionLocation } from "@/utils/section/section";
 import { stringTimeToDisplayTime, stringTimeToTime } from "@/utils/time/time";
 import clsx from "clsx";
-import { DayTable } from "../../../../components/course/day-table";
+import { DayTable } from "../../../../../components/course/day-table";
 
 interface SectionItemProps {
   highlighted?: boolean;
