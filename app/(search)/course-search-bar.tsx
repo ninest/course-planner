@@ -1,12 +1,14 @@
 "use client";
 
 import { useSubjects } from "@/hooks/fetching/use-subjects";
-import { ChangeEvent, useState } from "react";
-import { getSearchGroups } from "./search-bar-logic";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { getSearchGroups, SearchGroup } from "./search-bar-logic";
 
-interface CourseSearchBarProps { }
+interface CourseSearchBarProps {
+  setSearchGroups: Dispatch<SetStateAction<SearchGroup[]|null>>
+}
 
-export function CourseSearchBar({ }: CourseSearchBarProps) {
+export function CourseSearchBar({setSearchGroups }: CourseSearchBarProps) {
   const { subjects, isLoading } = useSubjects();
   const [text, setText] = useState("");
 
@@ -15,10 +17,9 @@ export function CourseSearchBar({ }: CourseSearchBarProps) {
     const subjectCodes = subjects!.map(subject => subject.code)
     const query = e.currentTarget.value
     const {value, searchGroups} = getSearchGroups({query, subjectCodes})
-    console.log(value)
-    console.log(searchGroups)
 
     setText(value)
+    setSearchGroups(searchGroups)
   }
 
   return (
