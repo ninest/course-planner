@@ -28,7 +28,7 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log("onSubmit");
+    console.log(data);
 
     const { search, term } = data;
     const searchGroups = getSearchGroups({ query: search });
@@ -41,7 +41,6 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
 
   // Search when the url changes
   useEffect(() => {
-    console.log("iniital search change");
     doSearch(initialSearch);
   }, [initialSearch]);
 
@@ -55,22 +54,16 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
           wrapperClassName="flex-1"
           inputClassName="form-field rounded-r-none"
         />
-        {/* <input
-          type="text"
-          name="search"
-          placeholder="Search courses, CRNs, ..."
-          // onChange={onChange}
-          // onKeyDown={onKeyDown}
-          className="flex-1 form-field rounded-r-none"
-        />
+
         <Select
+          control={control}
           name="term"
           options={[
             { title: "All", value: "all" },
             { title: "Fall 2023", value: "202310" },
           ]}
           className="text-center w-[8rem] rounded-l-none border-l-0"
-        /> */}
+        />
       </form>
     </>
   );
