@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 .form-field {
-  @apply p-2 rounded-lg border-2 text-gray-700 focus:border-indigo-500;
+  @apply p-2 rounded-xl border-2 text-gray-700 focus:border-indigo-500;
   @apply focus:outline-none;
 }
