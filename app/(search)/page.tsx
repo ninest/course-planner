@@ -7,7 +7,7 @@ export default function SearchPage() {
   const {searchGroups} = useSearchBar()
   return (
     <div>
-      {JSON.stringify(searchGroups,null,2)}
+      {/* {JSON.stringify(searchGroups,null,2)} */}
     </div>
   );
 }

@@ -1,30 +1,55 @@
-
-import { atom, useAtom } from "jotai";
+import { Course, SearchGroup } from "@/.data/types";
+import { searchCourses } from "@/api/search";
 import { useSubjects } from "@/hooks/fetching/use-subjects";
+import { decodeSearchQuery } from "@/utils/string";
+import { atom, useAtom } from "jotai";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import { getSearchGroups } from "../search-bar-logic";
-import { useQuery } from "@tanstack/react-query";
-import { searchCourses } from "@/api/search"
-import { Course } from "@/.data/types"
 
-// const courseSearchQueryAtom = atom("")
-const searchResultsAtom = atom<Course[]>([])
+const courseSearchQueryAtom = atom("");
+const searchGroupsAtom = atom<SearchGroup[]>([]);
+const searchResultsAtom = atom<Course[]>([]);
 
 export function useSearchBar() {
+  const params = useSearchParams();
+  const initialEncodedSearchQuery = params.get("search") ?? "";
+
   const { subjects, isLoading } = useSubjects();
-  // const [courseSearchQuery, setCourseSearchQuery] = useAtom(courseSearchQueryAtom)
-  const [searchResults, setSearchResults] = useAtom(searchResultsAtom)
+  const [courseSearchQuery, setCourseSearchQuery] = useAtom(courseSearchQueryAtom);
+  const [searchGroups, setSearchGroups] = useAtom(searchGroupsAtom);
+  const [searchResults, setSearchResults] = useAtom(searchResultsAtom);
 
-  const subjectCodes =( subjects??[]).map(subject => subject.code)
-  // const {value, searchGroups} = getSearchGroups({query:courseSearchQuery, subjectCodes})
+  useEffect(() => {
+    const searchQuery = decodeSearchQuery(initialEncodedSearchQuery);
+    setCourseSearchQuery(searchQuery);
+  }, [initialEncodedSearchQuery]);
 
-  const doSearch = async () => {
-    const courses = await searchCourses(searchGroups);
-    setSearchResults(courses)
-  }
+  const subjectCodes = (subjects ?? []).map((subject) => subject.code);
+
+  const doSearch = (searchQuery: string) => {
+    const s = getSearchGroups({ query: searchQuery, subjectCodes });
+    console.log(s);
+    
+    setCourseSearchQuery(s.value);
+    setSearchGroups(s.searchGroups);
+
+    // Remember: setState is async!
+    searchCourses(s.searchGroups).then((courses)=>{
+      console.log(courses);
+      
+    });
+
+    return {
+      formattedSearch: s.value,
+    };
+  };
 
   return {
-    courseSearchQuery, setCourseSearchQuery,
-    value, searchGroups,
-    doSearch
-  }
+    courseSearchQuery,
+    setCourseSearchQuery,
+    searchGroups,
+    doSearch,
+    searchResults,
+  };
 }

@@ -27,10 +27,13 @@ export function getSearchGroups({ query, subjectCodes }: GetSearchGroupsParams):
         // Check if there's any number in the string
         const hasNumberRe = /\d/;
         if (hasNumberRe.test(part)) {
+          // Remove space between subject and number
+          newPart = newPart.replaceAll(" ", "");
           searchGroup = {
             type: "course",
             subjectCode: code,
-            courseNumber: part.replaceAll(code, ""),
+            // Remove letters and space from string
+            courseNumber: part.replace(/\D/g, "").replaceAll(code, ""),
           };
         } else {
           searchGroup = {

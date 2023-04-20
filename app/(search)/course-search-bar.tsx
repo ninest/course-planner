@@ -1,35 +1,99 @@
 "use client";
 
-import { ChangeEvent, KeyboardEvent } from "react";
+import { FormField } from "@/components/form/form-field";
+import { Select } from "@/components/form/select";
+import { decodeSearchQuery, encodeSearchQuery } from "@/utils/string";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ChangeEvent, FormEvent, KeyboardEvent, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useSearchBar } from "./hooks/use-search-bar";
 
 interface CourseSearchBarProps {}
 
+interface CourseSearchForm {
+  search: string;
+  term: string;
+}
+
 export function CourseSearchBar({}: CourseSearchBarProps) {
-  const { setCourseSearchQuery, value, doSearch } = useSearchBar();
+  const router = useRouter();
+  const params = useSearchParams();
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const query = e.currentTarget.value;
-    // setCourseSearchQuery(query);
-    console.log(query)
-  };
+  const { setCourseSearchQuery, courseSearchQuery, doSearch } = useSearchBar();
 
-  const onKeyDown = (e:KeyboardEvent<HTMLInputElement>) => {
-    if (e.key==="Enter") {
-      doSearch()
-    }
-  }
+  const initialSearch = decodeSearchQuery(params.get("search") || "");
+  const { handleSubmit, control, setValue } = useForm<CourseSearchForm>({
+    defaultValues: { search: initialSearch, term: "all" },
+  });
+
+  const onSubmit = handleSubmit((data) => {
+    console.log("onSubmit");
+
+    const { search, term } = data;
+    console.log(search);
+    
+
+    const { formattedSearch } = doSearch(search);
+    setValue("search", formattedSearch);
+
+    const searchQuery = encodeSearchQuery(formattedSearch);
+    router.push(`?search=${searchQuery}`);
+  });
+
+  // If there is an initial search, get the results
+  useEffect(() => {
+    console.log("iniital search change");
+    onSubmit();
+  }, [initialSearch]);
+
+  // const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const query = e.currentTarget.value;
+  //   setCourseSearchQuery(query);
+  // };
+
+  // const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  //   if (e.key === "Enter") {
+  //     doSearch();
+  //     // const searchQuery = encodeSearchQuery(courseSearchQuery);
+  //     // router.push(`?search=${searchQuery}`);
+  //   }
+  // };
+
+  // const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const formData = new FormData(e.currentTarget);
+  //   const query = formData.get("search") as string;
+  //   const term = formData.get("term") as string;
+
+  //   setCourseSearchQuery(query);
+  // };
 
   return (
     <>
-      <input
-        type="text"
-        placeholder="Search courses, CRNs, ..."
-        value={value}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        className="form-field"
-      />
+      <form className="flex" onSubmit={onSubmit}>
+        <FormField
+          control={control}
+          name="search"
+          placeholder="Search courses, CRNs, ..."
+          inputClassName="flex-1 form-field rounded-r-none"
+        />
+        {/* <input
+          type="text"
+          name="search"
+          placeholder="Search courses, CRNs, ..."
+          // onChange={onChange}
+          // onKeyDown={onKeyDown}
+          className="flex-1 form-field rounded-r-none"
+        />
+        <Select
+          name="term"
+          options={[
+            { title: "All", value: "all" },
+            { title: "Fall 2023", value: "202310" },
+          ]}
+          className="text-center w-[8rem] rounded-l-none border-l-0"
+        /> */}
+      </form>
     </>
   );
 }
