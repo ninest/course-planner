@@ -1,19 +1,24 @@
 "use client";
 
-import { SearchGroup } from "@/.data/types";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, KeyboardEvent } from "react";
 import { useSearchBar } from "./hooks/use-search-bar";
 
 interface CourseSearchBarProps {}
 
 export function CourseSearchBar({}: CourseSearchBarProps) {
-  // const [text, setText] = useState("");
-  const { setCourseSearchQuery, value } = useSearchBar();
+  const { setCourseSearchQuery, value, doSearch } = useSearchBar();
 
-  const onKey = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const query = e.currentTarget.value;
-    setCourseSearchQuery(query);
+    // setCourseSearchQuery(query);
+    console.log(query)
   };
+
+  const onKeyDown = (e:KeyboardEvent<HTMLInputElement>) => {
+    if (e.key==="Enter") {
+      doSearch()
+    }
+  }
 
   return (
     <>
@@ -21,7 +26,8 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
         type="text"
         placeholder="Search courses, CRNs, ..."
         value={value}
-        onChange={onKey}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
         className="form-field"
       />
     </>
