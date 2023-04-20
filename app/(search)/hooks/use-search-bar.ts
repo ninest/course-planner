@@ -5,7 +5,7 @@ import { decodeSearchQuery } from "@/utils/string";
 import { atom, useAtom } from "jotai";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { getSearchGroups } from "../search-bar-logic";
+import { getSearchGroups } from "../../../utils/course/search";
 
 const courseSearchQueryAtom = atom("");
 const searchGroupsAtom = atom<SearchGroup[]>([]);
@@ -15,7 +15,6 @@ export function useSearchBar() {
   const params = useSearchParams();
   const initialEncodedSearchQuery = params.get("search") ?? "";
 
-  const { subjects, isLoading } = useSubjects();
   const [courseSearchQuery, setCourseSearchQuery] = useAtom(courseSearchQueryAtom);
   const [searchGroups, setSearchGroups] = useAtom(searchGroupsAtom);
   const [searchResults, setSearchResults] = useAtom(searchResultsAtom);
@@ -25,24 +24,14 @@ export function useSearchBar() {
     setCourseSearchQuery(searchQuery);
   }, [initialEncodedSearchQuery]);
 
-  const subjectCodes = (subjects ?? []).map((subject) => subject.code);
-
   const doSearch = (searchQuery: string) => {
-    const s = getSearchGroups({ query: searchQuery, subjectCodes });
-    console.log(s);
-    
-    setCourseSearchQuery(s.value);
-    setSearchGroups(s.searchGroups);
+    const sg = getSearchGroups({ query: searchQuery });
+    setSearchGroups(sg);
 
     // Remember: setState is async!
-    searchCourses(s.searchGroups).then((courses)=>{
-      console.log(courses);
-      
+    searchCourses(sg).then((courses) => {
+      setSearchResults(courses);
     });
-
-    return {
-      formattedSearch: s.value,
-    };
   };
 
   return {

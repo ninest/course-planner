@@ -2,6 +2,7 @@
 
 import { FormField } from "@/components/form/form-field";
 import { Select } from "@/components/form/select";
+import { getSearchGroups, searchGroupsToQuery } from "@/utils/course/search";
 import { decodeSearchQuery, encodeSearchQuery } from "@/utils/string";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, FormEvent, KeyboardEvent, useEffect } from "react";
@@ -19,7 +20,7 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
   const router = useRouter();
   const params = useSearchParams();
 
-  const { setCourseSearchQuery, courseSearchQuery, doSearch } = useSearchBar();
+  const { doSearch } = useSearchBar();
 
   const initialSearch = decodeSearchQuery(params.get("search") || "");
   const { handleSubmit, control, setValue } = useForm<CourseSearchForm>({
@@ -30,43 +31,19 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
     console.log("onSubmit");
 
     const { search, term } = data;
-    console.log(search);
-    
+    const searchGroups = getSearchGroups({ query: search });
+    const cleanSearchQuery = searchGroupsToQuery(searchGroups);
 
-    const { formattedSearch } = doSearch(search);
-    setValue("search", formattedSearch);
-
-    const searchQuery = encodeSearchQuery(formattedSearch);
+    const searchQuery = encodeSearchQuery(cleanSearchQuery);
     router.push(`?search=${searchQuery}`);
+    setValue("search", cleanSearchQuery);
   });
 
-  // If there is an initial search, get the results
+  // Search when the url changes
   useEffect(() => {
     console.log("iniital search change");
-    onSubmit();
+    doSearch(initialSearch);
   }, [initialSearch]);
-
-  // const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const query = e.currentTarget.value;
-  //   setCourseSearchQuery(query);
-  // };
-
-  // const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-  //   if (e.key === "Enter") {
-  //     doSearch();
-  //     // const searchQuery = encodeSearchQuery(courseSearchQuery);
-  //     // router.push(`?search=${searchQuery}`);
-  //   }
-  // };
-
-  // const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(e.currentTarget);
-  //   const query = formData.get("search") as string;
-  //   const term = formData.get("term") as string;
-
-  //   setCourseSearchQuery(query);
-  // };
 
   return (
     <>
@@ -75,7 +52,8 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
           control={control}
           name="search"
           placeholder="Search courses, CRNs, ..."
-          inputClassName="flex-1 form-field rounded-r-none"
+          wrapperClassName="flex-1"
+          inputClassName="form-field rounded-r-none"
         />
         {/* <input
           type="text"

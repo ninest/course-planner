@@ -28,7 +28,7 @@ export function SearchResults({}: SearchResultsProps) {
                       </div>
                     )}
                     {group.type === "subject" && <div key={index}>{group.subjectCode} courses</div>}
-                    {group.type === "crn" && <div key={index}>CRN {group.crn} courses</div>}
+                    {group.type === "crn" && <div key={index}>CRN {group.crn}</div>}
                   </div>
                 );
               })}
