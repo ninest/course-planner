@@ -30,7 +30,10 @@ export const SectionItem = ({
   planId,
   ...props
 }: SectionItemProps) => {
-  const professorsAvailable = section.faculty && section.faculty.length > 0;
+  // Faculty should be same even if there are separate meeting times
+  const faculty = section.meetingTimes[0].faculty 
+
+  const professorsAvailable = faculty && faculty.length > 0;
   const professors = getSectionProfessors(section);
   const showSectionTime = section?.startTime && section?.endTime;
   // Only show campus if not Boston
