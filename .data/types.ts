@@ -1,5 +1,5 @@
 export const campuses = ["nu", "cps", "law"] as const;
-export type Campus = typeof campuses[number];
+export type Campus = (typeof campuses)[number];
 
 export interface Term {
   code: string;
@@ -40,7 +40,7 @@ export type PrerequisiteItem = "Or" | "And" | "(" | ")" | Requisite | string;
 export type MinimizedCourse = Pick<Course, "subject" | "number" | "title" | "sections">;
 
 export const nuPath = ["ND", "EI", "IC", "FQ", "SI", "AD", "DD", "ER", "WF", "WD", "WI", "EX", "CE"] as const;
-export type NUPath = typeof nuPath[number];
+export type NUPath = (typeof nuPath)[number];
 export const nuPathMap: Record<NUPath, string> = {
   ND: "Natural/Designed World",
   EI: "Creative Express/Innov",
@@ -72,7 +72,7 @@ export interface Professor {
 }
 
 export const daysOfWeek = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"] as const;
-export type DayOfWeek = typeof daysOfWeek[number];
+export type DayOfWeek = (typeof daysOfWeek)[number];
 
 export interface MeetingTime {
   startTime: string;
@@ -100,7 +100,7 @@ export interface Seats {
 }
 
 export interface Section extends SectionInfo {
-  meetingTimes: FacultyMeetingTime[]
+  meetingTimes: FacultyMeetingTime[];
   seats: Seats;
 }
 
