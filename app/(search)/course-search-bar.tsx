@@ -2,8 +2,10 @@
 
 import { FormField } from "@/components/form/form-field";
 import { Select } from "@/components/form/select";
+import { useTerms } from "@/hooks/fetching/use-terms";
 import { getSearchGroups, searchGroupsToQuery } from "@/utils/course/search";
 import { decodeSearchQuery, encodeSearchQuery } from "@/utils/string";
+import { groupTermsByYear } from "@/utils/term/group";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, FormEvent, KeyboardEvent, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -28,8 +30,6 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
-
     const { search, term } = data;
     const searchGroups = getSearchGroups({ query: search });
     const cleanSearchQuery = searchGroupsToQuery(searchGroups);
@@ -43,6 +43,21 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
   useEffect(() => {
     doSearch(initialSearch);
   }, [initialSearch]);
+
+  const { terms } = useTerms();
+  const termGroups = groupTermsByYear(terms ?? []);
+
+  console.log(termGroups);
+
+  const options = termGroups.map((group) => ({
+    type: "optgroup" as const,
+    name: `${group.year-1}-${group.year}`,
+    options: group.terms.map((term) => ({
+      type: "option" as const,
+      title: term.description,
+      value: term.code,
+    })),
+  }));
 
   return (
     <>
@@ -58,11 +73,8 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
         <Select
           control={control}
           name="term"
-          options={[
-            { title: "All", value: "all" },
-            { title: "Fall 2023", value: "202310" },
-          ]}
-          className="text-center w-[8rem] rounded-l-none border-l-0"
+          options={[{ type: "option", title: "All", value: "all" }, ...options]}
+          className="text-sm w-[9rem] rounded-l-none border-l-0"
         />
       </form>
     </>

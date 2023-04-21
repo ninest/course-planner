@@ -1,7 +1,7 @@
 import { Term } from "@/.data/types";
 
 export async function getTerms() {
-  const response = await fetch(`https://nu-courses/terms}`);
+  const response = await fetch(`https://nu-courses.deno.dev/terms`);
 
   if (!response.ok) throw new Error(`Error in fetching terms }`);
 
@@ -10,7 +10,7 @@ export async function getTerms() {
 }
 
 export async function getTerm(termCode: string) {
-  const response = await fetch(`https://nu-courses/terms/${termCode}`);
+  const response = await fetch(`https://nu-courses.deno.dev/terms/${termCode}`);
 
   if (!response.ok) throw new Error(`Error in fetching term ${termCode}`);
 
