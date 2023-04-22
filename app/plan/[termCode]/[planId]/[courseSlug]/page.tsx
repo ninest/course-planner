@@ -20,7 +20,7 @@ export default async function CourseQueryPage({ params }: CourseQueryProps) {
   return (
     <>
       <div className="px-5 mt-5">
-        <SubPageBackButton href={`/${params.termCode}/${params.planId}`} />
+        <SubPageBackButton href={`/plan/${params.termCode}/${params.planId}`} />
         <h2 className="my-1 font-bold">
           {course.subject} {course.number}: {course.title}
         </h2>

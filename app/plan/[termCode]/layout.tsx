@@ -1,7 +1,7 @@
 import { getValuesFromTerm } from "@/utils/term/string";
 import { ReactNode } from "react";
 import terms from "../../../.data/terms.json";
-import { PlannerHeader } from "./planner-header";
+import { PlannerHeader } from "../planner-header";
 
 export const revalidate = 0; // no cache
 export const dynamic = "force-static";
@@ -18,11 +18,7 @@ export default function TermLayout({ params, children }: TermLayoutProps) {
   const { year, description } = getValuesFromTerm(term);
   return (
     <main>
-      <PlannerHeader
-        termCode={term.code}
-        description={description}
-        year={year!}
-      />
+      <PlannerHeader termCode={term.code} description={description} year={year!} />
       {children}
     </main>
   );

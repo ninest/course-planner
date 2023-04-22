@@ -10,5 +10,5 @@ export function useTerm(termCode: string) {
 export function useTerms() {
   const { isLoading, isError, isSuccess, data } = useQuery(["terms"], () => getTerms());
 
-  return { isLoading, isError, isSuccess, terms: data };
+  return { isTermsLoading: isLoading, isError, isSuccess, terms: data };
 }

@@ -7,8 +7,6 @@ import { useCurrentPlanId } from "@/utils/route";
 import clsx from "clsx";
 import { MoreVertical, Plus, Share } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
 interface PlannerHeaderProps {
   termCode: string;
@@ -90,7 +88,7 @@ const PlannerTabs = ({
           return (
             <Link
               key={plan.id}
-              href={`/${termCode}/${plan.id}`}
+              href={`/plan/${termCode}/${plan.id}`}
               className={clsx(
                 "h-7 inline-flex items-center py-1 px-3 text-sm  rounded-md",
                 {
@@ -104,7 +102,7 @@ const PlannerTabs = ({
           );
         })}
         <Link
-          href={`/${termCode}/new-plan`}
+          href={`/plan/${termCode}/new-plan`}
           className="h-7 inline-flex items-center py-1 px-3 text-sm bg-gray-100 rounded-md hover:bg-gray-200"
         >
           <Plus className="h-3 w-3" />

@@ -38,7 +38,7 @@ export default function NewPlanPage({ params }: NewPlanPageProps) {
     }
 
     const newPlanId = createPlan(term.code, name);
-    router.push(`${term.code}/${newPlanId}`);
+    router.push(`/plan/${term.code}/${newPlanId}`);
   };
 
   return (

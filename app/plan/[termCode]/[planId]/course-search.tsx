@@ -96,7 +96,7 @@ export const CourseSearch = ({
             {/* Subjects */}
             <div className="space-y-1">
               <Link
-                href={`/${termCode}/${planId}/my-sections`}
+                href={`/plan/${termCode}/${planId}/my-sections`}
                 className="mb-2 w-full py-1 hover:bg-gray-100 rounded-md flex items-center justify-between"
               >
                 <div>My sections</div>
@@ -184,7 +184,7 @@ const CourseItem = ({ termCode, planId, course }: CourseItemProps) => {
   return (
     <Link
       key={`${course.subject}${course.number}`}
-      href={`${termCode}/${planId}/${courseToSlug(
+      href={`/plan/${termCode}/${planId}/${courseToSlug(
         `${course.subject} ${course.number}`
       )}`}
       className="block py-1 hover:bg-gray-100 rounded-md"

@@ -9,6 +9,7 @@ import { getSearchGroups } from "../../../utils/course/search";
 
 const courseSearchQueryAtom = atom("");
 const searchGroupsAtom = atom<SearchGroup[]>([]);
+const termAtom = atom<string>("all");
 const searchResultsAtom = atom<Course[]>([]);
 
 export function useSearchBar() {
@@ -17,6 +18,7 @@ export function useSearchBar() {
 
   const [courseSearchQuery, setCourseSearchQuery] = useAtom(courseSearchQueryAtom);
   const [searchGroups, setSearchGroups] = useAtom(searchGroupsAtom);
+  const [term, setTerm] = useAtom(termAtom);
   const [searchResults, setSearchResults] = useAtom(searchResultsAtom);
 
   useEffect(() => {
@@ -40,5 +42,7 @@ export function useSearchBar() {
     searchGroups,
     doSearch,
     searchResults,
+    term,
+    setTerm,
   };
 }

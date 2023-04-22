@@ -1,7 +1,7 @@
 import { groupTermsByYear } from "@/utils/term/group";
 import { getValuesFromTerm } from "@/utils/term/string";
 import Link from "next/link";
-import terms from "../.data/terms.json";
+import terms from "../../.data/terms.json";
 
 export default function HomePage() {
   const termsByYear = groupTermsByYear(terms);
@@ -20,14 +20,9 @@ export default function HomePage() {
                   const { description, year } = getValuesFromTerm(term);
 
                   return (
-                    <Link
-                      href={`/${term.code}`}
-                      key={term.code}
-                      className="block hover:underline"
-                    >
+                    <Link href={`/plan/${term.code}`} key={term.code} className="block hover:underline">
                       <h3>
-                        {description}{" "}
-                        <span className="text-gray-400">{year}</span>
+                        {description} <span className="text-gray-400">{year}</span>
                       </h3>
                     </Link>
                   );
