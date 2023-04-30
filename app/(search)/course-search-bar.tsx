@@ -73,15 +73,18 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
           name="search"
           placeholder="Search courses, CRNs, ..."
           wrapperClassName="flex-1"
-          inputClassName="form-field rounded-r-none"
+          inputClassName="h-10 form-field rounded-r-none"
         />
-        <div className="border" />
-        <Select
-          control={control}
-          name="term"
-          options={[{ type: "option", title: "All", value: "all" }, ...options]}
-          className="text-sm w-[9rem] rounded-l-none border-l-0"
-        />
+
+        <div className="h-10 form-field rounded-l-none">
+          <Select
+            control={control}
+            name="term"
+            options={[{ type: "option", title: "All", value: "all" }, ...options]}
+            // className="bg-gray-200 text-sm w-[9rem] p-2 rounded-l-none border-l-0"
+            className="bg-gray-200 w-[9rem] text-xs p-1 rounded "
+          />
+        </div>
       </form>
     </>
   );

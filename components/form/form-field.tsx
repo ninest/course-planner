@@ -28,7 +28,7 @@ export function FormField({ control, name, wrapperClassName, inputClassName, ...
     <fieldset className={clsx(wrapperClassName)}>
       {/* TODO: label */}
       {/* TODO: description */}
-      <input type={props.type} className={clsx(inputClassName, "block w-full form-field")} {...props} {...fieldProps} />
+      <input type={props.type} className={clsx(inputClassName, "block w-full")} {...props} {...fieldProps} />
       {/* TODO: textarea instead of input */}
       {/* TODO: error */}
     </fieldset>

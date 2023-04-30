@@ -6,7 +6,6 @@ import { Title } from "@/components/title";
 import { useCourse } from "@/hooks/fetching/use-course";
 import { useSearchUrlParam } from "@/hooks/search/url-param";
 import { slugToCourse2 } from "@/utils/course/course";
-import { useSearchParams } from "next/navigation";
 
 interface Props {
   params: { courseSlugs: string[] };
@@ -19,14 +18,14 @@ export default function CoursePage({ params }: Props) {
   const { course, isCourseLoading } = useCourse(subject, number);
 
   return (
-    <div className="p-5  w-full md:mx-auto md:max-w-[90ch]">
+    <div className="p-5 w-full md:mx-auto md:max-w-[90ch]">
       <div className="md:hidden mb-2">
         <SubPageBackButton href={`/?${param}`} />
       </div>
 
       {course && (
-        <div className="bg-gray-50 p-5 rounded-lg">
-          <Title className="mb-2">
+        <div className="mt-1 rounded-lg">
+          <Title className="mb-2 tabular-nums">
             {course.subject} {course.number}: {course.title}
           </Title>
 

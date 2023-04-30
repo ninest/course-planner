@@ -29,14 +29,7 @@ export function Select({ control, name, options, className, ...props }: SelectPr
 
   return (
     <>
-      <select
-        id={name}
-        name={name}
-        onChange={field.onChange}
-        value={field.value}
-        className={clsx("form-field focus:outline-none focus:border-2 appearance-none", className)}
-        {...props}
-      >
+      <select id={name} name={name} onChange={field.onChange} value={field.value} className={className} {...props}>
         {options.map((option, index) => {
           if (option.type === "optgroup")
             return (

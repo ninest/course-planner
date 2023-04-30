@@ -15,7 +15,7 @@ export function Title({ level = 2, children, ...props }: TitleProps) {
         "font-display tracking-normal",
         {
           "text-4xl font-bold": level == 1,
-          "text-2xl font-bold": level == 2,
+          "text-3xl font-black": level == 2,
           "text-xl": level == 3,
           "text-lg": level == 4,
         },
