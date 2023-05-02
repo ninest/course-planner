@@ -5,22 +5,23 @@ import { courseDescriptionToList } from "@/utils/course/course";
 import { useState } from "react";
 import { NUPathTable } from "./nu-path-table";
 import { RequisiteDisplay } from "./requisite-display";
+import { CourseHrefFn } from "./types";
 
 interface CourseInfoProps {
   course: Course;
+  courseHrefFn: CourseHrefFn;
 }
 
-export const CourseInfo = ({ course }: CourseInfoProps) => {
-  const descriptionList = course.description
-    ? courseDescriptionToList(course.description)
-    : [];
+export const CourseInfo = ({ course, courseHrefFn }: CourseInfoProps) => {
+  const descriptionList = course.description ? courseDescriptionToList(course.description) : [];
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-5">
       {/* Course type, credits */}
-      <section className="text-sm">
-        {course.scheduleType} - {course.credits} credits
+      <section className="flex justify-between">
+        <div>{course.scheduleType}</div>
+        <div>{course.credits} credits</div>
       </section>
 
       {/* Description */}
@@ -45,10 +46,7 @@ export const CourseInfo = ({ course }: CourseInfoProps) => {
 
       {/* Requisites */}
       <section>
-        <RequisiteDisplay
-          coreqs={course.coreqs ?? []}
-          prereqs={course.prereqs ?? []}
-        />
+        <RequisiteDisplay coreqs={course.coreqs ?? []} prereqs={course.prereqs ?? []} courseHrefFn={courseHrefFn} />
       </section>
     </div>
   );

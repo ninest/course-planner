@@ -1,3 +1,5 @@
+const defaultColors = require("tailwindcss/colors");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -8,6 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: defaultColors.indigo,
+      },
       fontSize: { xxs: "0.6rem" },
       gridTemplateColumns: {
         "week-view-mobile": "0.75rem repeat(5, minmax(0, 1fr))",

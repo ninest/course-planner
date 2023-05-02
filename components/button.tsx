@@ -8,7 +8,7 @@ const buttonStyles = cva(
   {
     variants: {
       intent: {
-        primary: ["bg-indigo-600 text-white hover:bg-indigo-500"],
+        primary: ["bg-primary-600 text-white hover:bg-primary-500"],
         secondary: ["bg-gray-200 text-gray-800 hover:bg-gray-300"],
         ghost: ["bg-transparent text-gray-800 hover:bg-gray-100"],
       },
@@ -27,7 +27,7 @@ const buttonStyles = cva(
         intent: "primary",
         outline: true,
         class: [
-          "bg-transparent text-indigo-600 border-indigo-600 hover:bg-gray-100",
+          "bg-transparent text-primary-600 border-primary-600 hover:bg-gray-100",
         ],
       },
       { intent: "ghost", size: "default", class: "!p-0.5" },

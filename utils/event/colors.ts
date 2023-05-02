@@ -27,7 +27,7 @@ export const availableColorKeys: EventColorKey[] = [
 export const eventColorsMap: Record<EventColorKey, EventColor> = {
   LIGHT_BLUE: {
     name: "Light blue",
-    className: "bg-indigo-50 text-indigo-600",
+    className: "bg-primary-50 text-primary-600",
   },
   LIGHT_GREEN: {
     name: "Light green",

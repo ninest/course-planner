@@ -4,7 +4,7 @@ export const courseToSlug = (courseSubjectNumber: string) => {
   return courseSubjectNumber.toUpperCase().replace(" ", "-");
 };
 
-export const courseToSlug2 = (course: Course) => `${course.subject}${course.number}`;
+export const courseToSlug2 = (course: Pick<Course, "subject" | "number">) => `${course.subject}${course.number}`;
 
 export const slugToCourse = (slug: string) => {
   const subject = slug.split("-")[0].toUpperCase();
@@ -12,7 +12,7 @@ export const slugToCourse = (slug: string) => {
   return { subject, number };
 };
 
-export const slugToCourse2 = (slug: string) => {
+export const slugToCourse2 = (slug: string): Pick<Course, "subject" | "number"> => {
   const lettersThenNumbersRe = /^([A-Za-z]{2,5})\s?(\d+)$/;
   const courseMatch = slug.match(lettersThenNumbersRe);
   if (!courseMatch) throw new Error(`Not a course slug: ${slug}`);

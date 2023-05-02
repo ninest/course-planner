@@ -93,7 +93,7 @@ const PlannerTabs = ({
                 "h-7 inline-flex items-center py-1 px-3 text-sm  rounded-md",
                 {
                   "bg-gray-100": selectedPlanId !== plan.id,
-                  "bg-indigo-100": selectedPlanId === plan.id,
+                  "bg-primary-100": selectedPlanId === plan.id,
                 }
               )}
             >

@@ -70,7 +70,7 @@ export const SectionsList = ({
                         className={clsx(
                           "flex items-center justify-center font-medium h-36",
                           {
-                            "border-2 border-indigo-600": highlighted,
+                            "border-2 border-primary-600": highlighted,
                           }
                         )}
                       >
@@ -123,7 +123,7 @@ export const SectionsList = ({
                       className={clsx(
                         "flex items-center justify-center font-medium h-36",
                         {
-                          "border-2 border-indigo-600": highlighted,
+                          "border-2 border-primary-600": highlighted,
                         }
                       )}
                     >

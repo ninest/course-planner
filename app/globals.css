@@ -4,9 +4,9 @@
 
 @layer components {
   .form-field {
-    /* @apply p-2 rounded-xl border-2 text-gray-700 focus:border-indigo-500;
+    /* @apply p-2 rounded-xl border-2 text-gray-700 focus:border-primary-500;
     @apply focus:outline-none; */
     @apply px-4 py-2 rounded-lg text-gray-700 bg-gray-50;
-    @apply focus:outline-none focus:outline-indigo-200 appearance-none;
+    @apply focus:outline-none focus:outline-primary-200 appearance-none;
   }
 }

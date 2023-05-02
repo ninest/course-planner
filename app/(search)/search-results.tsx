@@ -2,6 +2,7 @@
 
 import { CourseDetailList } from "@/components/course/course-detail-list";
 import { useTerms } from "@/hooks/fetching/use-terms";
+import { useUrlCourse } from "@/hooks/url/use-url-course";
 import { courseToSlug2 } from "@/utils/course/course";
 import { useSearchParams } from "next/navigation";
 import { useSearchBar } from "./hooks/use-search-bar";
@@ -12,15 +13,16 @@ interface SearchResultsProps {
 
 export function SearchResults({}: SearchResultsProps) {
   const { searchGroups, searchResults, term } = useSearchBar();
-  const { terms, isTermsLoading } = useTerms();
+  const { terms } = useTerms();
 
   const selectedTerm = terms?.find((t) => t.code === term);
 
   const params = useSearchParams();
+  const courses = useUrlCourse();
 
   return (
     <>
-      <div className="px-5">
+      <div className="px-5 mb-40">
         {/* Searching results for ... */}
         {searchGroups.length > 0 && (
           <section>
@@ -40,7 +42,7 @@ export function SearchResults({}: SearchResultsProps) {
                 );
               })}
 
-              <div className="text-xs rounded bg-indigo-100 py-0.5 px-1 mr-2 mb-2">
+              <div className="text-xs rounded bg-primary-100 py-0.5 px-1 mr-2 mb-2">
                 {selectedTerm?.description ?? "All terms"}
               </div>
             </div>
@@ -51,7 +53,8 @@ export function SearchResults({}: SearchResultsProps) {
             <CourseDetailList
               termCode={selectedTerm?.code ?? "all"}
               courses={searchResults}
-              hrefFn={(course) => `/${courseToSlug2(course)}?${params}`}
+              selectedCourses={courses}
+              courseHrefFn={(course) => `/${courseToSlug2(course)}?${params}`}
             />
           </section>
         )}

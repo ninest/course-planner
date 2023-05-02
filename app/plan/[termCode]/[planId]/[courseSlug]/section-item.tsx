@@ -101,10 +101,10 @@ export const SectionItem = ({
       id={section.crn}
       className={clsx(
         "@container",
-        "bg-gray-50 p-3 rounded-md hover:bg-indigo-50 border-2",
+        "bg-gray-50 p-3 rounded-md hover:bg-primary-50 border-2",
         {
           "border-transparent": !highlighted,
-          "border-indigo-600": highlighted,
+          "border-primary-600": highlighted,
         }
       )}
       onMouseEnter={() => setPreview(section.crn)}
