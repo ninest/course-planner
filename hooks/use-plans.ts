@@ -50,23 +50,24 @@ export const usePlans = () => {
     const randomColorKey = randomFromList(availableColorKeys);
 
     // Async online courses
-    if (section.online && section.days.length == 0) {
-      currentPlan.items.push({
-        type: "async-online-course-section",
-        id: section.crn,
-        color: randomColorKey,
-        course,
-        section,
-      });
-    } else {
-      currentPlan.items.push({
-        type: "course-section",
-        id: section.crn,
-        color: randomColorKey,
-        course,
-        section,
-      });
-    }
+    // TODO: fix
+    // if (section.online && section.days.length == 0) {
+    //   currentPlan.items.push({
+    //     type: "async-online-course-section",
+    //     id: section.crn,
+    //     color: randomColorKey,
+    //     course,
+    //     section,
+    //   });
+    // } else {
+    //   currentPlan.items.push({
+    //     type: "course-section",
+    //     id: section.crn,
+    //     color: randomColorKey,
+    //     course,
+    //     section,
+    //   });
+    // }
 
     newPlans[currentPlanIndex] = currentPlan;
     setPlans(newPlans);

@@ -30,26 +30,28 @@ export const newPlan = (params: NewPlanParams): CoursePlan => {
 };
 
 // Get all events that have a time and can be displayed on a calendar
+// TODO: fix
 export const getPlanTimedEvents = (plan: CoursePlan): CalendarEvent[] => {
-  return (
-    plan?.items
-      .filter(
-        (item): item is CourseSectionCalendarEvent =>
-          item.type === "course-section"
-      )
-      .map((item) => {
-        return item.section.days.map((day) => ({
-          id: item.section.crn,
-          day: dayToNumber(day),
-          startTime: stringTimeToTime(item.section.startTime),
-          endTime: stringTimeToTime(item.section.endTime),
-          title: courseShortTitle(item.course),
-          subtitle: getSectionLocation(item.section),
-          color: item.color,
-        }));
-      })
-      .flat() ?? []
-  );
+  return []
+  // return (
+  //   plan?.items
+  //     .filter(
+  //       (item): item is CourseSectionCalendarEvent =>
+  //         item.type === "course-section"
+  //     )
+  //     .map((item) => {
+  //       return item.section.days.map((day) => ({
+  //         id: item.section.crn,
+  //         day: dayToNumber(day),
+  //         startTime: stringTimeToTime(item.section.startTime),
+  //         endTime: stringTimeToTime(item.section.endTime),
+  //         title: courseShortTitle(item.course),
+  //         subtitle: getSectionLocation(item.section),
+  //         color: item.color,
+  //       }));
+  //     })
+  //     .flat() ?? []
+  // );
 };
 
 export const getPlanSectionCrns = (plan: CoursePlan): string[] => {
