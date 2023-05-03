@@ -1,8 +1,8 @@
-import { Course } from "@/.data/types";
+import { Course, MinimizedCourse } from "@/.data/types";
 import { getCourse } from "@/api/courses";
 import { useQueries, useQuery } from "@tanstack/react-query";
 
-export function useCourse(course: Pick<Course, "subject" | "number">) {
+export function useCourse(course: MinimizedCourse) {
   const { isLoading, isError, isSuccess, data } = useQuery(["course", course.subject, course.number], () =>
     getCourse(course.subject, course.number)
   );
@@ -10,7 +10,7 @@ export function useCourse(course: Pick<Course, "subject" | "number">) {
   return { isCourseLoading: isLoading, isError, isSuccess, course: data };
 }
 
-export function useCourses(courses: Pick<Course, "subject" | "number">[]) {
+export function useCourses(courses: MinimizedCourse[]) {
   const results = useQueries({
     queries: courses.map((course) => ({
       queryKey: ["course", course.subject, course.number],

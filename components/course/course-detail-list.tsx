@@ -8,7 +8,7 @@ import { CourseHrefFn } from "./types";
 interface CourseDetailListProps {
   termCode?: string;
   courses: Course[];
-  selectedCourses?: Pick<Course, "subject" | "number">[];
+  selectedCourses?: MinimizedCourse[];
   courseHrefFn: CourseHrefFn;
 }
 
