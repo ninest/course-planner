@@ -10,6 +10,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchBar } from "./hooks/use-search-bar";
+import { useGetNewSearchUrlParam } from "@/hooks/url/use-search-url-param";
 
 interface CourseSearchBarProps {}
 
@@ -48,8 +49,13 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
   }, [initialSearch]);
 
   // Change term
+  const { getNewSearchUrlParam } = useGetNewSearchUrlParam()
   useEffect(() => {
-    setTerm(getValues("term"));
+    const term = getValues('term')
+    const params = getNewSearchUrlParam({ term })
+    router.push(`?${params}`);
+    setTerm(term);
+    console.log('watched term')
   }, [watch("term")]);
 
   const { terms } = useTerms();
