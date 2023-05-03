@@ -13,13 +13,11 @@ interface CourseDetailListProps {
 }
 
 export function CourseDetailList({ termCode, courses, selectedCourses, courseHrefFn }: CourseDetailListProps) {
-  const coursesInTerm = courses.filter((course) =>
-    termCode === "all" ? courses : hasSectionInTerm(course, termCode ?? "")
-  );
-
   return (
     <div className="space-y-0.5">
-      {coursesInTerm.map((course, index) => {
+      {/* TODO: put courses in term at the top */}
+      {courses.map((course, index) => {
+        const isInTerm = termCode === "all" || hasSectionInTerm(course, termCode ?? "")
         const isSelected = selectedCourses?.find((sc) => sc.number === course.number && sc.subject === course.subject);
         return (
           <Link
@@ -28,6 +26,7 @@ export function CourseDetailList({ termCode, courses, selectedCourses, courseHre
             className={clsx("block -mx-1 py-1 px-1 rounded-md", {
               "hover:bg-gray-100": !isSelected,
               "bg-primary-50": isSelected,
+              "opacity-50 hover:opacity-100": !isInTerm
             })}
           >
             <CourseDetail termCode={termCode} course={course} />
