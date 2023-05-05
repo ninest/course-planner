@@ -2,7 +2,7 @@
 
 import { CourseDetailList } from "@/components/course/course-detail-list";
 import { useTerms } from "@/hooks/fetching/use-terms";
-import { useUrlCourse } from "@/hooks/url/use-url-course";
+import { useUrlCourse } from "@/app/(search)/hooks/use-search-url-course";
 import { courseToSlug2 } from "@/utils/course/course";
 import { useSearchParams } from "next/navigation";
 import { useSearchBar } from "./hooks/use-search-bar";
@@ -42,7 +42,7 @@ export function SearchResults({}: SearchResultsProps) {
                 );
               })}
 
-              <div className="text-xs rounded bg-primary-100 py-0.5 px-1 mr-2 mb-2">
+              <div className="text-xs rounded bg-primary-50 py-0.5 px-1 mr-2 mb-2">
                 {selectedTerm?.description ?? "All terms"}
               </div>
             </div>

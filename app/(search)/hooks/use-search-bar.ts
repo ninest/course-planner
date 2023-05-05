@@ -1,6 +1,5 @@
 import { Course, SearchGroup } from "@/.data/types";
 import { searchCourses } from "@/api/search";
-import { useSubjects } from "@/hooks/fetching/use-subjects";
 import { decodeSearchQuery } from "@/utils/string";
 import { atom, useAtom } from "jotai";
 import { useSearchParams } from "next/navigation";

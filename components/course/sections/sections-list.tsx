@@ -1,61 +1,54 @@
 "use client";
-import { Course, Section } from "@/.data/types";
+
+import { Course, MinimizedCourse } from "@/.data/types";
 import { Empty } from "@/components/Empty";
+import { useSections } from "@/hooks/fetching/use-sections";
+import { removeDuplicates } from "@/utils/list";
 import clsx from "clsx";
+import { ComponentProps } from "react";
 import { SectionItem } from "./section-item";
 
-export interface SectionsListProps {
+interface SectionListProps extends ComponentProps<"div"> {
   termCode: string;
-  isLoading: boolean;
-  courses: Course[];
-  sections: (Section | null)[];
-  planId?: string;
+  course: Course;
 }
 
-export const SectionsList = ({
-  termCode,
-  isLoading = false,
-  courses,
-  sections,
-  planId,
-}: SectionsListProps) => {
+export function SectionList({ termCode, course, className }: SectionListProps) {
+  const { isLoading, sections } = useSections(termCode, course.subject, course.number);
+
+  // Get list of CRNs to display loading state
+  const crns = removeDuplicates(
+    course.sections.filter((section) => section.term === termCode).map((section) => section.crn)
+  );
+
   return (
-    <div className="space-y-2">
-      {isLoading
-        ? sections
-            // .filter((section) => section.term === termCode)
-            // .slice()
-            .map((section, index) => {
-              return (
-                <Empty
-                  key={index}
-                  className={clsx(
-                    "flex items-center justify-center font-medium h-36"
-                    // {
-                    //   "border-2 border-primary-600": highlighted,
-                    // }
-                  )}
-                >
-                  Loading section ...
-                </Empty>
-              );
-            })
-        : sections.map((section) => {
-            if (!section) return "Failed to load :/";
-            const course = courses.find((course) =>
-              course.sections.find(
-                (sectionInfo) => sectionInfo.crn === section.crn
-              )
-            )!;
+    <div className={clsx(className, "space-y-2")}>
+      {crns.map((crn) => {
+        return <SectionItem key={crn} termCode={termCode} course={course} crn={crn} />;
+      })}
+      {/* {isLoading && !sections && (
+        <>
+          {crns.map((crn) => {
             return (
-              <SectionItem
-                key={section.crn}
-                course={course}
-                section={section}
-                planId={planId}
-              />
+              <Empty key={crn} className="flex items-center justify-center font-medium h-36">
+                Loading CRN {crn} ...
+              </Empty>
             );
           })}
+        </>
+      )} */}
+
+      {/* {sections && (
+        <>
+          {sections.map((section, index) => {
+            if (section) return <SectionItem key={index} course={course} section={section} />;
+            else
+              <Empty key={index} className="flex items-center justify-center font-medium h-36">
+                Error?
+              </Empty>;
+          })}
+        </>
+      )} */}
     </div>
   );
-};
+}

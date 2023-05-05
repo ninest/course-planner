@@ -6,11 +6,11 @@ import { useTerms } from "@/hooks/fetching/use-terms";
 import { getSearchGroups, searchGroupsToQuery } from "@/utils/course/search";
 import { decodeSearchQuery, encodeSearchQuery } from "@/utils/string";
 import { groupTermsByYear } from "@/utils/term/group";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchBar } from "./hooks/use-search-bar";
-import { useGetNewSearchUrlParam } from "@/hooks/url/use-search-url-param";
+import { useGetNewSearchUrlParam } from "@/app/(search)/hooks/use-search-url-param";
 
 interface CourseSearchBarProps {}
 
@@ -22,6 +22,7 @@ interface CourseSearchForm {
 export function CourseSearchBar({}: CourseSearchBarProps) {
   const router = useRouter();
   const params = useSearchParams();
+  const pathname = usePathname();
 
   const { doSearch, setTerm } = useSearchBar();
 
@@ -38,7 +39,10 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
     const cleanSearchQuery = searchGroupsToQuery(searchGroups);
 
     const searchQuery = encodeSearchQuery(cleanSearchQuery);
-    router.push(`?term=${term}&search=${searchQuery}`);
+    console.log("searching, pushing");
+
+    // Pathname ahead so current course being viewed is not lost
+    router.push(`${pathname}?term=${term}&search=${searchQuery}`);
     setValue("search", cleanSearchQuery);
     setTerm(term);
   });
@@ -49,16 +53,20 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
   }, [initialSearch]);
 
   // Change term
-  const { getNewSearchUrlParam } = useGetNewSearchUrlParam()
+  const { getNewSearchUrlParam } = useGetNewSearchUrlParam();
+
   useEffect(() => {
-    const term = getValues('term')
-    const params = getNewSearchUrlParam({ term })
-    router.push(`?${params}`);
-    setTerm(term);
-    console.log('watched term')
+    const term = getValues("term");
+    const newParams = getNewSearchUrlParam({ term });
+
+    const paramsSame = params.toString() === newParams.toString();
+    if (!paramsSame) {
+      router.push(`${pathname}?${newParams}`);
+      setTerm(term);
+    }
   }, [watch("term")]);
 
-  const { terms } = useTerms();
+  const { isTermsLoading, terms } = useTerms();
   const termGroups = groupTermsByYear(terms ?? []);
 
   const options = termGroups.map((group) => ({
@@ -73,25 +81,28 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
 
   return (
     <>
-      <form className="flex" onSubmit={onSubmit}>
-        <FormField
-          control={control}
-          name="search"
-          placeholder="Search courses, CRNs, ..."
-          wrapperClassName="flex-1"
-          inputClassName="h-10 form-field rounded-r-none"
-        />
-
-        <div className="h-10 form-field rounded-l-none">
-          <Select
+      {isTermsLoading ? (
+        <div className="form-field h-10"></div>
+      ) : (
+        <form className="flex" onSubmit={onSubmit}>
+          <FormField
             control={control}
-            name="term"
-            options={[{ type: "option", title: "All", value: "all" }, ...options]}
-            // className="bg-gray-200 text-sm w-[9rem] p-2 rounded-l-none border-l-0"
-            className="bg-gray-200 w-[9rem] text-xs p-1 rounded "
+            name="search"
+            placeholder="Search courses, CRNs, ..."
+            wrapperClassName="flex-1"
+            inputClassName="h-10 form-field pr-0 rounded-r-none"
           />
-        </div>
-      </form>
+
+          <div className="h-10 form-field rounded-l-none">
+            <Select
+              control={control}
+              name="term"
+              options={[{ type: "option", title: "All", value: "all" }, ...options]}
+              className="bg-gray-200 w-[8rem] text-xs  rounded "
+            />
+          </div>
+        </form>
+      )}
     </>
   );
 }

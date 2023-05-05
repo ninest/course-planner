@@ -1,5 +1,5 @@
 "use client";
-import { SectionsList } from "@/components/course/sections/sections-list";
+import { SectionsList } from "@/components/course/sections/OLD_sections-list";
 import { Empty } from "@/components/Empty";
 import { SubPageBackButton } from "@/components/sub-page-back-button";
 import { useMultipleSections } from "@/hooks/fetching/use-sections";
@@ -15,7 +15,7 @@ export default function MySectionsPage({ params }: MySectionsPageProps) {
   const plan = planById(params.planId);
   if (!plan) throw new Error("Invalid plan");
 
-  const { sections, isLoading, isError } = useMultipleSections(params.termCode, getPlanSectionCrns(plan));
+  // const { sections, isLoading, isError } = useMultipleSections(params.termCode, getPlanSectionCrns(plan));
 
   return (
     <>
@@ -25,13 +25,14 @@ export default function MySectionsPage({ params }: MySectionsPageProps) {
 
         <>
           {plan.items.length > 0 ? (
-            <SectionsList
-              termCode={params.termCode}
-              isLoading={isLoading}
-              courses={getPlanCourses(plan)}
-              sections={sections ?? []}
-              planId={params.planId}
-            />
+            <></>
+            // <SectionsList
+            //   termCode={params.termCode}
+            //   isLoading={isLoading}
+            //   courses={getPlanCourses(plan)}
+            //   sections={sections ?? []}
+            //   planId={params.planId}
+            // />
           ) : (
             <Empty className="p-2">No events added. Go back and add one</Empty>
           )}

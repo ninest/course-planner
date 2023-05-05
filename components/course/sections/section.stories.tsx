@@ -1,5 +1,5 @@
 import { Course, Section } from "@/.data/types";
-import { SectionsList } from "./sections-list";
+import { SectionsList } from "./OLD_sections-list";
 
 export const SectionDemo = () => {
   // const cs2500: Course = {

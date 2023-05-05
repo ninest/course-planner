@@ -17,7 +17,7 @@ export const CourseInfo = ({ course, courseHrefFn }: CourseInfoProps) => {
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-3">
       {/* Course type, credits */}
       <section className="flex justify-between">
         <div>{course.scheduleType}</div>

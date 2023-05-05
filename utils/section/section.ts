@@ -1,12 +1,8 @@
-import { Section } from "@/.data/types";
+import { MeetingTime, Section } from "@/.data/types";
 
-export const getSectionLocation = (section: Section) => {
-  return "TODO: "
-  // return section.online
-  //   ? "Online"
-  //   : `${section.building.description} ${section.building.room}`;
+export const getMeetingTimeLocation = (meetingTime: MeetingTime) => {
+  return meetingTime.online ? "Online" : `${meetingTime.building.description} ${meetingTime.building.room}`;
 };
-
 
 export const getSectionProfessors = (section: Section) =>
   section.meetingTimes[0].faculty.map((professor) => professor.name).join("; ");

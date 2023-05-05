@@ -7,6 +7,7 @@ import { CourseSearchBar } from "./course-search-bar";
 import { SearchResults } from "./search-results";
 
 export default function SearchLayout({ children }: { children: ReactNode }) {
+  // TODO: make this a server component, get pathname somehow https://stackoverflow.com/questions/75362636/how-can-i-get-the-url-pathname-on-a-server-component-next-js-13
   const pathname = usePathname();
   const showingCourses = pathname !== "/";
 
@@ -23,7 +24,7 @@ export default function SearchLayout({ children }: { children: ReactNode }) {
       {/* Desktop */}
       <div className="hidden md:flex md:h-screen">
         <div className="md:w-[300px] lg:w-[400px] md:overflow-y-scroll md:border-r">
-          <div className="bg-white/90 backdrop-blur-sm p-5 sticky top-0">
+          <div className="bg-white/90 z-10 backdrop-blur-sm p-5 sticky top-0">
             <CourseSearchBar />
           </div>
           <SearchResults />
