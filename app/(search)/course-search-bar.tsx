@@ -84,21 +84,21 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
       {isTermsLoading ? (
         <div className="form-field h-10"></div>
       ) : (
-        <form className="flex" onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className="flex group rounded-md focus-within:ring-2 ring-offset-2 ring-primary-200">
           <FormField
             control={control}
             name="search"
             placeholder="Search courses, CRNs, ..."
             wrapperClassName="flex-1"
-            inputClassName="h-10 form-field pr-0 rounded-r-none"
+            inputClassName="h-10 form-field pr-0 rounded-r-none focus:ring-0"
           />
 
-          <div className="h-10 form-field rounded-l-none">
+          <div className="flex-0 h-10 form-field rounded-l-none flex items-end pl-0">
             <Select
               control={control}
               name="term"
               options={[{ type: "option", title: "All", value: "all" }, ...options]}
-              className="bg-gray-200 w-[8rem] text-xs  rounded "
+              className="form-field bg-gray-200 text-xs rounded p-1 min-w-[3rem]"
             />
           </div>
         </form>

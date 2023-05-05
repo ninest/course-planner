@@ -1,15 +1,11 @@
 import { Course, Section } from "@/.data/types";
 import { nanoid } from "nanoid";
-import { courseShortTitle } from "../course/course";
 import { courseContainsSection } from "../course/functions";
-import { dayToNumber } from "../date/days";
 import { CalendarEvent } from "../event/types";
-import { getSectionLocation } from "../section/section";
-import { stringTimeToTime } from "../time/time";
 import {
   AsyncOnlineSectionCalendarEvent,
   CoursePlan,
-  CourseSectionCalendarEvent,
+  CourseSectionCalendarEvent
 } from "./types";
 
 // Create a new plan
