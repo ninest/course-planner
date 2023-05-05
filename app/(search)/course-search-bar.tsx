@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchBar } from "./hooks/use-search-bar";
 import { useGetNewSearchUrlParam } from "@/app/(search)/hooks/use-search-url-param";
+import { useSubjects } from "@/hooks/fetching/use-subjects";
 
 interface CourseSearchBarProps {}
 
@@ -24,7 +25,10 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
   const params = useSearchParams();
   const pathname = usePathname();
 
-  const { doSearch, setTerm } = useSearchBar();
+  const { subjects } = useSubjects();
+  const subjectCodes = (subjects ?? []).map((subject) => subject.code);
+
+  const { doSearch, setTerm } = useSearchBar(subjectCodes);
 
   const initialSearch = decodeSearchQuery(params.get("search") || "");
   const initialTerm = params.get("term") || "all";

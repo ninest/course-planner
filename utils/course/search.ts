@@ -1,10 +1,19 @@
 import { SearchGroup } from "@/.data/types";
 
 interface GetSearchGroupsParams {
+  subjectCodes: string[];
   query: string;
 }
-export function getSearchGroups({ query }: GetSearchGroupsParams): SearchGroup[] /* GetSearchGroupsResult */ {
-  const parts = query.split(",").map((part) => part.trim());
+
+export function getSearchGroups({
+  subjectCodes,
+  query,
+}: GetSearchGroupsParams): SearchGroup[] /* GetSearchGroupsResult */ {
+  // Remove all periods, slashes, semicolons, other punctuation
+  // TODO: use regex?
+  const parts = query
+    .split(",")
+    .map((part) => part.trim().replaceAll(".", "").replaceAll("?", "").replaceAll("/", "").replaceAll(";", ""));
 
   const searchGroups: SearchGroup[] = [];
 
@@ -20,7 +29,12 @@ export function getSearchGroups({ query }: GetSearchGroupsParams): SearchGroup[]
       searchGroup = { type: "subject", subjectCode };
     }
 
+    // Check if subject code followed by query
+    // Example "CS fundamentals", "CS datab"
+    
+
     // Check if subject code and number (ex. `CS3400` or `CS 3400`)
+    // TODO: allow for multiple spaces between subject code and number
     const lettersThenNumbersRe = /^([A-Za-z]{2,5})\s?(\d+)$/;
     const courseMatch = part.match(lettersThenNumbersRe);
     if (courseMatch) {

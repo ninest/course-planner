@@ -11,7 +11,7 @@ const searchGroupsAtom = atom<SearchGroup[]>([]);
 const termAtom = atom<string>("all");
 const searchResultsAtom = atom<Course[]>([]);
 
-export function useSearchBar() {
+export function useSearchBar(subjectCodes: string[]) {
   const params = useSearchParams();
   const initialEncodedSearchQuery = params.get("search") ?? "";
 
@@ -26,7 +26,7 @@ export function useSearchBar() {
   }, [initialEncodedSearchQuery]);
 
   const doSearch = (searchQuery: string) => {
-    const sg = getSearchGroups({ query: searchQuery });
+    const sg = getSearchGroups({ subjectCodes, query: searchQuery });
     setSearchGroups(sg);
 
     // Remember: setState is async!
