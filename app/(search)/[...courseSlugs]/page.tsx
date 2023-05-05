@@ -62,8 +62,6 @@ export default function CoursePage({ params }: Props) {
 
                   <SectionTermMatrix className="mt-4" terms={getCourseTerms(course)} />
 
-                  <Debug className="mt-3" data={course} />
-
                   <Title className="mt-4" level={3}>
                     Sections
                   </Title>

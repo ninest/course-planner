@@ -9,7 +9,6 @@ export function getSearchGroups({ query }: GetSearchGroupsParams): SearchGroup[]
   const searchGroups: SearchGroup[] = [];
 
   parts.forEach((part) => {
-    // let newPart: null | string = null;
     let searchGroup: SearchGroup | null = null;
 
     // Check if subject code
@@ -25,8 +24,6 @@ export function getSearchGroups({ query }: GetSearchGroupsParams): SearchGroup[]
     const lettersThenNumbersRe = /^([A-Za-z]{2,5})\s?(\d+)$/;
     const courseMatch = part.match(lettersThenNumbersRe);
     if (courseMatch) {
-      // newPart = part.toUpperCase();
-
       const subjectCode = courseMatch[1].toUpperCase();
       const courseNumber = courseMatch[2];
       searchGroup = {
@@ -49,8 +46,7 @@ export function getSearchGroups({ query }: GetSearchGroupsParams): SearchGroup[]
     if (searchGroup) searchGroups.push(searchGroup);
   });
 
-  // const value = textGroups.join(",");
-  return searchGroups; //{ searchGroups, value };
+  return searchGroups;
 }
 
 // Convert searchGroups to the string search query used to get these searchGroups
