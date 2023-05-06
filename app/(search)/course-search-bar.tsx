@@ -28,6 +28,8 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
   const { subjects } = useSubjects();
   const subjectCodes = (subjects ?? []).map((subject) => subject.code);
 
+  const { isTermsLoading, terms } = useTerms();
+
   const { doSearch, setTerm } = useSearchBar(subjectCodes);
 
   const initialSearch = decodeSearchQuery(params.get("search") || "");
@@ -39,11 +41,9 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
 
   const onSubmit = handleSubmit((data) => {
     const { search, term } = data;
-    const searchGroups = getSearchGroups({ query: search });
+    const searchGroups = getSearchGroups({ subjectCodes, query: search });
     const cleanSearchQuery = searchGroupsToQuery(searchGroups);
-
     const searchQuery = encodeSearchQuery(cleanSearchQuery);
-    console.log("searching, pushing");
 
     // Pathname ahead so current course being viewed is not lost
     router.push(`${pathname}?term=${term}&search=${searchQuery}`);
@@ -70,7 +70,6 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
     }
   }, [watch("term")]);
 
-  const { isTermsLoading, terms } = useTerms();
   const termGroups = groupTermsByYear(terms ?? []);
 
   const options = termGroups.map((group) => ({

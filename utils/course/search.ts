@@ -5,10 +5,7 @@ interface GetSearchGroupsParams {
   query: string;
 }
 
-export function getSearchGroups({
-  subjectCodes,
-  query,
-}: GetSearchGroupsParams): SearchGroup[] /* GetSearchGroupsResult */ {
+export function getSearchGroups({ subjectCodes, query }: GetSearchGroupsParams): SearchGroup[] {
   // Remove all periods, slashes, semicolons, other punctuation
   // TODO: use regex?
   const parts = query
@@ -26,12 +23,12 @@ export function getSearchGroups({
     const subjectMatch = part.match(lettersRe);
     if (subjectMatch) {
       const subjectCode = subjectMatch[1].toUpperCase();
-      searchGroup = { type: "subject", subjectCode };
+      const validSubjectCode = subjectCodes.includes(subjectCode);
+      if (validSubjectCode) {
+        searchGroup = { type: "subject", subjectCode };
+        searchGroups.push(searchGroup);
+      }
     }
-
-    // Check if subject code followed by query
-    // Example "CS fundamentals", "CS datab"
-    
 
     // Check if subject code and number (ex. `CS3400` or `CS 3400`)
     // TODO: allow for multiple spaces between subject code and number
@@ -39,12 +36,43 @@ export function getSearchGroups({
     const courseMatch = part.match(lettersThenNumbersRe);
     if (courseMatch) {
       const subjectCode = courseMatch[1].toUpperCase();
-      const courseNumber = courseMatch[2];
+      const validSubjectCode = subjectCodes.includes(subjectCode);
+      if (validSubjectCode) {
+        const courseNumber = courseMatch[2];
+        searchGroup = {
+          type: "course",
+          subjectCode,
+          courseNumber,
+        };
+        searchGroups.push(searchGroup);
+        return;
+      }
+    }
+
+    // Check if subject code followed by query
+    // Example "CS fundamentals", "CS datab"
+    const subjectThenQueryRe = /^(\w{2,5})\s(.*)/;
+    const subjectQueryMatch = part.match(subjectThenQueryRe);
+    if (subjectQueryMatch) {
+      const subjectCode = subjectQueryMatch[1].toUpperCase();
+      const validSubjectCode = subjectCodes.includes(subjectCode);
+      if (validSubjectCode) {
+        const query = subjectQueryMatch[2];
+        searchGroup = { type: "subject-query", subjectCode, query };
+        searchGroups.push(searchGroup);
+      }
+    }
+
+    // Either 1 to 4 numbers, not more
+    const courseNumberRe = /^\d{1,4}(?!\d)$/;
+    const courseNumberMatch = part.match(courseNumberRe);
+    if (courseNumberMatch) {
+      const courseNumber = courseNumberMatch[0];
       searchGroup = {
-        type: "course",
-        subjectCode,
+        type: "number",
         courseNumber,
       };
+      searchGroups.push(searchGroup);
     }
 
     // Check if CRN: exactly 5 digits
@@ -55,10 +83,11 @@ export function getSearchGroups({
         type: "crn",
         crn: part,
       };
+      searchGroups.push(searchGroup);
     }
-
-    if (searchGroup) searchGroups.push(searchGroup);
   });
+
+  console.log(searchGroups);
 
   return searchGroups;
 }
@@ -68,7 +97,9 @@ export function searchGroupsToQuery(searchGroups: SearchGroup[]) {
   const searchQueryItems: string[] = [];
   searchGroups.forEach((group) => {
     if (group.type === "course") searchQueryItems.push(`${group.subjectCode} ${group.courseNumber}`);
+    else if (group.type === "number") searchQueryItems.push(`${group.courseNumber}`);
     else if (group.type === "subject") searchQueryItems.push(`${group.subjectCode}`);
+    else if (group.type === "subject-query") searchQueryItems.push(`${group.subjectCode} ${group.query}`);
     else if (group.type === "crn") searchQueryItems.push(`${group.crn}`);
   });
   return searchQueryItems.join(", ");

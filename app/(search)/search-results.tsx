@@ -37,6 +37,9 @@ export function SearchResults({}: SearchResultsProps) {
                       </div>
                     )}
                     {group.type === "subject" && <div key={index}>{group.subjectCode} courses</div>}
+                    {group.type === "subject-query" && <div key={index}>{group.subjectCode} "{group.query}"</div>}
+                    {group.type === "number" && <div key={index}>{group.courseNumber} courses</div>}
+                    {group.type === "query" && <div key={index}>"{group.query}"</div>}
                     {group.type === "crn" && <div key={index}>CRN {group.crn}</div>}
                   </div>
                 );
