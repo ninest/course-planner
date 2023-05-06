@@ -6,13 +6,15 @@ import { useUrlCourse } from "@/app/(search)/hooks/use-search-url-course";
 import { courseToSlug2 } from "@/utils/course/course";
 import { useSearchParams } from "next/navigation";
 import { useSearchBar } from "./hooks/use-search-bar";
+import { useSubjectCodes } from "@/hooks/fetching/use-subjects";
 
 interface SearchResultsProps {
   // courses: Course[]
 }
 
 export function SearchResults({}: SearchResultsProps) {
-  const { searchGroups, searchResults, term } = useSearchBar();
+  const subjectCodes = useSubjectCodes();
+  const { searchGroups, searchResults, term } = useSearchBar(subjectCodes);
   const { terms } = useTerms();
 
   const selectedTerm = terms?.find((t) => t.code === term);
@@ -37,7 +39,11 @@ export function SearchResults({}: SearchResultsProps) {
                       </div>
                     )}
                     {group.type === "subject" && <div key={index}>{group.subjectCode} courses</div>}
-                    {group.type === "subject-query" && <div key={index}>{group.subjectCode} "{group.query}"</div>}
+                    {group.type === "subject-query" && (
+                      <div key={index}>
+                        {group.subjectCode} "{group.query}"
+                      </div>
+                    )}
                     {group.type === "number" && <div key={index}>{group.courseNumber} courses</div>}
                     {group.type === "query" && <div key={index}>"{group.query}"</div>}
                     {group.type === "crn" && <div key={index}>CRN {group.crn}</div>}

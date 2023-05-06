@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSearchBar } from "./hooks/use-search-bar";
 import { useGetNewSearchUrlParam } from "@/app/(search)/hooks/use-search-url-param";
-import { useSubjects } from "@/hooks/fetching/use-subjects";
+import { useSubjectCodes, useSubjects } from "@/hooks/fetching/use-subjects";
 
 interface CourseSearchBarProps {}
 
@@ -25,8 +25,7 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
   const params = useSearchParams();
   const pathname = usePathname();
 
-  const { subjects } = useSubjects();
-  const subjectCodes = (subjects ?? []).map((subject) => subject.code);
+  const subjectCodes = useSubjectCodes();
 
   const { isTermsLoading, terms } = useTerms();
 
@@ -39,7 +38,9 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
     defaultValues: { search: initialSearch, term: initialTerm },
   });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit((data, e) => {
+    e?.preventDefault();
+    
     const { search, term } = data;
     const searchGroups = getSearchGroups({ subjectCodes, query: search });
     const cleanSearchQuery = searchGroupsToQuery(searchGroups);
