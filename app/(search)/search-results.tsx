@@ -7,20 +7,24 @@ import { courseToSlug2 } from "@/utils/course/course";
 import { useSearchParams } from "next/navigation";
 import { useSearchBar } from "./hooks/use-search-bar";
 import { useSubjectCodes } from "@/hooks/fetching/use-subjects";
+import { useSearch } from "./hooks/use-search";
+import clsx from "clsx";
 
 interface SearchResultsProps {
   // courses: Course[]
 }
 
 export function SearchResults({}: SearchResultsProps) {
-  const subjectCodes = useSubjectCodes();
-  const { searchGroups, searchResults, term } = useSearchBar(subjectCodes);
+  const { subjectCodes } = useSubjectCodes();
+  const { searchGroups, searchResults, searchIsLoading, term } = useSearch({ subjectCodes });
   const { terms } = useTerms();
 
   const selectedTerm = terms?.find((t) => t.code === term);
 
   const params = useSearchParams();
   const courses = useUrlCourse();
+
+  // const isLoading = sea
 
   return (
     <>
@@ -57,8 +61,9 @@ export function SearchResults({}: SearchResultsProps) {
             </div>
           </section>
         )}
+
         {searchResults.length > 0 && (
-          <section className="mt-3">
+          <section className={clsx("mt-3")}>
             <CourseDetailList
               termCode={selectedTerm?.code ?? "all"}
               courses={searchResults}

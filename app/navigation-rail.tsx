@@ -3,7 +3,7 @@ import { FaSearch, FaTable } from "react-icons/fa";
 export function NavigationRail() {
   return (
     <div className="w-16 border-r h-full">
-      <div className="h-[5rem] p-5 flex justify-center">
+      <div className="h-[5rem] p-5 flex justify-center items-center">
         <div className="w-5 h-5 bg-gray-500 rounded-md"></div>
       </div>
       <div className="flex justify-center items-center">

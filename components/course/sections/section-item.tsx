@@ -38,7 +38,7 @@ export function SectionItem({ termCode, course, crn, className }: SectionItemPro
     <div className={clsx(className, "bg-gray-100 p-3 rounded-md ")}>
       <section className="flex items-center justify-between">
         {/* Professor */}
-        <div className="font-medium">{professorsAvailable ? professors : <i>Professors to be announced</i>}</div>
+        <div className="text-sm">{professorsAvailable ? professors : <i>Professors to be announced</i>}</div>
 
         {/* CRN display */}
         <div className="font-mono text-xs">{crn}</div>

@@ -33,10 +33,13 @@ export function Sections({ termCode, course, className, initiallyOpen = false }:
   const [open, setOpen] = useState(initiallyOpen);
 
   return (
-    <div className={clsx(className, "border rounded-md ")} onClick={() => setOpen(!open)}>
-      <div className="rounded-md p-3 sticky top-0 z-10 bg-white flex items-center justify-between">
-        <div className=" flex items-center space-x-3">
-          <Title level={4}>{termName}</Title>
+    <div className={clsx(className, "border rounded-md ")}>
+      <div
+        onClick={() => setOpen(!open)}
+        className="cursor-pointer rounded-md p-3 sticky top-0 z-10 bg-white flex items-center justify-between"
+      >
+        <div className=" flex flex-col md:flex-row md:items-center md:space-x-3">
+          <Title level={4} className="font-medium">{termName}</Title>
           <div className="tabular-nums text-gray-600 text-sm">
             {sections.length} sections, {!allLoaded && "at least"} {numSectionsWithSeats} with seats
           </div>

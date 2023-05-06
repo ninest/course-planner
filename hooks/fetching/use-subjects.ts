@@ -7,7 +7,7 @@ export function useSubjects() {
 }
 
 export function useSubjectCodes() {
-  const { subjects } = useSubjects();
+  const { isLoading, subjects } = useSubjects();
   const subjectCodes = (subjects ?? []).map((subject) => subject.code);
-  return subjectCodes;
+  return { subjectCodesIsLoading: isLoading, subjectCodes };
 }

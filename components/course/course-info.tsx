@@ -17,7 +17,7 @@ export const CourseInfo = ({ course, courseHrefFn }: CourseInfoProps) => {
   const [descriptionExpanded, setDescriptionExpanded] = useState(false);
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-6">
       {/* Course type, credits */}
       <section className="flex justify-between">
         <div>{course.scheduleType}</div>
@@ -42,7 +42,13 @@ export const CourseInfo = ({ course, courseHrefFn }: CourseInfoProps) => {
       )}
 
       {/* NUPath */}
-      <NUPathTable path={course.nuPath} />
+      <section>
+        {course.nuPath.length > 0 ? (
+          <NUPathTable path={course.nuPath} />
+        ) : (
+          <span className="text-gray-400 text-sm font-medium">No NUPath covered.</span>
+        )}
+      </section>
 
       {/* Requisites */}
       <section>

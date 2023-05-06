@@ -87,8 +87,6 @@ export function getSearchGroups({ subjectCodes, query }: GetSearchGroupsParams):
     }
   });
 
-  console.log(searchGroups);
-
   return searchGroups;
 }
 

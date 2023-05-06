@@ -12,10 +12,10 @@ interface RequisiteDisplayProps {
 
 export const RequisiteDisplay = ({ coreqs, prereqs, courseHrefFn }: RequisiteDisplayProps) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       {coreqs.length > 0 && (
-        <div>
-          <div className="text-sm mb-1">Co-requisites</div>
+        <div className="flex flex-col md:flex-row align-middle space-x-0 md:space-x-4">
+          <div className="text-sm mb-1 font-medium">Co-requisites</div>
           <div className="flex">
             {coreqs.map((reqItem, index) => {
               return (
@@ -29,8 +29,8 @@ export const RequisiteDisplay = ({ coreqs, prereqs, courseHrefFn }: RequisiteDis
       )}
 
       {prereqs.length > 0 && (
-        <div>
-          <div className="text-sm mb-1">Pre-requisites</div>
+        <div className="flex flex-col md:flex-row align-middle space-x-0 md:space-x-4">
+          <div className="text-sm mb-1 font-medium">Pre-requisites</div>
           <div className="-mt-xs flex flex-wrap items-baseline">
             {prereqs.map((reqItem, index) => {
               const marginClassNames = "mr-1 mt-xs";

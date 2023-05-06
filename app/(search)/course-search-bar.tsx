@@ -2,78 +2,62 @@
 
 import { FormField } from "@/components/form/form-field";
 import { Select } from "@/components/form/select";
+import { useSubjectCodes } from "@/hooks/fetching/use-subjects";
 import { useTerms } from "@/hooks/fetching/use-terms";
 import { getSearchGroups, searchGroupsToQuery } from "@/utils/course/search";
 import { decodeSearchQuery, encodeSearchQuery } from "@/utils/string";
 import { groupTermsByYear } from "@/utils/term/group";
+import clsx from "clsx";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useSearchBar } from "./hooks/use-search-bar";
-import { useGetNewSearchUrlParam } from "@/app/(search)/hooks/use-search-url-param";
-import { useSubjectCodes, useSubjects } from "@/hooks/fetching/use-subjects";
-
-interface CourseSearchBarProps {}
+import { useSearch } from "./hooks/use-search";
+import {
+  useGetNewSearchUrlParam,
+  useGetSearchUrlParamValues
+} from "./hooks/use-search-url-param";
 
 interface CourseSearchForm {
   search: string;
   term: string;
 }
 
-export function CourseSearchBar({}: CourseSearchBarProps) {
+export function CourseSearchBar() {
   const router = useRouter();
   const params = useSearchParams();
   const pathname = usePathname();
+  const { getNewSearchUrlParam } = useGetNewSearchUrlParam();
 
-  const subjectCodes = useSubjectCodes();
-
+  const { subjectCodesIsLoading, subjectCodes } = useSubjectCodes();
   const { isTermsLoading, terms } = useTerms();
+  const isLoading = subjectCodesIsLoading || isTermsLoading;
 
-  const { doSearch, setTerm } = useSearchBar(subjectCodes);
-
-  const initialSearch = decodeSearchQuery(params.get("search") || "");
-  const initialTerm = params.get("term") || "all";
+  const initialSearch = decodeSearchQuery(params?.get("search") || "");
+  const initialTerm = params?.get("term") || "all";
 
   const { handleSubmit, control, setValue, watch, getValues } = useForm<CourseSearchForm>({
     defaultValues: { search: initialSearch, term: initialTerm },
   });
 
-  const onSubmit = handleSubmit((data, e) => {
-    e?.preventDefault();
-    
+  const onSubmit = handleSubmit(async (data) => {
     const { search, term } = data;
+
+    // Set URL
     const searchGroups = getSearchGroups({ subjectCodes, query: search });
     const cleanSearchQuery = searchGroupsToQuery(searchGroups);
     const searchQuery = encodeSearchQuery(cleanSearchQuery);
-
-    // Pathname ahead so current course being viewed is not lost
     router.push(`${pathname}?term=${term}&search=${searchQuery}`);
-    setValue("search", cleanSearchQuery);
-    setTerm(term);
   });
 
-  // Search when the url changes
-  useEffect(() => {
-    doSearch(initialSearch);
-  }, [initialSearch]);
-
-  // Change term
-  const { getNewSearchUrlParam } = useGetNewSearchUrlParam();
-
+  // Set URL on term change
   useEffect(() => {
     const term = getValues("term");
     const newParams = getNewSearchUrlParam({ term });
-
-    const paramsSame = params.toString() === newParams.toString();
-    if (!paramsSame) {
-      router.push(`${pathname}?${newParams}`);
-      setTerm(term);
-    }
+    router.push(`${pathname}?${newParams.toString()}`);
   }, [watch("term")]);
 
   const termGroups = groupTermsByYear(terms ?? []);
-
-  const options = termGroups.map((group) => ({
+  const termOptions = termGroups.map((group) => ({
     type: "optgroup" as const,
     name: `${group.year - 1}-${group.year}`,
     options: group.terms.map((term) => ({
@@ -83,12 +67,37 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
     })),
   }));
 
+  const { term, searchQuery } = useGetSearchUrlParamValues();
+  const { doSearch, searchIsLoading } = useSearch({ subjectCodes });
+  useEffect(() => {
+    // Set form values if changed
+    const formTerm = getValues("term");
+    const formSearch = getValues("search");
+    if (term && formTerm !== term) setValue("term", term);
+    if (searchQuery && formSearch !== searchQuery) setValue("search", searchQuery);
+
+    doSearch(searchQuery);
+  }, [params]);
+
+  // Run initial page load search
+  useEffect(() => {
+    if (!isLoading) {
+      console.log("page loaded", searchQuery);
+      doSearch(searchQuery);
+    }
+  }, [isLoading]);
+
   return (
     <>
-      {isTermsLoading ? (
+      {isLoading ? (
         <div className="form-field h-10"></div>
       ) : (
-        <form onSubmit={onSubmit} className="flex group rounded-md focus-within:ring-2 ring-offset-2 ring-primary-200">
+        <form
+          onSubmit={onSubmit}
+          className={clsx("flex group rounded-md focus-within:ring-2 ring-offset-2 ring-primary-200", {
+            "animate-pulse": searchIsLoading,
+          })}
+        >
           <FormField
             control={control}
             name="search"
@@ -101,7 +110,7 @@ export function CourseSearchBar({}: CourseSearchBarProps) {
             <Select
               control={control}
               name="term"
-              options={[{ type: "option", title: "All", value: "all" }, ...options]}
+              options={[{ type: "option", title: "All", value: "all" }, ...termOptions]}
               className="form-field bg-gray-200 text-xs rounded p-1 min-w-[3rem]"
             />
           </div>

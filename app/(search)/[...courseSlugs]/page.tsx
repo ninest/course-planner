@@ -60,9 +60,9 @@ export default function CoursePage({ params }: Props) {
                     courseHrefFn={(course) => `/${courseToSlug2(course)}?${searchUrlParams}`}
                   />
 
-                  <SectionTermMatrix className="mt-4" terms={getCourseTerms(course)} />
+                  <SectionTermMatrix className="mt-10" terms={getCourseTerms(course)} />
 
-                  <Title className="mt-4" level={3}>
+                  <Title className="mt-10" level={3}>
                     Sections
                   </Title>
 

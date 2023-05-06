@@ -1,5 +1,5 @@
 import { nuPath, NUPath } from "@/.data/types";
-import { CheckCircle2, Divide } from "lucide-react";
+import { FaCheck } from "react-icons/fa";
 
 interface NUPathTableProps {
   path: NUPath[];
@@ -13,7 +13,7 @@ export const NUPathTable = ({ path }: NUPathTableProps) => {
           <div key={np} className="flex-1">
             <div className="p-1 dark:bg-gray-900 text-gray-500 font-bold text-xs text-center">{np}</div>
             <div className="h-7 p-xs border-t dark:border-gray-800 flex items-center justify-center">
-              {path.includes(np) && <CheckCircle2 className="w-3 dark:text-primary-darker" />}
+              {path.includes(np) && <FaCheck className="w-3 dark:text-primary-darker" />}
             </div>
           </div>
         ))}
