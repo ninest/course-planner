@@ -1,10 +1,12 @@
+"use client";
+
+import { Debug } from "@/components/debug";
+import { Title } from "@/components/title";
+import { useTerm } from "@/hooks/fetching/use-terms";
+import { usePlans } from "@/hooks/use-plans";
 import { getValuesFromTerm } from "@/utils/term/string";
 import { ReactNode } from "react";
-import terms from "../../../.data/terms.json";
-import { PlannerHeader } from "../planner-header";
-
-export const revalidate = 0; // no cache
-export const dynamic = "force-static";
+import { usePlan } from "../hooks/plan";
 
 interface TermLayoutProps {
   params: { termCode: string };
@@ -12,14 +14,20 @@ interface TermLayoutProps {
 }
 
 export default function TermLayout({ params, children }: TermLayoutProps) {
-  const term = terms.find((term) => term.code === params.termCode);
-  if (!term) throw Error("Invalid term");
+  const { termIsLoading, termIsError, term } = useTerm(params.termCode);
+  const { plans } = usePlans();
+  if (!term || !plans) return <main>Loading ...</main>;
 
   const { year, description } = getValuesFromTerm(term);
+
   return (
-    <main>
-      <PlannerHeader termCode={term.code} description={description} year={year!} />
-      {children}
+    <main className="">
+      <Title level={1} className="text-lg">
+        {description} <span className="text-gray-400">{year}</span>
+      </Title>
+
+      <Debug data={plans} />
+      <div>{children}</div>
     </main>
   );
 }

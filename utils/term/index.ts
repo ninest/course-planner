@@ -30,3 +30,8 @@ export function getTermName(term: string) {
 export function getTermYear(term: string) {
   return term.substring(0, 4);
 }
+
+// Get "2023-2024" display string
+export function getYearDisplay(year: number) {
+  return `${year-1}-${year}`;
+}

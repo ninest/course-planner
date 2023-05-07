@@ -1,4 +1,4 @@
-import { getTermYear, termCodes } from "@/utils/course/terms";
+import { getTermYear, termCodes } from "@/utils/term";
 import { groupBy, removeDuplicates } from "@/utils/list";
 import clsx from "clsx";
 import { ComponentProps, Fragment } from "react";
@@ -11,8 +11,8 @@ export function SectionTermMatrix({ terms, className }: SectionTermMatrixProps) 
   const years = removeDuplicates(terms.map(getTermYear));
 
   return (
-    <div className={clsx(className, "rounded-md p-3 border overflow-x-scroll")}>
-      <div className={"w-[109vw] lg:w-full grid grid-cols-[0.8fr_2fr_2fr_2fr_2fr_2fr] gap-3"}>
+    <div className={clsx(className, "rounded-md p-3 border w-full overflow-x-scroll")}>
+      <div className={" w-[109vw] md:w-full grid grid-cols-[0.8fr_2fr_2fr_2fr_2fr_2fr] gap-3"}>
         <div></div>
         {termCodes.map((term) => {
           return (

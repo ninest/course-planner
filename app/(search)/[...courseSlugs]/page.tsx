@@ -11,7 +11,7 @@ import { SubPageBackButton } from "@/components/sub-page-back-button";
 import { Title } from "@/components/title";
 import { useCourses } from "@/hooks/fetching/use-course";
 import { courseToSlug2 } from "@/utils/course/course";
-import { getCourseTerms } from "@/utils/course/terms";
+import { getCourseTerms } from "@/utils/term";
 
 interface Props {
   params: { courseSlugs: string[] };
@@ -25,7 +25,7 @@ export default function CoursePage({ params }: Props) {
 
   return (
     <div className="px-5 md:p-5 w-full md:mx-auto md:max-w-[75ch]">
-      <div className="md:hidden mb-2">
+      <div className="md:hidden mt-5 mb-2">
         <SubPageBackButton href={`/?${searchUrlParams.toString()}`} />
       </div>
 

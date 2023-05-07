@@ -11,7 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <aside className="hidden md:block flex-none">
             <NavigationRail />
           </aside>
-          <div className="flex-1">{children}</div>
+          <div className="flex-1 min-h-screen">{children}</div>
         </body>
       </Providers>
     </html>

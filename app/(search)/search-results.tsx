@@ -1,14 +1,13 @@
 "use client";
 
-import { CourseDetailList } from "@/components/course/course-detail-list";
-import { useTerms } from "@/hooks/fetching/use-terms";
 import { useUrlCourse } from "@/app/(search)/hooks/use-search-url-course";
-import { courseToSlug2 } from "@/utils/course/course";
-import { useSearchParams } from "next/navigation";
-import { useSearchBar } from "./hooks/use-search-bar";
+import { CourseDetailList } from "@/components/course/course-detail-list";
 import { useSubjectCodes } from "@/hooks/fetching/use-subjects";
-import { useSearch } from "./hooks/use-search";
+import { useTerms } from "@/hooks/fetching/use-terms";
+import { courseToSlug2 } from "@/utils/course/course";
 import clsx from "clsx";
+import { useSearchParams } from "next/navigation";
+import { useSearch } from "./hooks/use-search";
 
 interface SearchResultsProps {
   // courses: Course[]

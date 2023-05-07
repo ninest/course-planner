@@ -1,10 +1,19 @@
-export const revalidate = 0; // no cache
-export const dynamic = "force-static";
+"use client";
+
+import { useTerm } from "@/hooks/fetching/use-terms";
+import { ReactNode } from "react";
 
 interface TermPageProps {
   params: { termCode: string };
+  children: ReactNode;
 }
 
 export default function TermPage({ params }: TermPageProps) {
-  return <div className="p-5">Select a plan or create one!</div>;
+  const { termIsLoading, termIsError, term } = useTerm(params.termCode);
+
+  return (
+    <main>
+      Select a plan or create one.
+    </main>
+  );
 }

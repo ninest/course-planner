@@ -3,7 +3,7 @@
 import { Course } from "@/.data/types";
 import { Title } from "@/components/title";
 import { useMultipleSections } from "@/hooks/fetching/use-sections";
-import { getTermName } from "@/utils/course/terms";
+import { getTermName } from "@/utils/term";
 import clsx from "clsx";
 import { ComponentProps, useState } from "react";
 import { CgSpinner } from "react-icons/cg";

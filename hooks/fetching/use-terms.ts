@@ -2,9 +2,14 @@ import { getTerm, getTerms } from "@/api/terms";
 import { useQuery } from "@tanstack/react-query";
 
 export function useTerm(termCode: string) {
-  const { isLoading, isError, isSuccess, data } = useQuery(["term", termCode], () => getTerm(termCode));
+  const {
+    isLoading: termIsLoading,
+    isError: termIsError,
+    isSuccess,
+    data,
+  } = useQuery(["term", termCode], () => getTerm(termCode));
 
-  return { isLoading, isError, isSuccess, term: data };
+  return { termIsLoading, termIsError, isSuccess, term: data };
 }
 
 export function useTerms() {

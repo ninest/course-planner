@@ -15,10 +15,16 @@ export default function SearchLayout({ children }: { children: ReactNode }) {
     <main>
       {/* Mobile */}
       <div className="md:hidden">
-        <div className="bg-white/90 backdrop-blur-sm p-5 sticky top-0 z-50">
-          <CourseSearchBar />
-        </div>
-        {showingCourses ? <>{children}</> : <SearchResults />}
+        {showingCourses ? (
+          <>{children}</>
+        ) : (
+          <>
+            <div className="bg-white/90 backdrop-blur-sm p-5 sticky top-0 z-50">
+              <CourseSearchBar />
+            </div>
+            <SearchResults />
+          </>
+        )}
       </div>
 
       {/* Desktop */}
