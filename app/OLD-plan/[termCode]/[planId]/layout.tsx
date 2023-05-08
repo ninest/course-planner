@@ -4,8 +4,8 @@ import { WeekView } from "@/components/week-view/week-view";
 import { usePlans } from "@/hooks/use-plans";
 import { useWeekView } from "@/hooks/use-week-view";
 import { CalendarEvent } from "@/utils/event/types";
-import { getPlanTimedEvents } from "@/utils/plan/functions";
-import { CoursePlan } from "@/utils/plan/types";
+import { getPlanTimedEvents } from "@/utils/OLD_plan/functions";
+import { CoursePlan } from "@/utils/OLD_plan/types";
 import clsx from "clsx";
 import { ReactNode, useEffect, useState } from "react";
 

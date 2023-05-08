@@ -12,7 +12,7 @@ export default function TermPage({ params }: TermPageProps) {
   const { termIsLoading, termIsError, term } = useTerm(params.termCode);
 
   return (
-    <main>
+    <main className="p-5">
       Select a plan or create one.
     </main>
   );

@@ -41,9 +41,9 @@ export default function NewPlanPage({ params }: NewPlanPageProps) {
   });
 
   return (
-    <main className="p-5">
+    <div className="p-5">
       <Title level={1}>New Plan</Title>
-      <form className="mt-5 space-y-8" onSubmit={onSubmit}>
+      <form className="md:max-w-[60ch] mt-5 space-y-8" onSubmit={onSubmit}>
         <FormField control={control} name="name" label="Name" inputClassName="form-field" />
         <Select
           control={control}
@@ -55,6 +55,6 @@ export default function NewPlanPage({ params }: NewPlanPageProps) {
         <FormField control={control} name="description" label="Description" inputClassName="form-field" textarea />
         <Button type="submit">Submit</Button>
       </form>
-    </main>
+    </div>
   );
 }

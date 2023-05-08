@@ -12,17 +12,18 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSearch } from "./hooks/use-search";
-import {
-  useGetNewSearchUrlParam,
-  useGetSearchUrlParamValues
-} from "./hooks/use-search-url-param";
+import { useGetNewSearchUrlParam, useGetSearchUrlParamValues } from "./hooks/use-search-url-param";
 
 interface CourseSearchForm {
   search: string;
   term: string;
 }
 
-export function CourseSearchBar() {
+interface CourseSearchBarProps {
+  allowSelectTerm?: boolean;
+}
+
+export function CourseSearchBar({ allowSelectTerm = true }: CourseSearchBarProps) {
   const router = useRouter();
   const params = useSearchParams();
   const pathname = usePathname();
@@ -46,14 +47,21 @@ export function CourseSearchBar() {
     const searchGroups = getSearchGroups({ subjectCodes, query: search });
     const cleanSearchQuery = searchGroupsToQuery(searchGroups);
     const searchQuery = encodeSearchQuery(cleanSearchQuery);
-    router.push(`${pathname}?term=${term}&search=${searchQuery}`);
+    // TODO: use URLSearchParams rather than string
+    if (allowSelectTerm) {
+      router.push(`${pathname}?term=${term}&search=${searchQuery}`);
+    } else {
+      router.push(`${pathname}?search=${searchQuery}`);
+    }
   });
 
   // Set URL on term change
   useEffect(() => {
-    const term = getValues("term");
-    const newParams = getNewSearchUrlParam({ term });
-    router.push(`${pathname}?${newParams.toString()}`);
+    if (allowSelectTerm) {
+      const term = getValues("term");
+      const newParams = getNewSearchUrlParam({ term });
+      router.push(`${pathname}?${newParams.toString()}`);
+    }
   }, [watch("term")]);
 
   const termGroups = groupTermsByYear(terms ?? []);
@@ -73,7 +81,7 @@ export function CourseSearchBar() {
     // Set form values if changed
     const formTerm = getValues("term");
     const formSearch = getValues("search");
-    if (term && formTerm !== term) setValue("term", term);
+    if (allowSelectTerm && term && formTerm !== term) setValue("term", term);
     if (searchQuery && formSearch !== searchQuery) setValue("search", searchQuery);
 
     doSearch(searchQuery);
@@ -82,7 +90,6 @@ export function CourseSearchBar() {
   // Run initial page load search
   useEffect(() => {
     if (!isLoading) {
-      console.log("page loaded", searchQuery);
       doSearch(searchQuery);
     }
   }, [isLoading]);
@@ -107,12 +114,14 @@ export function CourseSearchBar() {
           />
 
           <div className="flex-0 h-10 form-field rounded-l-none flex items-end pl-0">
-            <Select
-              control={control}
-              name="term"
-              options={[{ type: "option", title: "All", value: "all" }, ...termOptions]}
-              className="form-field bg-gray-200 text-xs rounded p-1 min-w-[3rem]"
-            />
+            {allowSelectTerm && (
+              <Select
+                control={control}
+                name="term"
+                options={[{ type: "option", title: "All", value: "all" }, ...termOptions]}
+                className="form-field bg-gray-200 text-xs rounded p-1 min-w-[3rem]"
+              />
+            )}
           </div>
         </form>
       )}

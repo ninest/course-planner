@@ -4,7 +4,7 @@ import { Empty } from "@/components/Empty";
 import { SubPageBackButton } from "@/components/sub-page-back-button";
 import { useMultipleSections } from "@/hooks/fetching/use-sections";
 import { usePlans } from "@/hooks/use-plans";
-import { getPlanCourses, getPlanCourseSectionsFromSections, getPlanSectionCrns } from "@/utils/plan/functions";
+import { getPlanCourses, getPlanCourseSectionsFromSections, getPlanSectionCrns } from "@/utils/OLD_plan/functions";
 
 interface MySectionsPageProps {
   params: { termCode: string; planId: string };

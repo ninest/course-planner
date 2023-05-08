@@ -1,5 +1,6 @@
 "use client";
 
+import { MinimizedCourse } from "@/.data/types";
 import { useUrlCourse } from "@/app/(search)/hooks/use-search-url-course";
 import { CourseDetailList } from "@/components/course/course-detail-list";
 import { useSubjectCodes } from "@/hooks/fetching/use-subjects";
@@ -7,13 +8,16 @@ import { useTerms } from "@/hooks/fetching/use-terms";
 import { courseToSlug2 } from "@/utils/course/course";
 import clsx from "clsx";
 import { useSearchParams } from "next/navigation";
+import { ComponentProps } from "react";
 import { useSearch } from "./hooks/use-search";
 
-interface SearchResultsProps {
-  // courses: Course[]
+interface SearchResultsProps extends ComponentProps<"div"> {
+  selectedCourses?: MinimizedCourse[];
+  // Function to get href of course when clicked
+  courseHrefFn: ComponentProps<typeof CourseDetailList>["courseHrefFn"];
 }
 
-export function SearchResults({}: SearchResultsProps) {
+export function SearchResults({ selectedCourses, courseHrefFn, className }: SearchResultsProps) {
   const { subjectCodes } = useSubjectCodes();
   const { searchGroups, searchResults, searchIsLoading, term } = useSearch({ subjectCodes });
   const { terms } = useTerms();
@@ -21,13 +25,10 @@ export function SearchResults({}: SearchResultsProps) {
   const selectedTerm = terms?.find((t) => t.code === term);
 
   const params = useSearchParams();
-  const courses = useUrlCourse();
-
-  // const isLoading = sea
 
   return (
     <>
-      <div className="px-5 mb-40">
+      <div className={className}>
         {/* Searching results for ... */}
         {searchGroups.length > 0 && (
           <section>
@@ -66,8 +67,8 @@ export function SearchResults({}: SearchResultsProps) {
             <CourseDetailList
               termCode={selectedTerm?.code ?? "all"}
               courses={searchResults}
-              selectedCourses={courses}
-              courseHrefFn={(course) => `/${courseToSlug2(course)}?${params}`}
+              selectedCourses={selectedCourses}
+              courseHrefFn={courseHrefFn}
             />
           </section>
         )}

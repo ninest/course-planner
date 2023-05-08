@@ -4,6 +4,7 @@ import { Term } from "@/.data/types";
 import { Button } from "@/components/button";
 import { Title } from "@/components/title";
 import { useTerms } from "@/hooks/fetching/use-terms";
+import { plansForTerm } from "@/utils/plan";
 import { getYearDisplay } from "@/utils/term";
 import { groupTermsByYear } from "@/utils/term/group";
 import Link from "next/link";
@@ -42,11 +43,17 @@ export default function PlanPage() {
 }
 
 function TermDisplay({ term }: { term: Term }) {
+  const { plans } = usePlan();
+  const termPlans = plansForTerm(plans, term);
+
   return (
     <Link key={term.code} href={`/plan/${term.code}`} className="block border p-3 rounded-lg">
-      <Title level={3} className="font-medium">
-        {term.description}
-      </Title>
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+        <Title level={3} className="font-medium">
+          {term.description}
+        </Title>
+        <div className="text-sm text-gray-600">{termPlans.length} plans</div>
+      </div>
     </Link>
   );
 }

@@ -1,9 +1,9 @@
 import { Course, Section } from "@/.data/types";
 import { availableColorKeys } from "@/utils/event/colors";
-import { newPlan } from "@/utils/plan/functions";
+import { newPlan } from "@/utils/OLD_plan/functions";
 import {
   CoursePlan
-} from "@/utils/plan/types";
+} from "@/utils/OLD_plan/types";
 import { randomFromList } from "@/utils/random";
 import { useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
