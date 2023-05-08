@@ -79,7 +79,7 @@ function PlannerTabs({ term, plans }: PlannerTabsProps) {
             key={plan.id}
             href={`/plan/${term.code}/${plan.id}`}
             size={"xs"}
-            className={clsx({ "!bg-primary-100": pathname?.includes(plan.id) })}
+            className={clsx('h-6', { "!bg-primary-100": pathname?.includes(plan.id) })}
           >
             {plan.name}
           </Button>
@@ -89,7 +89,7 @@ function PlannerTabs({ term, plans }: PlannerTabsProps) {
         href={`/plan/${term.code}/new`}
         size={"xs"}
         iconLeft={<FaPlus className="h-2" />}
-        className={clsx({ "bg-primary-100": pathname?.endsWith("/new") })}
+        className={clsx('h-6', { "bg-primary-100": pathname?.endsWith("/new") })}
       ></Button>
     </header>
   );
