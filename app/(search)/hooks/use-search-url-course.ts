@@ -1,4 +1,4 @@
-import { slugToCourse2 } from "@/utils/course/course";
+import { slugToCourse2 } from "@/course";
 
 import { usePathname } from "next/navigation";
 

@@ -4,7 +4,7 @@ import { Course, SubjectWithCourseCount } from "@/.data/types";
 import { useCoursesForTerm } from "@/hooks/fetching/use-courses-for-term";
 import { usePlans } from "@/hooks/use-plans";
 import { useFocus } from "@/hooks/util/use-focus";
-import { courseToSlug } from "@/utils/course/course";
+import { courseToSlug } from "@/course";
 import { useAtom } from "jotai";
 import { atomWithStorage, createJSONStorage } from "jotai/utils";
 import { X } from "lucide-react";

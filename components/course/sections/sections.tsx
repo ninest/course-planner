@@ -3,7 +3,7 @@
 import { Course } from "@/.data/types";
 import { Title } from "@/components/title";
 import { useMultipleSections } from "@/hooks/fetching/use-sections";
-import { getTermName } from "@/utils/term";
+import { getTermName } from "@/term";
 import clsx from "clsx";
 import { ComponentProps, useState } from "react";
 import { CgSpinner } from "react-icons/cg";
@@ -24,11 +24,7 @@ export function Sections({ termCode, course, className, initiallyOpen = false }:
     // Temp fix
     .map((section) => ({ ...section, termCode: section.term }));
 
-  const results = useMultipleSections(sections);
-  const fetchedSections = results.map((result) => result.data).filter(Boolean);
-  const allLoaded = !results.some((result) => result.isLoading);
-
-  const numSectionsWithSeats = fetchedSections.filter((section) => section?.seats.available ?? 0 > 0).length;
+  const { results, fetchedSections, allLoaded, numSectionsWithSeats } = useMultipleSections(sections);
 
   const [open, setOpen] = useState(initiallyOpen);
 
@@ -39,7 +35,9 @@ export function Sections({ termCode, course, className, initiallyOpen = false }:
         className="cursor-pointer rounded-md p-3 sticky top-0 z-10 bg-white flex items-center justify-between"
       >
         <div className=" flex flex-col md:flex-row md:items-center md:space-x-3">
-          <Title level={4} className="font-medium">{termName}</Title>
+          <Title level={4} className="font-medium">
+            {termName}
+          </Title>
           <div className="tabular-nums text-gray-600 text-sm">
             {sections.length} sections, {!allLoaded && "at least"} {numSectionsWithSeats} with seats
           </div>

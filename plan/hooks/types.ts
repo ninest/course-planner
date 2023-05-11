@@ -1,4 +1,4 @@
-import { AddEventToPlanParams, CreatePlanParams, DeletePlanParams, EditPlanParams, Plan } from "../../types";
+import { AddEventToPlanParams, CreatePlanParams, DeletePlanParams, EditPlanParams, Plan } from "../../../app/plan/types";
 
 export interface PlanHook {
   plans: Plan[];

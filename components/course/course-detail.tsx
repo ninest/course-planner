@@ -15,7 +15,7 @@ export function CourseDetail({ termCode, course, className }: CourseDetailProps)
   return (
     <div className={className}>
       {/* Course name */}
-      <div className="text-sm truncate">
+      <div className="text-sm truncate text-gray-800">
         <span className="font-bold tabular-nums">
           {course.subject} {course.number}
         </span>

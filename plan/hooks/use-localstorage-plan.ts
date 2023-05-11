@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
 import { nanoid } from "nanoid";
-import { AddEventToPlanParams, CreatePlanParams, DeletePlanParams, EditPlanParams, Plan } from "../../types";
+import { AddEventToPlanParams, CreatePlanParams, DeletePlanParams, EditPlanParams, Plan } from "../../../app/plan/types";
 import { PlanHook } from "./types";
 
 const plansAtom = atomWithStorage<Plan[]>("plans", []);

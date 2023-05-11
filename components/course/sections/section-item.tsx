@@ -1,19 +1,23 @@
 import { Course, Section } from "@/.data/types";
 import { Empty } from "@/components/Empty";
 import { useSection } from "@/hooks/fetching/use-sections";
-import { getMeetingTimeLocation, getSectionProfessors } from "@/utils/section/section";
+import { getMeetingTimeLocation, getSectionProfessors } from "@/section/section";
 import { stringTimeToDisplayTime } from "@/utils/time/time";
 import clsx from "clsx";
 import { ComponentProps } from "react";
 import { DayTable } from "../day-table";
+import { Button } from "@/components/button";
 
 interface SectionItemProps extends ComponentProps<"div"> {
   termCode: string;
   course: Course;
   crn: string;
+  onHover?: (section: Section, course: Course) => void;
+  onUnhover?: (section: Section, course: Course) => void;
+  buttons?: { text: string; onClick: (section: Section, course: Course) => void }[];
 }
 
-export function SectionItem({ termCode, course, crn, className }: SectionItemProps) {
+export function SectionItem({ termCode, course, crn, className, onHover, onUnhover, buttons }: SectionItemProps) {
   const { isLoading, section } = useSection(termCode, crn);
   if (isLoading || !section)
     return (
@@ -35,7 +39,11 @@ export function SectionItem({ termCode, course, crn, className }: SectionItemPro
     section?.seats.waitlist.available !== section.seats.waitlist.capacity;
 
   return (
-    <div className={clsx(className, "bg-gray-100 p-3 rounded-md ")}>
+    <div
+      onMouseEnter={() => onHover?.(section, course)}
+      onMouseLeave={() => onUnhover?.(section, course)}
+      className={clsx(className, "bg-gray-100 p-3 rounded-md")}
+    >
       <section className="flex items-center justify-between">
         {/* Professor */}
         <div className="text-sm">{professorsAvailable ? professors : <i>Professors to be announced</i>}</div>
@@ -89,6 +97,19 @@ export function SectionItem({ termCode, course, crn, className }: SectionItemPro
           </div>
         )}
       </div>
+
+      {/* Buttons, if any */}
+      {buttons && (
+        <div className="mt-3 flex items-center space-x-2">
+          {buttons.map((button) => {
+            return (
+              <Button onClick={() => button.onClick(section, course)} size={"sm"} intent={"tonal"}>
+                {button.text}
+              </Button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import { MinimizedCourse } from "@/.data/types";
+
 export interface Plan {
   id: string;
   termCode: string;
@@ -7,10 +9,10 @@ export interface Plan {
 }
 
 export type PlanEvent = CoursePlanEvent;
-
 export interface CoursePlanEvent {
   type: "course";
   crn: string;
+  minimizedCourse: MinimizedCourse;
 }
 
 export interface CreatePlanParams {

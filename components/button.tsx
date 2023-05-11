@@ -6,8 +6,9 @@ import { ComponentProps, ReactNode } from "react";
 const buttonStyles = cva(["inline-flex tracking-wide", "rounded-md", "border-2"], {
   variants: {
     intent: {
-      primary: ["bg-primary-600 text-white hover:bg-primary-500"],
-      secondary: ["bg-gray-200 text-gray-800 hover:bg-gray-300"],
+      primary: ["bg-primary-600 text-white hover:bg-primary-500 shadow-sm"],
+      secondary: ["bg-gray-100 text-gray-800 hover:bg-gray-300 shadow-sm"],
+      tonal: ["bg-primary-100 text-gray-800 hover:bg-gray-300 shadow-sm"],
       ghost: ["bg-transparent text-gray-800 hover:bg-gray-100"],
     },
     outline: {
@@ -19,6 +20,7 @@ const buttonStyles = cva(["inline-flex tracking-wide", "rounded-md", "border-2"]
       sm: ["text-sm py-1 px-3"],
       default: ["text-base py-1 px-5"],
     },
+    danger: {},
   },
   compoundVariants: [
     {

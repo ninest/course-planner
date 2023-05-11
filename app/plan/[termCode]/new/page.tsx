@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { usePlan } from "../../hooks/plan";
+import { usePlan } from "../../../../plan/hooks";
 
 interface NewPlanPageProps {
   params: { termCode: string };
@@ -37,7 +37,7 @@ export default function NewPlanPage({ params }: NewPlanPageProps) {
     e?.preventDefault();
 
     const newPlan = await createPlan(data);
-    router.push(`/plans/${params.termCode}/${newPlan.id}`);
+    router.push(`/plan/${data.termCode}/${newPlan.id}`);
   });
 
   return (

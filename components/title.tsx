@@ -12,7 +12,7 @@ export function Title({ level = 2, children, ...props }: TitleProps) {
   return (
     <H
       className={clsx(
-        "font-display tracking-normal",
+        "font-display tracking-normal text-gray-800",
         {
           "text-4xl font-bold": level == 1,
           "text-3xl font-black": level == 2,

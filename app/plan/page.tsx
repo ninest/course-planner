@@ -2,13 +2,14 @@
 
 import { Term } from "@/.data/types";
 import { Button } from "@/components/button";
+import { Loading } from "@/components/loading";
 import { Title } from "@/components/title";
 import { useTerms } from "@/hooks/fetching/use-terms";
-import { plansForTerm } from "@/utils/plan";
-import { getYearDisplay } from "@/utils/term";
-import { groupTermsByYear } from "@/utils/term/group";
+import { plansForTerm } from "@/plan";
+import { getYearDisplay } from "@/term";
+import { groupTermsByYear } from "@/term/group";
 import Link from "next/link";
-import { usePlan } from "./hooks/plan";
+import { usePlan } from "../../plan/hooks";
 
 export default function PlanPage() {
   const { isTermsLoading, terms } = useTerms();
@@ -19,11 +20,26 @@ export default function PlanPage() {
   return (
     <>
       <main className="md:h-screen">
-        <header className="p-5 border-b flex justify-end">
-          <Button>New Plan</Button>
+        <header className="p-5 flex justify-end items-center">
+          <Button href={`/plan/${terms?.at(-1)?.code}/new`}>New Plan</Button>
         </header>
 
-        <div className="p-5 space-y-8">
+        <div className="px-5 space-y-8">
+          {isTermsLoading && !terms && (
+            <>
+              <Loading
+                heights={[
+                  3,
+                  { type: "spacer", height: 1 },
+                  4,
+                  { type: "spacer", height: 2 },
+                  3,
+                  { type: "spacer", height: 1 },
+                  4,
+                ]}
+              />
+            </>
+          )}
           {termsByYear.map((group) => {
             return (
               <section key={group.year}>

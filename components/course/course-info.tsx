@@ -1,7 +1,7 @@
 "use client";
 
 import { Course } from "@/.data/types";
-import { courseDescriptionToList } from "@/utils/course/course";
+import { courseDescriptionToList } from "@/course";
 import { useState } from "react";
 import { NUPathTable } from "./nu-path-table";
 import { RequisiteDisplay } from "./requisite-display";

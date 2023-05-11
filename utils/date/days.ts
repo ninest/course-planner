@@ -10,6 +10,6 @@ export const dayShortCodes: Record<DayOfWeek, string> = {
   saturday: "S",
 };
 
-export const dayToNumber = (day: DayOfWeek): number => {
+export const dayNameToNumber = (day: DayOfWeek): number => {
   return daysOfWeek.indexOf(day);
 };

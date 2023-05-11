@@ -1,6 +1,6 @@
 import { Course, SearchGroup } from "@/.data/types";
 import { searchCourses } from "@/api/search";
-import { getSearchGroups } from "@/utils/course/search";
+import { getSearchGroups } from "@/course/search";
 import { atom, useAtom } from "jotai";
 import { useGetSearchUrlParamValues } from "./use-search-url-param";
 
@@ -28,5 +28,5 @@ export function useSearch({ subjectCodes }: UseSearchParams) {
     setSearchIsLoading(false);
   };
 
-  return { searchGroups, searchResults, term, searchIsLoading, doSearch };
+  return { searchGroups, searchResults, searchTermCode: term, searchIsLoading, doSearch };
 }

@@ -1,4 +1,4 @@
-import { getValuesFromTerm } from "@/utils/term/string";
+import { getValuesFromTerm } from "@/term/string";
 import { ReactNode } from "react";
 import terms from "../../../.data/terms.json";
 import { PlannerHeader } from "../planner-header";

@@ -1,5 +1,5 @@
-import { groupTermsByYear } from "@/utils/term/group";
-import { getValuesFromTerm } from "@/utils/term/string";
+import { groupTermsByYear } from "@/term/group";
+import { getValuesFromTerm } from "@/term/string";
 import Link from "next/link";
 import terms from "../../.data/terms.json";
 

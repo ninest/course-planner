@@ -1,7 +1,7 @@
 import { getCourse } from "@/api/courses";
 import { Button } from "@/components/button";
 import { SubPageBackButton } from "@/components/sub-page-back-button";
-import { slugToCourse } from "@/utils/course/course";
+import { slugToCourse } from "@/course";
 import { ChevronLeft } from "lucide-react";
 import { CourseInfo } from "../../../../../components/course/course-info";
 import { SectionsList } from "./sections-list";

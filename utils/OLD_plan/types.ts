@@ -1,6 +1,6 @@
 import type { Course, Section } from "../../.data/types";
-import { EventColorKey } from "../event/colors";
-import { CalendarEvent } from "../event/types";
+import { EventColorKey } from "../../event/colors";
+import { CalendarEvent } from "../../event/types";
 import { Time } from "../time/types";
 
 export interface CoursePlan {

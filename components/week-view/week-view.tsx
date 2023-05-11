@@ -1,9 +1,8 @@
 import { WEEK_DAYS } from "@/utils/date/display";
-import { eventColorsMap } from "@/utils/event/colors";
-import { getConflictList } from "@/utils/event/conflict";
-import { CalendarEvent } from "@/utils/event/types";
+import { eventColorsMap } from "@/event/colors";
+import { getConflictList } from "@/event/conflict";
+import { CalendarEvent } from "@/event/types";
 import { integerRange, integersBetween } from "@/utils/list";
-import { useCurrentPlanId, useCurrentTermCode } from "@/utils/route";
 import { hourToCalendarDisplay } from "@/utils/time/display";
 import clsx from "clsx";
 
@@ -17,9 +16,6 @@ export const WeekView = ({ events }: WeekViewProps) => {
   const hours = integersBetween(minHour, maxHour);
 
   const conflicts = getConflictList(events);
-
-  const termCode = useCurrentTermCode();
-  const planId = useCurrentPlanId();
 
   return (
     <>
@@ -35,6 +31,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
           </div>
         ))}
       </div>
+
       {/* Times and events */}
       <div className="grid grid-cols-week-view-mobile md:grid-cols-week-view auto-rows-[0.35rem] md:auto-rows-[0.4rem]">
         {/* Alternate table row colors */}
@@ -67,15 +64,8 @@ export const WeekView = ({ events }: WeekViewProps) => {
         {/* Events */}
         {events.map((event, index) => {
           const durationMinutes =
-            event.endTime.hour * 60 +
-            event.endTime.minute -
-            (event.startTime.hour * 60 + event.startTime.minute);
-
-          const startRowSpan =
-            1 +
-            (event.startTime.hour - minHour) * 12 +
-            event.startTime.minute / 5;
-
+            event.endTime.hour * 60 + event.endTime.minute - (event.startTime.hour * 60 + event.startTime.minute);
+          const startRowSpan = 1 + (event.startTime.hour - minHour) * 12 + event.startTime.minute / 5;
           const rowSpan = durationMinutes / 5;
 
           // Get conflict and change style
@@ -83,15 +73,9 @@ export const WeekView = ({ events }: WeekViewProps) => {
           const eventIsConflicting = conflictingEvents.length > 0;
 
           const eventColor = event.color ?? "GRAY";
-
           const eventColorClassName = eventColorsMap[eventColor].className;
 
-          // TODO: find a better way to do this. Perhaps pass in course with event
-          // event.title will always be `SUBJECTCODE NUMBER`, so we can do this
-          const hrefToCourse = `/${termCode}/${planId}/${event.title.replaceAll(
-            " ",
-            "-"
-          )}#${event.id}`;
+          const hrefToCourse = `/`;
 
           return (
             <div
@@ -110,15 +94,13 @@ export const WeekView = ({ events }: WeekViewProps) => {
                   {
                     "border-transparent": !eventIsConflicting,
                     "border-red-300 opacity-60": eventIsConflicting,
-                    "opacity-75 animate-jiggle": event.possible,
+                    "opacity-60 animate-jiggle": event.possible,
                   },
                   "overflow-scroll"
                 )}
               >
                 <div className="text-xs font-semibold">{event.title}</div>
-                <div className="text-[0.6rem]  md:text-xs">
-                  {event.subtitle}
-                </div>
+                <div className="text-[0.6rem] md:text-xs">{event.subtitle}</div>
               </a>
             </div>
           );

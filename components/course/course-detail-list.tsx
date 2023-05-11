@@ -1,5 +1,5 @@
 import { Course, MinimizedCourse } from "@/.data/types";
-import { hasSectionInTerm } from "@/utils/course/section";
+import { hasSectionInTerm } from "@/course/section";
 import clsx from "clsx";
 import Link from "next/link";
 import { CourseDetail } from "./course-detail";

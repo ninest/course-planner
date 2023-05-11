@@ -10,8 +10,8 @@ import { Loading } from "@/components/loading";
 import { SubPageBackButton } from "@/components/sub-page-back-button";
 import { Title } from "@/components/title";
 import { useCourses } from "@/hooks/fetching/use-course";
-import { courseToSlug2 } from "@/utils/course/course";
-import { getCourseTerms } from "@/utils/term";
+import { courseToSlug2 } from "@/course";
+import { getCourseTerms } from "@/term";
 
 interface Props {
   params: { courseSlugs: string[] };

@@ -1,3 +1,5 @@
+import { ComponentProps } from "react";
+
 interface LoadingProps {
   heights: (number | { type: "spacer"; height: number })[];
 }
@@ -17,4 +19,10 @@ export function Loading({ heights }: LoadingProps) {
       })}
     </div>
   );
+}
+
+interface SkeletonProps extends ComponentProps<"div"> {}
+
+export function Skeleton({ className }: SkeletonProps) {
+  return <div className={`${className} bg-gray-50 rounded-md animate-pulse`}></div>;
 }

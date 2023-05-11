@@ -1,7 +1,7 @@
 import { Course, Section } from "@/.data/types";
 import { nanoid } from "nanoid";
-import { courseContainsSection } from "../course/functions";
-import { CalendarEvent } from "../event/types";
+import { courseContainsSection } from "../../course/functions";
+import { CalendarEvent } from "../../event/types";
 import {
   AsyncOnlineSectionCalendarEvent,
   CoursePlan,

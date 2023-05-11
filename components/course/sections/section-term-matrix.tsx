@@ -1,4 +1,4 @@
-import { getTermYear, termCodes } from "@/utils/term";
+import { getTermYear, termCodes } from "@/term";
 import { groupBy, removeDuplicates } from "@/utils/list";
 import clsx from "clsx";
 import { ComponentProps, Fragment } from "react";

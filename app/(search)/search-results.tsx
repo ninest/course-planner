@@ -1,11 +1,9 @@
 "use client";
 
-import { MinimizedCourse } from "@/.data/types";
-import { useUrlCourse } from "@/app/(search)/hooks/use-search-url-course";
+import { MinimizedCourse, Term } from "@/.data/types";
 import { CourseDetailList } from "@/components/course/course-detail-list";
 import { useSubjectCodes } from "@/hooks/fetching/use-subjects";
 import { useTerms } from "@/hooks/fetching/use-terms";
-import { courseToSlug2 } from "@/utils/course/course";
 import clsx from "clsx";
 import { useSearchParams } from "next/navigation";
 import { ComponentProps } from "react";
@@ -13,16 +11,17 @@ import { useSearch } from "./hooks/use-search";
 
 interface SearchResultsProps extends ComponentProps<"div"> {
   selectedCourses?: MinimizedCourse[];
+  term?: Term;
   // Function to get href of course when clicked
   courseHrefFn: ComponentProps<typeof CourseDetailList>["courseHrefFn"];
 }
 
-export function SearchResults({ selectedCourses, courseHrefFn, className }: SearchResultsProps) {
+export function SearchResults({ selectedCourses, term, courseHrefFn, className }: SearchResultsProps) {
   const { subjectCodes } = useSubjectCodes();
-  const { searchGroups, searchResults, searchIsLoading, term } = useSearch({ subjectCodes });
-  const { terms } = useTerms();
+  const { searchGroups, searchResults, searchIsLoading, searchTermCode } = useSearch({ subjectCodes });
 
-  const selectedTerm = terms?.find((t) => t.code === term);
+  const { terms } = useTerms();
+  const selectedTerm = term ? term : terms?.find((t) => t.code === searchTermCode);
 
   const params = useSearchParams();
 
@@ -33,7 +32,7 @@ export function SearchResults({ selectedCourses, courseHrefFn, className }: Sear
         {searchGroups.length > 0 && (
           <section>
             <div className="text-sm text-gray-600 mb-2">Showing results for</div>
-            <div className="flex flex-wrap">
+            <div className="flex flex-wrap text-gray-800">
               {searchGroups.map((group, index) => {
                 return (
                   <div key={index} className="text-xs rounded bg-gray-100 py-0.5 px-1 mr-2 mb-2">

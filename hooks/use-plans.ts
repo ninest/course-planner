@@ -1,5 +1,5 @@
 import { Course, Section } from "@/.data/types";
-import { availableColorKeys } from "@/utils/event/colors";
+import { availableColorKeys } from "@/event/colors";
 import { newPlan } from "@/utils/OLD_plan/functions";
 import {
   CoursePlan
