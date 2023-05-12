@@ -8,7 +8,7 @@ interface SubPageBackButtonProps {
 export const SubPageBackButton = ({ href }: SubPageBackButtonProps) => {
   return (
     <Button
-      intent={"ghost"}
+      variant={"ghost"}
       href={href}
       className="-ml-2 flex items-center space-x-2"
     >

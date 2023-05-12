@@ -1,4 +1,12 @@
-import { AddEventToPlanParams, CreatePlanParams, DeletePlanParams, EditPlanParams, Plan } from "../../../app/plan/types";
+import {
+  AddEventToPlanParams,
+  CreatePlanParams,
+  DeletePlanParams,
+  EditPlanParams,
+  EventInPlanParams,
+  Plan,
+  RemoveEventFromPlanParams,
+} from "../types";
 
 export interface PlanHook {
   plans: Plan[];
@@ -6,4 +14,6 @@ export interface PlanHook {
   deletePlan(params: DeletePlanParams): Promise<void>;
   editPlan(params: EditPlanParams): Promise<void>;
   addEventToPlan(params: AddEventToPlanParams): Promise<void>;
+  removeEventFromPlan(params: RemoveEventFromPlanParams): Promise<void>;
+  eventInPlan(params: EventInPlanParams): boolean;
 }

@@ -58,8 +58,8 @@ export const PlannerHeader = ({
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <Button intent={"primary"}>Share</Button>
-            <Button intent={"ghost"}>
+            <Button variant={"primary"}>Share</Button>
+            <Button variant={"ghost"}>
               <MoreVertical className="w-4" />
             </Button>
           </div>

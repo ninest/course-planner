@@ -4,9 +4,9 @@ import { useSection } from "@/hooks/fetching/use-sections";
 import { getMeetingTimeLocation, getSectionProfessors } from "@/section/section";
 import { stringTimeToDisplayTime } from "@/utils/time/time";
 import clsx from "clsx";
-import { ComponentProps } from "react";
+import { ComponentProps, ComponentType } from "react";
 import { DayTable } from "../day-table";
-import { Button } from "@/components/button";
+import { Button, ButtonProps } from "@/components/button";
 
 interface SectionItemProps extends ComponentProps<"div"> {
   termCode: string;
@@ -14,7 +14,8 @@ interface SectionItemProps extends ComponentProps<"div"> {
   crn: string;
   onHover?: (section: Section, course: Course) => void;
   onUnhover?: (section: Section, course: Course) => void;
-  buttons?: { text: string; onClick: (section: Section, course: Course) => void }[];
+  // buttons?: { text: string; onClick: (section: Section, course: Course) => void }[];
+  buttons?: (section: Section, course: Course) => ButtonProps[];
 }
 
 export function SectionItem({ termCode, course, crn, className, onHover, onUnhover, buttons }: SectionItemProps) {
@@ -101,10 +102,10 @@ export function SectionItem({ termCode, course, crn, className, onHover, onUnhov
       {/* Buttons, if any */}
       {buttons && (
         <div className="mt-3 flex items-center space-x-2">
-          {buttons.map((button) => {
+          {buttons(section, course).map((button, index) => {
             return (
-              <Button onClick={() => button.onClick(section, course)} size={"sm"} intent={"tonal"}>
-                {button.text}
+              <Button key={index} size={"sm"} {...button}>
+                {button.children}
               </Button>
             );
           })}

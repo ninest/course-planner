@@ -19,7 +19,7 @@ export const RequisiteDisplay = ({ coreqs, prereqs, courseHrefFn }: RequisiteDis
           <div className="flex">
             {coreqs.map((reqItem, index) => {
               return (
-                <Button key={index} intent={"secondary"} size={"xs"} href={courseHrefFn(reqItem)}>
+                <Button key={index} variant={"secondary"} size={"xs"} href={courseHrefFn(reqItem)}>
                   {reqItem.subject} {reqItem.number}
                 </Button>
               );
@@ -39,7 +39,7 @@ export const RequisiteDisplay = ({ coreqs, prereqs, courseHrefFn }: RequisiteDis
                   <Button
                     key={index}
                     className={marginClassNames}
-                    intent={"secondary"}
+                    variant={"secondary"}
                     size={"xs"}
                     href={courseHrefFn(reqItem)}
                   >

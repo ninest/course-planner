@@ -3,13 +3,15 @@ import clsx from "clsx";
 import Link from "next/link";
 import { ComponentProps, ReactNode } from "react";
 
-const buttonStyles = cva(["inline-flex tracking-wide", "rounded-md", "border-2"], {
+const buttonStyles = cva(["inline-flex tracking-wide font-medium", "rounded-lg", "border-2"], {
   variants: {
-    intent: {
-      primary: ["bg-primary-600 text-white hover:bg-primary-500 shadow-sm"],
-      secondary: ["bg-gray-100 text-gray-800 hover:bg-gray-300 shadow-sm"],
-      tonal: ["bg-primary-100 text-gray-800 hover:bg-gray-300 shadow-sm"],
-      ghost: ["bg-transparent text-gray-800 hover:bg-gray-100"],
+    variant: {
+      primary: ["bg-primary-500 text-white hover:bg-primary-500 shadow-sm"],
+      "primary-danger": ["bg-error-500 text-white hover:bg-error-500 shadow-sm"],
+      secondary: ["bg-gray-100 text-gray-700 hover:bg-gray-300 shadow-sm"],
+      "secondary-success": ["bg-primary-100 text-primary-700 hover:bg-primary-300 shadow-sm"],
+      "secondary-danger": ["bg-error-100 text-error-700 hover:bg-error-300 shadow-sm"],
+      ghost: ["bg-transparent text-gray-700 hover:bg-gray-100"],
     },
     outline: {
       true: "",
@@ -18,29 +20,28 @@ const buttonStyles = cva(["inline-flex tracking-wide", "rounded-md", "border-2"]
     size: {
       xs: ["text-xs py-0.5 px-1"],
       sm: ["text-sm py-1 px-3"],
-      default: ["text-base py-1 px-5"],
+      default: ["text-base py-1 px-3"],
     },
-    danger: {},
   },
   compoundVariants: [
     {
-      intent: "primary",
+      variant: "primary",
       outline: true,
       class: ["bg-transparent text-primary-600 border-primary-600 hover:bg-gray-100"],
     },
-    { intent: "ghost", size: "default", class: "!p-0.5" },
+    { variant: "ghost", size: "default", class: "!p-0.5" },
   ],
   defaultVariants: {
-    intent: "secondary",
+    variant: "secondary",
     size: "default",
     outline: false,
   },
 });
 
-type ButtonProps = VariantProps<typeof buttonStyles> &
+export type ButtonProps = VariantProps<typeof buttonStyles> &
   ComponentProps<"button"> & { href?: string; iconLeft?: ReactNode; iconRight?: ReactNode };
 export const Button = ({
-  intent,
+  variant: intent,
   outline,
   size,
   href,
@@ -53,7 +54,7 @@ export const Button = ({
   const classes = clsx(
     "flex items-center justify-center space-x-3",
     className,
-    buttonStyles({ intent, outline, size })
+    buttonStyles({ variant: intent, outline, size })
   );
   const childrenElement = (
     <>

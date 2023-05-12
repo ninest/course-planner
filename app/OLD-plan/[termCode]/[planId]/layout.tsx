@@ -24,7 +24,7 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
     setCurrentPlan(plan);
   }, [params.planId, plans]);
 
-  const { previewEvents, sectionsInPlanPreview } = useWeekView();
+  // const { previewEvents, sectionsInPlanPreview } = useWeekView();
 
   // const events: CalendarEvent[] = [
   //   ...(currentPlan?.items
@@ -49,7 +49,7 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
   const events: CalendarEvent[] = getPlanTimedEvents(currentPlan!).map(
     (event) => ({
       ...event,
-      possible: sectionsInPlanPreview.includes(event.id),
+      // possible: sectionsInPlanPreview.includes(event.id),
     })
   );
 
@@ -93,7 +93,7 @@ export default function PlanLayout({ params, children }: PlanLayoutProps) {
             "pb-[50vh]"
           )}
         >
-          <WeekView events={[...previewEvents, ...events]} />
+          {/* <WeekView events={[...previewEvents, ...events]} /> */}
         </div>
       </div>
     )

@@ -1,5 +1,6 @@
 "use client";
 
+import { ButtonProps } from "@/components/button";
 import { CourseInfo } from "@/components/course/course-info";
 import { SectionList } from "@/components/course/sections/sections-list";
 import { Loading } from "@/components/loading";
@@ -9,8 +10,10 @@ import { courseToSlug2, slugToCourse2 } from "@/course";
 import { useCourse } from "@/hooks/fetching/use-course";
 import { useMultipleSections } from "@/hooks/fetching/use-sections";
 import { useWeekView } from "@/hooks/use-week-view";
+import { usePlan } from "@/plan/hooks";
 import { sectionCourseToCalendarEvents } from "@/plan/plan-transformers";
 import { usePathname, useSearchParams } from "next/navigation";
+import { ComponentProps } from "react";
 import { CgSpinner } from "react-icons/cg";
 
 interface PlanCoursePageProps {
@@ -38,6 +41,31 @@ export default function PlanCoursePage({ params }: PlanCoursePageProps) {
   const { results, fetchedSections, allLoaded, numSectionsWithSeats } = useMultipleSections(sections);
 
   const { addPreviewEvents, setPreviewEvents, clearPreviewEvents } = useWeekView();
+
+  const { addEventToPlan, removeEventFromPlan, eventInPlan } = usePlan();
+  const sectionButtons: ComponentProps<typeof SectionList>["sectionButtons"] = (section, course) => {
+    const buttons: ButtonProps[] = [];
+    if (eventInPlan({ id: params.planId, eventId: section.crn }))
+      buttons.push({
+        children: "Remove",
+        variant: "secondary-danger",
+        onClick: () => {
+          removeEventFromPlan({ id: params.planId, eventId: section.crn });
+        },
+      });
+    else
+      buttons.push({
+        children: "Add",
+        variant: "secondary-success",
+        onClick: () => {
+          addEventToPlan({
+            id: params.planId,
+            event: { id: section.crn, type: "course", crn: section.crn, minimizedCourse: course },
+          });
+        },
+      });
+    return buttons;
+  };
 
   return (
     <div className="p-3">
@@ -81,7 +109,7 @@ export default function PlanCoursePage({ params }: PlanCoursePageProps) {
             onSectionUnhover={() => {
               clearPreviewEvents();
             }}
-            sectionButtons={[{ text: "Add", onClick: (section, course) => {} }]}
+            sectionButtons={sectionButtons}
           />
         </div>
       )}

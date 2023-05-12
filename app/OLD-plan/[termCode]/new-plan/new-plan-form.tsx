@@ -64,7 +64,7 @@ export const NewPlanForm = ({ termCode, onSuccess }: NewPlanFormProps) => {
 
       {error && <FormError message={error} />}
 
-      <Button type="submit" intent={"primary"}>
+      <Button type="submit" variant={"primary"}>
         Create plan
       </Button>
     </form>

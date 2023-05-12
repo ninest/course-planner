@@ -13,7 +13,7 @@ interface NewPlanPageProps {
 }
 
 export default function NewPlanPage({ params }: NewPlanPageProps) {
-  const { term, isLoading: termIsLoading } = useTerm(params.termCode);
+  const { term, termIsLoading } = useTerm(params.termCode);
 
   const { createPlan, validPlanName } = usePlans();
   const [error, setError] = useState("");
@@ -70,7 +70,7 @@ export default function NewPlanPage({ params }: NewPlanPageProps) {
 
             {error && <FormError message={error} />}
 
-            <Button type="submit" intent={"primary"}>
+            <Button type="submit" variant={"primary"}>
               Create plan
             </Button>
           </form>

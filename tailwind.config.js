@@ -12,6 +12,7 @@ module.exports = {
     extend: {
       colors: {
         primary: defaultColors.indigo,
+        error: defaultColors.red,
       },
       fontSize: { xxs: "0.6rem" },
       gridTemplateColumns: {

@@ -74,7 +74,7 @@ export default function PlanPageLayout({ params, children }: TermLayoutProps) {
       {/* Desktop */}
       <div className="hidden md:flex h-[calc(100vh-var(--plan-header-height))]">
         <aside className="w-[300px] lg:w-[400px] overflow-y-scroll border-r">{children}</aside>
-        <div className="flex-1">
+        <div className="flex-1 overflow-y-scroll">
           <Planner planId={params.planId} />
         </div>
       </div>

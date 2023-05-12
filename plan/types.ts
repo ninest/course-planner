@@ -8,7 +8,7 @@ export interface Plan {
   events: PlanEvent[];
 }
 
-export type PlanEvent = CoursePlanEvent;
+export type PlanEvent = { id: string } & CoursePlanEvent;
 export interface CoursePlanEvent {
   type: "course";
   crn: string;
@@ -30,4 +30,14 @@ export interface EditPlanParams extends Partial<Plan> {}
 export interface AddEventToPlanParams {
   id: string;
   event: PlanEvent;
+}
+
+export interface RemoveEventFromPlanParams {
+  id: string;
+  eventId: string;
+}
+
+export interface EventInPlanParams {
+  id: string;
+  eventId: string;
 }

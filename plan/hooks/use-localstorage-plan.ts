@@ -1,9 +1,15 @@
-import produce from "immer";
 import { useAtom } from "jotai";
-import { withImmer } from "jotai-immer";
 import { atomWithStorage } from "jotai/utils";
 import { nanoid } from "nanoid";
-import { AddEventToPlanParams, CreatePlanParams, DeletePlanParams, EditPlanParams, Plan } from "../../../app/plan/types";
+import {
+  AddEventToPlanParams,
+  CreatePlanParams,
+  DeletePlanParams,
+  EditPlanParams,
+  EventInPlanParams,
+  Plan,
+  RemoveEventFromPlanParams,
+} from "../types";
 import { PlanHook } from "./types";
 
 const plansAtom = atomWithStorage<Plan[]>("plans", []);
@@ -52,5 +58,21 @@ export function useLocalStoragePlan(): PlanHook {
     setPlans(newPlans);
   };
 
-  return { plans, createPlan, deletePlan, editPlan, addEventToPlan };
+  const removeEventFromPlan = async (params: RemoveEventFromPlanParams) => {
+    const index = plans.findIndex((plan) => plan.id === params.id);
+    if (index === -1) throw new Error("Unable to remove event from invalid plan");
+
+    const newPlans = [...plans];
+    newPlans[index].events = newPlans[index].events.filter((event) => event.id !== params.eventId);
+    setPlans(newPlans);
+  };
+
+  const eventInPlan = (params: EventInPlanParams) => {
+    const index = plans.findIndex((plan) => plan.id === params.id);
+    if (index === -1) throw new Error("Unable to find event in invalid plan");
+    console.log(plans[index].events)
+    return plans[index].events.some((event) => event.id === params.eventId);
+  };
+
+  return { plans, createPlan, deletePlan, editPlan, addEventToPlan, removeEventFromPlan, eventInPlan };
 }

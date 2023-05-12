@@ -53,7 +53,7 @@ export default function NewPlanPage({ params }: NewPlanPageProps) {
           className="form-field"
         />
         <FormField control={control} name="description" label="Description" inputClassName="form-field" textarea />
-        <Button type="submit">Submit</Button>
+        <Button variant={'secondary-success'} type="submit">Submit</Button>
       </form>
     </div>
   );
