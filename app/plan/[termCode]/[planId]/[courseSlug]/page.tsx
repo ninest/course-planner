@@ -1,5 +1,6 @@
 "use client";
 
+import { Course, Section } from "@/.data/types";
 import { ButtonProps } from "@/components/button";
 import { CourseInfo } from "@/components/course/course-info";
 import { SectionList } from "@/components/course/sections/sections-list";
@@ -10,6 +11,7 @@ import { courseToSlug2, slugToCourse2 } from "@/course";
 import { useCourse } from "@/hooks/fetching/use-course";
 import { useMultipleSections } from "@/hooks/fetching/use-sections";
 import { useWeekView } from "@/hooks/use-week-view";
+import { planById, sectionInPlan } from "@/plan";
 import { usePlan } from "@/plan/hooks";
 import { sectionCourseToCalendarEvents } from "@/plan/plan-transformers";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -42,7 +44,20 @@ export default function PlanCoursePage({ params }: PlanCoursePageProps) {
 
   const { addPreviewEvents, setPreviewEvents, clearPreviewEvents } = useWeekView();
 
-  const { addEventToPlan, removeEventFromPlan, eventInPlan } = usePlan();
+  const { addEventToPlan, removeEventFromPlan, eventInPlan, plans } = usePlan();
+
+  const onSectionHover = (section: Section, course: Course) => {
+    // Add section to preview if section not in plan
+    const plan = planById(plans, params.planId);
+    if (plan && sectionInPlan(plan, section.crn)) {
+      return;
+    }
+    const previewEvents = sectionCourseToCalendarEvents(section, course);
+    setPreviewEvents(previewEvents);
+  };
+
+  const onSectionUnhover = () => clearPreviewEvents();
+
   const sectionButtons: ComponentProps<typeof SectionList>["sectionButtons"] = (section, course) => {
     const buttons: ButtonProps[] = [];
     if (eventInPlan({ id: params.planId, eventId: section.crn }))
@@ -62,6 +77,7 @@ export default function PlanCoursePage({ params }: PlanCoursePageProps) {
             id: params.planId,
             event: { id: section.crn, type: "course", crn: section.crn, minimizedCourse: course },
           });
+          clearPreviewEvents();
         },
       });
     return buttons;
@@ -101,15 +117,10 @@ export default function PlanCoursePage({ params }: PlanCoursePageProps) {
           <SectionList
             termCode={params.termCode}
             course={course}
-            className="mt-2"
-            onSectionHover={(section, course) => {
-              const previewEvents = sectionCourseToCalendarEvents(section, course);
-              setPreviewEvents(previewEvents);
-            }}
-            onSectionUnhover={() => {
-              clearPreviewEvents();
-            }}
+            onSectionHover={onSectionHover}
+            onSectionUnhover={onSectionUnhover}
             sectionButtons={sectionButtons}
+            className="mt-2"
           />
         </div>
       )}

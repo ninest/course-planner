@@ -15,6 +15,7 @@ export interface CoursePlanEvent {
   minimizedCourse: MinimizedCourse;
 }
 
+// Function params
 export interface CreatePlanParams {
   name: string;
   termCode: string;

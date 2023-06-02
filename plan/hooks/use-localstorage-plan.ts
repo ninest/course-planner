@@ -70,7 +70,6 @@ export function useLocalStoragePlan(): PlanHook {
   const eventInPlan = (params: EventInPlanParams) => {
     const index = plans.findIndex((plan) => plan.id === params.id);
     if (index === -1) throw new Error("Unable to find event in invalid plan");
-    console.log(plans[index].events)
     return plans[index].events.some((event) => event.id === params.eventId);
   };
 

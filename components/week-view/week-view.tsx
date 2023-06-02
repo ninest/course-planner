@@ -8,9 +8,10 @@ import clsx from "clsx";
 
 interface WeekViewProps {
   events: CalendarEvent[];
+  hrefFn: (calendarEvent: CalendarEvent) => string;
 }
 
-export const WeekView = ({ events }: WeekViewProps) => {
+export const WeekView = ({ events, hrefFn }: WeekViewProps) => {
   const minHour = Math.min(8, ...events.map((event) => event.startTime.hour));
   const maxHour = Math.max(...events.map((event) => event.endTime.hour), 17);
   const hours = integersBetween(minHour, maxHour);
@@ -75,7 +76,8 @@ export const WeekView = ({ events }: WeekViewProps) => {
           const eventColor = event.color ?? "GRAY";
           const eventColorClassName = eventColorsMap[eventColor].className;
 
-          const hrefToCourse = `/`;
+          // const hrefToCourse = `/`;
+          const href = hrefFn(event);
 
           return (
             <div
@@ -87,7 +89,7 @@ export const WeekView = ({ events }: WeekViewProps) => {
               className="my-[0.1rem] mx-[0.05rem]"
             >
               <a
-                href={hrefToCourse}
+                href={href}
                 className={clsx(
                   eventColorClassName,
                   "block w-full h-full rounded-lg p-1 md:p-2 border-2",

@@ -1,12 +1,12 @@
 import { Course, Section } from "@/.data/types";
+import { Button, ButtonProps } from "@/components/button";
 import { Empty } from "@/components/Empty";
 import { useSection } from "@/hooks/fetching/use-sections";
 import { getMeetingTimeLocation, getSectionProfessors } from "@/section/section";
 import { stringTimeToDisplayTime } from "@/utils/time/time";
 import clsx from "clsx";
-import { ComponentProps, ComponentType } from "react";
+import { ComponentProps } from "react";
 import { DayTable } from "../day-table";
-import { Button, ButtonProps } from "@/components/button";
 
 interface SectionItemProps extends ComponentProps<"div"> {
   termCode: string;
@@ -19,10 +19,20 @@ interface SectionItemProps extends ComponentProps<"div"> {
 }
 
 export function SectionItem({ termCode, course, crn, className, onHover, onUnhover, buttons }: SectionItemProps) {
+  // Get hashes from URL
+  const selectedCrns = window.location.hash.substring(1).split(",");
+  console.log(selectedCrns);
+
   const { isLoading, section } = useSection(termCode, crn);
   if (isLoading || !section)
     return (
-      <Empty key={crn} className="animate-pulse flex items-center justify-center font-medium h-36">
+      <Empty
+        id={crn}
+        key={crn}
+        className={clsx("animate-pulse flex items-center justify-center font-medium h-36", {
+          "border-primary-400": selectedCrns.includes(crn),
+        })}
+      >
         Loading CRN {crn} ...
       </Empty>
     );
@@ -41,9 +51,12 @@ export function SectionItem({ termCode, course, crn, className, onHover, onUnhov
 
   return (
     <div
+      id={crn}
       onMouseEnter={() => onHover?.(section, course)}
       onMouseLeave={() => onUnhover?.(section, course)}
-      className={clsx(className, "bg-gray-100 p-3 rounded-md")}
+      className={clsx(className, "bg-gray-100 p-3 rounded-md border-2 border-transparent", {
+        "border-primary-400": selectedCrns.includes(crn),
+      })}
     >
       <section className="flex items-center justify-between">
         {/* Professor */}

@@ -21,7 +21,7 @@ export default function PlanPageSidebar({ params }: TermLayoutProps) {
       <TransparentHeader className="sticky top-[var(--bottom-sheet-handle-container-height)] px-3 pb-3 md:top-0 md:p-3">
         <CourseSearchBar allowSelectTerm={false} />
       </TransparentHeader>
-      <div className="px-3 mb-40">
+      <div className="px-3 ">
         <SearchResults
           term={term}
           courseHrefFn={(course) =>
