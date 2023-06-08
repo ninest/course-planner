@@ -27,7 +27,7 @@ export function SearchResults({ selectedCourses, term, courseHrefFn, className }
 
   return (
     <>
-      <div className={className}>
+      <div className={clsx(className, { "animate-pulse": searchIsLoading })}>
         {/* Searching results for ... */}
         {searchGroups.length > 0 && (
           <section>

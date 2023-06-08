@@ -27,6 +27,15 @@ module.exports = {
       },
       animation: {
         jiggle: "jiggle 0.2s ease-in-out infinite",
+        // Default pulse is too slow and too light
+        pulse: "pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+      },
+      keyframes: {
+        pulse: {
+          "50%": {
+            opacity: ".25",
+          },
+        },
       },
     },
   },

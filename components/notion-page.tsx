@@ -44,15 +44,6 @@ export function NotionPage({ recordMap, pageMentions }: NotionPageProps) {
               </UniversalLink>
             );
           },
-          Pdf: (props) => {
-            console.log(props)
-            return <>pdf</>;
-          },
-          Embed: (props) => {
-            console.log(props)
-            return <>embed</>;
-          }
-
         }}
       />
     </>
