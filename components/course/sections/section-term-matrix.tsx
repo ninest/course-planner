@@ -10,9 +10,6 @@ export interface SectionTermMatrixProps extends ComponentProps<"div"> {
 export function SectionTermMatrix({ terms, className }: SectionTermMatrixProps) {
   const years = removeDuplicates(terms.map(getTermYear));
 
-  console.log(terms);
-  
-
   return (
     <div className={clsx(className, "rounded-md p-3 border w-full overflow-x-scroll")}>
       <div className={"w-[109vw] md:w-full grid grid-cols-[1.5fr_2fr_2fr_2fr_2fr_2fr] gap-3"}>
@@ -25,8 +22,8 @@ export function SectionTermMatrix({ terms, className }: SectionTermMatrixProps) 
           );
         })}
         {years.map((year) => {
-          const actualYear = parseInt(year)
-          const academicYear = `${actualYear-1}–${year.slice(-2)}`
+          const actualYear = parseInt(year);
+          const academicYear = `${actualYear - 1}–${year.slice(-2)}`;
           return (
             <Fragment key={year}>
               <div className="text-gray-500 font-bold text-xs md:text-sm tabular-nums text-left">{academicYear}</div>

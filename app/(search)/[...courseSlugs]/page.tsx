@@ -12,6 +12,7 @@ import { getCourseTerms } from "@/term";
 import { ClientCourseInfo } from "./client-course-info";
 import { CourseNotes } from "./course-notes";
 import { MobileCourseSearchBackButton } from "./mobile-back-button";
+import { TestServerComp } from "./test-server-component";
 
 export const revalidate = 3600; // revalidate this page every X seconds
 
@@ -25,19 +26,22 @@ export default async function CoursePage({ params }: Props) {
   const courses = await Promise.all(
     courseSlugs.map(async (courseSlug) => {
       const course = slugToCourse2(courseSlug);
-      const courseInfo = await getCourse(course.subject, course.number);
 
-      const rows = await queryCourseDatabase(course);
+      const courseInfoPromise = getCourse(course.subject, course.number);
+      const rowsPromise = queryCourseDatabase(course);
+      const [courseInfo, rows] = await Promise.all([courseInfoPromise, rowsPromise]);
+
       if (rows.results.length === 0) {
         return { courseInfo, hasNotionPageContent: false, notionRecordMap: null, pageMentions: null };
       }
 
-      const notionDatabaseResult = (await queryCourseDatabase(course)).results[0];
-      const notionRecordMap = await getNotionRecordMap(notionDatabaseResult.id);
+      const notionDatabaseResult = rows.results[0];
+
+      const notionRecordMapPromise = getNotionRecordMap(notionDatabaseResult.id);
+      const pageMentionsPromise = getNotionPageMentions(notionDatabaseResult.id);
+      const [notionRecordMap, pageMentions] = await Promise.all([notionRecordMapPromise, pageMentionsPromise]);
+
       const hasNotionPageContent = Object.keys(notionRecordMap.block).length > 2;
-
-      const pageMentions = await getNotionPageMentions(notionDatabaseResult.id);
-
       return { courseInfo, hasNotionPageContent, notionRecordMap, pageMentions };
     })
   );
