@@ -1,4 +1,5 @@
-import "./globals.css";
+import "../styles/globals.scss";
+
 import { NavigationRail } from "./navigation-rail";
 import { Providers } from "./providers";
 

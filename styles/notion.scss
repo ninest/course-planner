@@ -1,0 +1,21 @@
+@layer components {
+  .notion-page {
+    @apply space-y-1;
+
+    .notion-h2,
+    .notion-h3 {
+      @apply /* font-display */ tracking-normal text-gray-800;
+      @apply pt-3;
+    }
+
+    .notion-h2 {
+      @apply text-2xl font-bold;
+    }
+    .notion-h3 {
+      @apply text-base font-medium;
+    }
+    .notion-hash-link {
+      display: none;
+    }
+  }
+}

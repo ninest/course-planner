@@ -22,8 +22,8 @@ export async function queryCourseDatabase(course: MinimizedCourse) {
         },
         {
           property: "Number",
-          rich_text: {
-            equals: course.subject,
+          number: {
+            equals: parseInt(course.number),
           },
         },
       ],

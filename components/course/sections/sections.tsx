@@ -34,7 +34,7 @@ export function Sections({ termCode, course, className, initiallyOpen = false }:
         onClick={() => setOpen(!open)}
         className="cursor-pointer rounded-md p-3 sticky top-0 z-10 bg-white flex items-center justify-between"
       >
-        <div className=" flex flex-col md:flex-row md:items-center md:space-x-3">
+        <div className="flex flex-col">
           <Title level={4} className="font-medium">
             {termName}
           </Title>
