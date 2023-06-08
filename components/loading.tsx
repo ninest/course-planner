@@ -1,12 +1,13 @@
+import clsx from "clsx";
 import { ComponentProps } from "react";
 
-interface LoadingProps {
+interface LoadingProps extends ComponentProps<"div"> {
   heights: (number | { type: "spacer"; height: number })[];
 }
 
-export function Loading({ heights }: LoadingProps) {
+export function Loading({ heights, className }: LoadingProps) {
   return (
-    <div className="space-y-0.5">
+    <div className={clsx(className, "space-y-0.5")}>
       {heights.map((height, index) => {
         if (typeof height === "number")
           return (

@@ -12,7 +12,6 @@ import { getCourseTerms } from "@/term";
 import { ClientCourseInfo } from "./client-course-info";
 import { CourseNotes } from "./course-notes";
 import { MobileCourseSearchBackButton } from "./mobile-back-button";
-import { TestServerComp } from "./test-server-component";
 
 export const revalidate = 3600; // revalidate this page every X seconds
 
@@ -21,6 +20,7 @@ interface Props {
 }
 
 export default async function CoursePage({ params }: Props) {
+  await new Promise(resolve => setTimeout(resolve, 31290312));
   const courseSlugs = params.courseSlugs;
 
   const courses = await Promise.all(
