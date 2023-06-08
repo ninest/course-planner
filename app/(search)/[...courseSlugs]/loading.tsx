@@ -3,7 +3,7 @@ import { slugToCourse2 } from "@/course";
 
 export default function LoadingCoursePage() {
   return (
-    <div className="px-5 md:p-5 w-full md:mx-auto md:max-w-[75ch]">
+    <div className="mt-3 px-5 md:p-5 w-full md:mx-auto md:max-w-[75ch]">
       <div className="mb-2 divide-y">
         <Loading
           heights={[
@@ -14,6 +14,12 @@ export default function LoadingCoursePage() {
             2,
             { type: "spacer", height: 1 },
             3,
+            { type: "spacer", height: 1 },
+            7,
+            { type: "spacer", height: 1 },
+            5,
+            { type: "spacer", height: 1 },
+            7,
           ]}
         />
       </div>

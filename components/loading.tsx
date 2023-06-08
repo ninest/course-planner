@@ -10,7 +10,7 @@ export function Loading({ heights }: LoadingProps) {
       {heights.map((height, index) => {
         if (typeof height === "number")
           return (
-            <div key={index} style={{ height: `${height}rem` }} className="bg-gray-50 rounded-md animate-pulse"></div>
+            <div key={index} style={{ height: `${height}rem` }} className="bg-gray-100 rounded-md animate-pulse"></div>
           );
         else {
           if (height.type === "spacer")

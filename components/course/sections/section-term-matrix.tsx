@@ -1,5 +1,5 @@
 import { getTermYear, termCodes } from "@/term";
-import { groupBy, removeDuplicates } from "@/utils/list";
+import { removeDuplicates } from "@/utils/list";
 import clsx from "clsx";
 import { ComponentProps, Fragment } from "react";
 
@@ -10,9 +10,12 @@ export interface SectionTermMatrixProps extends ComponentProps<"div"> {
 export function SectionTermMatrix({ terms, className }: SectionTermMatrixProps) {
   const years = removeDuplicates(terms.map(getTermYear));
 
+  console.log(terms);
+  
+
   return (
     <div className={clsx(className, "rounded-md p-3 border w-full overflow-x-scroll")}>
-      <div className={" w-[109vw] md:w-full grid grid-cols-[0.8fr_2fr_2fr_2fr_2fr_2fr] gap-3"}>
+      <div className={"w-[109vw] md:w-full grid grid-cols-[1.5fr_2fr_2fr_2fr_2fr_2fr] gap-3"}>
         <div></div>
         {termCodes.map((term) => {
           return (
@@ -22,9 +25,11 @@ export function SectionTermMatrix({ terms, className }: SectionTermMatrixProps) 
           );
         })}
         {years.map((year) => {
+          const actualYear = parseInt(year)
+          const academicYear = `${actualYear-1}–${year.slice(-2)}`
           return (
             <Fragment key={year}>
-              <div className="text-gray-500 font-bold text-sm md:text-base tabular-nums text-center">{year}</div>
+              <div className="text-gray-500 font-bold text-xs md:text-sm tabular-nums text-left">{academicYear}</div>
               {termCodes.map((term) => {
                 const fullTermId = year + term.id;
                 const offerredInTerm = terms.includes(fullTermId);

@@ -9,6 +9,8 @@ import { FaSearch, FaTable } from "react-icons/fa";
 export function NavigationRail() {
   const pathname = usePathname();
 
+  const isOnSearch = pathname === "/" || !pathname.startsWith("/plan");
+
   return (
     <div className="w-16 border-r h-full">
       <div className="h-[5rem] p-5 flex justify-center items-center">
@@ -16,7 +18,7 @@ export function NavigationRail() {
       </div>
       <div className="flex justify-center items-center">
         <div className="space-y-2">
-          <RailTabButton href="/" active={pathname === "/"} title="Search">
+          <RailTabButton href="/" active={isOnSearch} title="Search">
             <FaSearch />
           </RailTabButton>
           <RailTabButton href="/plan" active={pathname?.startsWith("/plan") ?? false} title="Plan">

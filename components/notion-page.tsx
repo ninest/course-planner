@@ -34,7 +34,6 @@ export function NotionPage({ recordMap, pageMentions }: NotionPageProps) {
             );
           },
           nextLink: (props: any) => {
-            console.log("next link");
             return <Link {...props} />;
           },
           Link: (props: any) => {

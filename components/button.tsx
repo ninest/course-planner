@@ -1,7 +1,9 @@
+"use client"
+
 import { cva, VariantProps } from "class-variance-authority";
 import clsx from "clsx";
-import Link from "next/link";
 import { ComponentProps, ReactNode } from "react";
+import { UniversalLink } from "./universal-link";
 
 const buttonStyles = cva(["inline-flex tracking-wide font-medium", "rounded-lg", "border-2"], {
   variants: {
@@ -65,9 +67,9 @@ export const Button = ({
   );
   if (href)
     return (
-      <Link href={href} className={classes}>
+      <UniversalLink href={href} className={classes}>
         {childrenElement}
-      </Link>
+      </UniversalLink>
     );
   return (
     <button className={classes} {...props}>
