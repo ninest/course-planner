@@ -4,6 +4,7 @@ export const WeekViewBasicDemo = () => {
   return (
     <>
       <WeekView
+        hrefFn={() => `/`}
         events={[
           {
             id: "0",
@@ -59,6 +60,7 @@ export const WeekViewWithConflicts = () => {
   return (
     <>
       <WeekView
+        hrefFn={() => `/`}
         events={[
           {
             id: "0",
@@ -91,6 +93,7 @@ export const WeekViewEventColors = () => {
   return (
     <>
       <WeekView
+        hrefFn={() => `/`}
         events={[
           {
             id: "0",
