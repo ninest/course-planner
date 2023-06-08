@@ -34,7 +34,10 @@ export async function getNotionPageMentions(pageId: string) {
             "Subject" in fullNotionPage.properties &&
             "Number" in fullNotionPage.properties
           ) {
+            // TODO
+            // @ts-ignore
             const subject = fullNotionPage.properties["Subject"].rich_text[0].plain_text;
+            // @ts-ignore
             const number = fullNotionPage.properties["Number"].number;
             pageMentions.push({
               id: mentionedPageId,

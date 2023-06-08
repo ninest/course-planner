@@ -13,7 +13,7 @@ interface NotionPageProps {
 }
 
 export function NotionPage({ recordMap, pageMentions }: NotionPageProps) {
-  const classes = "notion-page notion-h2 notion-h3 notion-hash-link";
+  const classes = "notion-page notion-h2 notion-h3 notion-hash-link notion-file notion-file-icon notion-file-size";
   return (
     <>
       <NotionRenderer
@@ -27,7 +27,11 @@ export function NotionPage({ recordMap, pageMentions }: NotionPageProps) {
 
             let href = mention.href;
             if (mention.type === "course-link") href += `?${searchParams.toString()}`;
-            return <UniversalLink href={href} underline>{mention.title}</UniversalLink>;
+            return (
+              <UniversalLink href={href} underline>
+                {mention.title}
+              </UniversalLink>
+            );
           },
           nextLink: (props: any) => {
             console.log("next link");
@@ -40,6 +44,15 @@ export function NotionPage({ recordMap, pageMentions }: NotionPageProps) {
               </UniversalLink>
             );
           },
+          Pdf: (props) => {
+            console.log(props)
+            return <>pdf</>;
+          },
+          Embed: (props) => {
+            console.log(props)
+            return <>embed</>;
+          }
+
         }}
       />
     </>

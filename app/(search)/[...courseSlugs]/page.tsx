@@ -1,4 +1,5 @@
 import { getCourse } from "@/api/courses";
+import { Button } from "@/components/button";
 import { SectionTermMatrix } from "@/components/course/sections/section-term-matrix";
 import { Sections } from "@/components/course/sections/sections";
 import { NotionPage } from "@/components/notion-page";
@@ -64,9 +65,28 @@ export default async function CoursePage({ params }: Props) {
                 {hasNotionPageContent && notionRecordMap && pageMentions ? (
                   <NotionPage recordMap={notionRecordMap} pageMentions={pageMentions} />
                 ) : (
-                  <div className="italic">No content for this page.</div>
+                  <a
+                    href="https://docs.google.com/forms/d/e/1FAIpQLSdIzBLNUhuc1OMyPCPAKwDBo4gpvqcK78OY9yaoCoJ3YMxTkQ/viewform?usp=sf_link"
+                    className="block"
+                  >
+                    <span className="italic">
+                      No content for this page.{" "}
+                      <span className="underline">Click here to share syllabi or other information!</span>
+                    </span>
+                  </a>
                 )}
               </CourseNotes>
+
+              <div className="mt-5 space-y-2">
+                <Button
+                  size={"sm"}
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSdIzBLNUhuc1OMyPCPAKwDBo4gpvqcK78OY9yaoCoJ3YMxTkQ/viewform?usp=sf_link"
+                >
+                  Share course information
+                </Button>
+
+                <div className="text-sm">If you have any information related to {courseInfo.subject} {courseInfo.number} (syllabus, textbook, etc.), please share it!</div>
+              </div>
 
               <Title className="mt-10" level={3}>
                 Sections

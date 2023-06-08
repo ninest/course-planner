@@ -17,5 +17,22 @@
     .notion-hash-link {
       display: none;
     }
+
+    .notion-file {
+      .notion-file-icon {
+        display: none;
+      }
+
+      .notion-file-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .notion-file-size {
+        font-size: 0.75rem;
+        text-decoration: none !important;
+      }
+    }
   }
 }
