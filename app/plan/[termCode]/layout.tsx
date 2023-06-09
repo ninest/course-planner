@@ -38,7 +38,7 @@ export default function TermLayout({ params, children }: TermLayoutProps) {
 
   return (
     // TODO: use dvh?
-    <main className="min-h-screen [--plan-header-height:6rem] md:[--plan-header-height:4rem]">
+    <main className="min-h-[100dvh] [--plan-header-height:6rem] md:[--plan-header-height:4rem]">
       <div className="p-5 h-[var(--plan-header-height)] border-b flex items-center">
         <div className="flex-1 flex flex-col space-y-3 md:space-y-0 md:flex-row md:items-center md:space-x-8">
           <div className="flex justify-between items-center space-x-5">

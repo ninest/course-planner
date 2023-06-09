@@ -22,7 +22,7 @@ export default function PlanPageLayout({ params, children }: TermLayoutProps) {
   return (
     <div>
       {/* Mobile */}
-      <div className="md:hidden h-[calc(100vh-var(--plan-header-height))] flex flex-col [--collapsed-bottom-sheet-height:5.5rem] [--expanded-bottom-sheet-height:85%]">
+      <div className="md:hidden h-[calc(100dvh-var(--plan-header-height))] flex flex-col [--collapsed-bottom-sheet-height:5.5rem] [--expanded-bottom-sheet-height:85%]">
         <div
           onClick={() => {
             if (bottomSheetExpanded) setBottomSheetExpanded(false);
@@ -72,7 +72,7 @@ export default function PlanPageLayout({ params, children }: TermLayoutProps) {
       </div>
 
       {/* Desktop */}
-      <div className="hidden md:flex h-[calc(100vh-var(--plan-header-height))]">
+      <div className="hidden md:flex h-[calc(100dvh-var(--plan-header-height))]">
         <aside className="w-[300px] lg:w-[400px] overflow-y-scroll border-r">{children}</aside>
         <div className="flex-1 overflow-y-scroll">
           <Planner planId={params.planId} />

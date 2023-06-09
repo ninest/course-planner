@@ -1,7 +1,9 @@
-import { getCourse } from "@/api/courses";
+import { getCourse, getCourses } from "@/api/courses";
+import { getSubject } from "@/api/subjects";
 import { Button } from "@/components/button";
 import { SectionTermMatrix } from "@/components/course/sections/section-term-matrix";
 import { Sections } from "@/components/course/sections/sections";
+import { Loading } from "@/components/loading";
 import { NotionPage } from "@/components/notion-page";
 import { TransparentHeader } from "@/components/sticky-transparent-header";
 import { Title } from "@/components/title";
@@ -9,20 +11,32 @@ import { slugToCourse2 } from "@/course";
 import { queryCourseDatabase } from "@/notion/database";
 import { getNotionPageMentions, getNotionRecordMap } from "@/notion/page";
 import { getCourseTerms } from "@/term";
+import { Suspense } from "react";
 import { ClientCourseInfo } from "./client-course-info";
 import { CourseNotes } from "./course-notes";
 import { MobileCourseSearchBackButton } from "./mobile-back-button";
 
-export const revalidate = 3600; // revalidate this page every X seconds
+// export const revalidate = 3600; // revalidate this page every X seconds
+
+// export async function generateStaticParams() {
+//   const subjects = [await getSubject("CS")];
+
+//   const params: { courseSlugs: string[] }[] = [];
+
+//   for await (const subject of subjects) {
+//     const courses = await getCourses(subject.code);
+//     courses.forEach((course) => params.push({ courseSlugs: [`${course.subject}${course.number}`] }));
+//   }
+
+//   return params;
+// }
 
 interface Props {
   params: { courseSlugs: string[] };
 }
 
 export default async function CoursePage({ params }: Props) {
-  await new Promise(resolve => setTimeout(resolve, 31290312));
   const courseSlugs = params.courseSlugs;
-
   const courses = await Promise.all(
     courseSlugs.map(async (courseSlug) => {
       const course = slugToCourse2(courseSlug);
@@ -50,7 +64,9 @@ export default async function CoursePage({ params }: Props) {
     <>
       {/* Mobile only back button */}
       <TransparentHeader className="md:hidden sticky top-0 px-5 py-3">
-        <MobileCourseSearchBackButton />
+        <Suspense fallback={<Loading className="md:hidden w-10" heights={[2]} />}>
+          <MobileCourseSearchBackButton />
+        </Suspense>
       </TransparentHeader>
 
       <div className="px-5 md:p-5 w-full md:mx-auto md:max-w-[75ch]">
@@ -63,13 +79,17 @@ export default async function CoursePage({ params }: Props) {
                   {courseInfo.subject} {courseInfo.number}: {courseInfo.title}
                 </Title>
 
-                <ClientCourseInfo course={courseInfo} />
+                <Suspense fallback={<Loading heights={[3]} />}>
+                  <ClientCourseInfo course={courseInfo} />
+                </Suspense>
 
                 <SectionTermMatrix className="mt-10" terms={getCourseTerms(courseInfo)} />
 
                 <CourseNotes className="mt-10">
                   {hasNotionPageContent && notionRecordMap && pageMentions ? (
-                    <NotionPage recordMap={notionRecordMap} pageMentions={pageMentions} />
+                    <Suspense fallback={<div className="text-sm">Rendering ...</div>}>
+                      <NotionPage recordMap={notionRecordMap} pageMentions={pageMentions} />
+                    </Suspense>
                   ) : (
                     // TODO: use UniversalLink here
                     <a
@@ -85,7 +105,7 @@ export default async function CoursePage({ params }: Props) {
                   )}
                 </CourseNotes>
 
-                <div className="mt-5 space-y-2">
+                <div className="mt-3 space-y-2">
                   <Button
                     size={"sm"}
                     href="https://docs.google.com/forms/d/e/1FAIpQLSdIzBLNUhuc1OMyPCPAKwDBo4gpvqcK78OY9yaoCoJ3YMxTkQ/viewform?usp=sf_link"

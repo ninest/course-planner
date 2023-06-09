@@ -31,7 +31,7 @@ export default function SearchLayout({ children }: { children: ReactNode }) {
             <SearchResults
               selectedCourses={selectedCourses}
               courseHrefFn={(course) => `/${courseToSlug2(course)}?${params}`}
-              className="px-5 mb-40"
+              className="px-5"
             />
           </>
         )}

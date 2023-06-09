@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useSearch } from "./hooks/use-search";
 import { useGetNewSearchUrlParam, useGetSearchUrlParamValues } from "./hooks/use-search-url-param";
+import { LoadingCourseSearchBar } from "./loading-course-search-bar";
 
 interface CourseSearchForm {
   search: string;
@@ -97,7 +98,7 @@ export function CourseSearchBar({ allowSelectTerm = true }: CourseSearchBarProps
   return (
     <>
       {isLoading ? (
-        <div className="form-field h-10"></div>
+        <LoadingCourseSearchBar />
       ) : (
         <form
           onSubmit={onSubmit}

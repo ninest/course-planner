@@ -7,3 +7,11 @@ export async function getSubjects() {
   const receivedData: Subject[] = await response.json();
   return receivedData;
 }
+
+export async function getSubject(subjectCode: string) {
+  const response = await fetch(`https://nu-courses.deno.dev/subjects/${subjectCode}`);
+  if (!response.ok) throw new Error(`Error in fetching subject ${subjectCode}`);
+
+  const receivedData: Subject = await response.json();
+  return receivedData;
+}
