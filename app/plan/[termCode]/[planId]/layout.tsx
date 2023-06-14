@@ -2,9 +2,10 @@
 
 import { TransparentHeader } from "@/components/sticky-transparent-header";
 import clsx from "clsx";
-import { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import { FaChevronUp } from "react-icons/fa";
 import { Planner } from "./planner";
+import { useBottomSheet } from "./use-bottom-sheet";
 
 interface TermLayoutProps {
   params: { termCode: string; planId: string };
@@ -17,7 +18,8 @@ export default function PlanPageLayout({ params, children }: TermLayoutProps) {
   Clicking on the bottom sheet will expand it
   When expanded, clicking on the down caret or the planner UI will collapse it
   */
-  const [bottomSheetExpanded, setBottomSheetExpanded] = useState(false);
+  // const [bottomSheetExpanded, setBottomSheetExpanded] = useState(false);
+  const { bottomSheetExpanded, setBottomSheetExpanded } = useBottomSheet();
 
   return (
     <div>

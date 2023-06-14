@@ -12,7 +12,7 @@ export function SectionTermMatrix({ terms, className }: SectionTermMatrixProps) 
 
   return (
     <div className={clsx(className, "rounded-md p-3 border w-full overflow-x-scroll")}>
-      <div className={"w-[109vw] md:w-full grid grid-cols-[1.9fr_2fr_2fr_2fr_2fr_2fr] gap-3"}>
+      <div className={"w-[109vw] md:w-full grid grid-cols-[1.9fr_2fr_2fr_2fr_2fr_2.5fr] gap-3"}>
         <div></div>
         {termCodes.map((term) => {
           return (

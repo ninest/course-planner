@@ -14,7 +14,9 @@ import { getCourseTerms } from "@/term";
 import { Suspense } from "react";
 import { ClientCourseInfo } from "./client-course-info";
 import { CourseNotes } from "./course-notes";
+import { CourseNotesExpandable } from "./course-notes-expandable";
 import { MobileCourseSearchBackButton } from "./mobile-back-button";
+import { TestServerLoadingComponent } from "./test-server-loading-component";
 
 // export const revalidate = 3600; // revalidate this page every X seconds
 
@@ -40,23 +42,8 @@ export default async function CoursePage({ params }: Props) {
   const courses = await Promise.all(
     courseSlugs.map(async (courseSlug) => {
       const course = slugToCourse2(courseSlug);
-
-      const courseInfoPromise = getCourse(course.subject, course.number);
-      const rowsPromise = queryCourseDatabase(course);
-      const [courseInfo, rows] = await Promise.all([courseInfoPromise, rowsPromise]);
-
-      if (rows.results.length === 0) {
-        return { courseInfo, hasNotionPageContent: false, notionRecordMap: null, pageMentions: null };
-      }
-
-      const notionDatabaseResult = rows.results[0];
-
-      const notionRecordMapPromise = getNotionRecordMap(notionDatabaseResult.id);
-      const pageMentionsPromise = getNotionPageMentions(notionDatabaseResult.id);
-      const [notionRecordMap, pageMentions] = await Promise.all([notionRecordMapPromise, pageMentionsPromise]);
-
-      const hasNotionPageContent = Object.keys(notionRecordMap.block).length > 2;
-      return { courseInfo, hasNotionPageContent, notionRecordMap, pageMentions };
+      const courseInfo = await getCourse(course.subject, course.number);
+      return { course, courseInfo };
     })
   );
 
@@ -71,7 +58,7 @@ export default async function CoursePage({ params }: Props) {
 
       <div className="px-5 md:p-5 w-full md:mx-auto md:max-w-[75ch]">
         <div className="mb-2 divide-y">
-          {courses.map(({ courseInfo, notionRecordMap, pageMentions, hasNotionPageContent }, index) => {
+          {courses.map(({ course, courseInfo }, index) => {
             const terms = courseInfo ? getCourseTerms(courseInfo) : [];
             return (
               <div key={index} className="pt-10 first:pt-0 pb-10">
@@ -85,39 +72,13 @@ export default async function CoursePage({ params }: Props) {
 
                 <SectionTermMatrix className="mt-10" terms={getCourseTerms(courseInfo)} />
 
-                <CourseNotes className="mt-10">
-                  {hasNotionPageContent && notionRecordMap && pageMentions ? (
-                    <Suspense fallback={<div className="text-sm">Rendering ...</div>}>
-                      <NotionPage recordMap={notionRecordMap} pageMentions={pageMentions} />
-                    </Suspense>
-                  ) : (
-                    // TODO: use UniversalLink here
-                    <a
-                      href="https://docs.google.com/forms/d/e/1FAIpQLSdIzBLNUhuc1OMyPCPAKwDBo4gpvqcK78OY9yaoCoJ3YMxTkQ/viewform?usp=sf_link"
-                      target={"_blank"}
-                      className="block text-sm"
-                    >
-                      <span className="italic">
-                        No content for this page.{" "}
-                        <span className="underline">Click here to share syllabi or other information!</span>
-                      </span>
-                    </a>
-                  )}
-                </CourseNotes>
-
-                <div className="mt-3 space-y-2">
-                  <Button
-                    size={"sm"}
-                    href="https://docs.google.com/forms/d/e/1FAIpQLSdIzBLNUhuc1OMyPCPAKwDBo4gpvqcK78OY9yaoCoJ3YMxTkQ/viewform?usp=sf_link"
-                  >
-                    Share course information
-                  </Button>
-
-                  <div className="text-sm">
-                    If you have any information related to {courseInfo.subject} {courseInfo.number} (syllabus, textbook,
-                    etc.), please share it!
-                  </div>
-                </div>
+                <Suspense
+                  fallback=<>
+                    <Loading className="mt-10" heights={[9]} />
+                  </>
+                >
+                  <CourseNotesExpandable course={course} className="mt-10" />
+                </Suspense>
 
                 <Title className="mt-10" level={3}>
                   Sections
