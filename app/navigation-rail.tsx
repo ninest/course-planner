@@ -4,12 +4,13 @@ import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ComponentProps } from "react";
-import { FaSearch, FaTable } from "react-icons/fa";
+import { FaLink, FaSearch, FaTable } from "react-icons/fa";
 
 export function NavigationRail() {
   const pathname = usePathname();
 
-  const isOnSearch = pathname === "/" || !pathname.startsWith("/plan");
+  const excludedPaths = ["/plan", "/links"];
+  const isOnSearch = pathname === "/" && !excludedPaths.some((path) => pathname.startsWith(path));
 
   return (
     <div className="w-16 border-r h-full">
@@ -18,6 +19,9 @@ export function NavigationRail() {
       </div>
       <div className="flex justify-center items-center">
         <div className="space-y-2">
+          <RailTabButton href="/links" active={pathname?.startsWith("/links") ?? false} title="Links">
+            <FaLink />
+          </RailTabButton>
           <RailTabButton href="/" active={isOnSearch} title="Search">
             <FaSearch />
           </RailTabButton>

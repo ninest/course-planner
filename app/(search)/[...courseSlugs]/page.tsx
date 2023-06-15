@@ -1,22 +1,15 @@
-import { getCourse, getCourses } from "@/api/courses";
-import { getSubject } from "@/api/subjects";
-import { Button } from "@/components/button";
+import { getCourse } from "@/api/courses";
 import { SectionTermMatrix } from "@/components/course/sections/section-term-matrix";
 import { Sections } from "@/components/course/sections/sections";
 import { Loading } from "@/components/loading";
-import { NotionPage } from "@/components/notion-page";
 import { TransparentHeader } from "@/components/sticky-transparent-header";
 import { Title } from "@/components/title";
 import { slugToCourse2 } from "@/course";
-import { queryCourseDatabase } from "@/notion/database";
-import { getNotionPageMentions, getNotionRecordMap } from "@/notion/page";
 import { getCourseTerms } from "@/term";
 import { Suspense } from "react";
 import { ClientCourseInfo } from "./client-course-info";
-import { CourseNotes } from "./course-notes";
 import { CourseNotesExpandable } from "./course-notes-expandable";
 import { MobileCourseSearchBackButton } from "./mobile-back-button";
-import { TestServerLoadingComponent } from "./test-server-loading-component";
 
 // export const revalidate = 3600; // revalidate this page every X seconds
 
