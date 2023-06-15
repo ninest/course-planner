@@ -4,12 +4,12 @@ import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ComponentProps } from "react";
-import { FaLink, FaSearch, FaTable } from "react-icons/fa";
+import { FaLink, FaRegBookmark, FaSearch, FaTable } from "react-icons/fa";
 
 export function NavigationRail() {
   const pathname = usePathname();
 
-  const excludedPaths = ["/plan", "/links"];
+  const excludedPaths = ["/plan", "/links", "/wiki"];
   const isOnSearch = pathname === "/" && !excludedPaths.some((path) => pathname.startsWith(path));
 
   return (
@@ -21,6 +21,9 @@ export function NavigationRail() {
         <div className="space-y-2">
           <RailTabButton href="/links" active={pathname?.startsWith("/links") ?? false} title="Links">
             <FaLink />
+          </RailTabButton>
+          <RailTabButton href="/wiki" active={pathname?.startsWith("/wiki") ?? false} title="Wiki">
+            <FaRegBookmark />
           </RailTabButton>
           <RailTabButton href="/" active={isOnSearch} title="Search">
             <FaSearch />

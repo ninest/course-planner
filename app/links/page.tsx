@@ -11,9 +11,9 @@ export default async function LinksPage() {
         <Title>Links</Title>
 
         <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-3">
-          {links.map((courseLink) => {
+          {/* {links.map((courseLink) => {
             return <LinkButton href={courseLink.url} title={courseLink.title} />;
-          })}
+          })} */}
         </div>
       </main>
     </>

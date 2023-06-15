@@ -1,4 +1,5 @@
 export const constants = {
   COURSE_DATABASE_ID: "efa10c1e8f5e432aa0e393b435c68a67",
   LINKS_DATABASE_ID: "b2389f2e689647208200abc26b44c137",
+  WIKI_DATABASE_ID: "ac7bbf9bc11343ad90fe028fb371b112",
 };
