@@ -42,7 +42,7 @@ export default async function CoursePage({ params }: Props) {
             const terms = courseInfo ? getCourseTerms(courseInfo) : [];
             return (
               <div key={index} className="pt-10 first:pt-0 pb-10">
-                <Title className="mb-2 tabular-nums">
+                <Title level={1} className="mb-2 tabular-nums">
                   {courseInfo.subject} {courseInfo.number}: {courseInfo.title}
                 </Title>
 

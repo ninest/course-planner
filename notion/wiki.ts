@@ -8,6 +8,11 @@ export interface WikiArticle {
   title: string;
   description: string;
   tagIds: string[];
+  metadata?: ArticleMetadata;
+}
+interface ArticleMetadata {
+  createdAt: Date;
+  lastEditedAt: Date;
 }
 
 export const wikiTags = {
@@ -46,7 +51,26 @@ export async function getWikiArticleBySlug(slug: string) {
     filter: { property: "Slug", rich_text: { equals: slug } },
   });
   const page = response.results[0];
-  return page;
+
+  if (!("properties" in page)) throw new Error(`In properties in page ${slug}`);
+
+  const metadata: ArticleMetadata = {
+    createdAt: new Date(page.created_time),
+    lastEditedAt: new Date(page.last_edited_time),
+  };
+
+  const article: WikiArticle = {
+    id: page.id,
+    // @ts-ignore
+    slug: page.properties["Slug"].rich_text[0].plain_text,
+    // @ts-ignore
+    title: page.properties["Title"].title[0].plain_text,
+    // @ts-ignore
+    tagIds: page.properties["Tags"].multi_select.map((multi_select) => multi_select.id),
+    // @ts-ignore
+    description: page.properties["Description"].rich_text[0].plain_text,
+    metadata,
+  };
+
+  return article;
 }
-
-

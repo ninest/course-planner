@@ -13,16 +13,24 @@ export interface HuskerLink {
   url: string;
   filterIds: string[];
 }
-export const linkCategories = {
-  courses: "h^h",
+export const linkCategoryMap = {
+  services: "8a5623a3-468e-424e-9eb6-2e015b311b80",
+  courses: "`h^h",
 };
-export const linkFilters = {
+export const linkCategories: { title: string; categoryKey: keyof typeof linkCategoryMap }[] = [
+  { title: "Services", categoryKey: "services" },
+  { title: "Courses", categoryKey: "courses" },
+];
+
+export const linkFilterMap = {
   graduateOnly: "ukCx",
   undergraduateOnly: "nT[|",
 };
 
 export async function getLinks() {
-  const response = await queryNotionDatabase(constants.LINKS_DATABASE_ID)
+  const response = await queryNotionDatabase(constants.LINKS_DATABASE_ID, {
+    sorts: [{ property: "Order", direction: "ascending" }],
+  });
   const links: HuskerLink[] = [];
 
   const rowProperties = response.results

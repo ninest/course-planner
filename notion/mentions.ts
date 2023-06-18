@@ -1,14 +1,25 @@
 import { getBlocksChildrenList, retrieveNotionPage } from "@/api/notion";
+import { BlockObjectResponse, PartialBlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 export type PageMention = { id: string; type: "course-link" | "wiki-link"; title: string; href: string };
 export async function getNotionPageMentions(pageId: string) {
   const pageMentions: PageMention[] = [];
 
   const blocks = await getBlocksChildrenList(pageId);
+  const mentions = await getMentionsFromBlocks(blocks.results);
+  mentions.forEach((m) => pageMentions.push(m));
 
-  for await (const block of blocks.results) {
-    if ("paragraph" in block) {
-      const parts = block.paragraph.rich_text;
+  return pageMentions;
+}
+
+async function getMentionsFromBlocks(blocks: (PartialBlockObjectResponse | BlockObjectResponse)[]) {
+  const pageMentions: PageMention[] = [];
+  for await (const block of blocks) {
+    // TODO: improve this code
+    if ("paragraph" in block || "bulleted_list_item" in block) {
+      let parts: any;
+      if ("paragraph" in block) parts = block.paragraph.rich_text;
+      else if ("bulleted_list_item" in block) parts = block.bulleted_list_item.rich_text;
 
       for await (const part of parts) {
         if (part.type === "mention" && part.href !== null) {
@@ -52,6 +63,5 @@ export async function getNotionPageMentions(pageId: string) {
       }
     }
   }
-
   return pageMentions;
 }

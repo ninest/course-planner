@@ -14,10 +14,10 @@ export function Title({ level = 2, children, ...props }: TitleProps) {
       className={clsx(
         "font-display tracking-normal text-gray-800",
         {
-          "text-4xl font-bold": level == 1,
-          "text-3xl font-black": level == 2,
-          "text-lg font-bold": level == 3,
-          "text-base font-bold": level == 4,
+          // "text-4xl font-bold": level == 1,
+          "text-3xl font-black": level == 1,
+          "text-xl font-bold": level == 2,
+          "text-base font-bold": level == 3,
         },
         props.className
       )}

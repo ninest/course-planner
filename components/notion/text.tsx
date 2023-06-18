@@ -15,7 +15,7 @@ export function NotionText({ text, mentions }: { text: any; mentions: PageMentio
     } = value;
     const classes = clsx({
       "font-bold": bold,
-      "font-mono": code,
+      "font-mono bg-gray-100 text-sm rounded -mx-0.5 px-0.5": code,
       italic: italic,
       strikethrough: strikethrough,
       underline: underline,
@@ -24,7 +24,7 @@ export function NotionText({ text, mentions }: { text: any; mentions: PageMentio
     switch (type) {
       case "text": {
         const text = value.text;
-        return <span className={classes}>{text.link ? <a href={text.link.url}>{text.content}</a> : text.content}</span>;
+        return <span className={classes}>{text.link ? <a href={text.link.url} className="underline">{text.content}</a> : text.content}</span>;
       }
       // @ts-ignore
       case "mention": {
