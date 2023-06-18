@@ -7,19 +7,13 @@ export interface WikiArticle {
   slug: string;
   title: string;
   description: string;
-  tagIds: string[];
+  categoryIds: string[];
   metadata?: ArticleMetadata;
 }
 interface ArticleMetadata {
   createdAt: Date;
   lastEditedAt: Date;
 }
-
-export const wikiTags = {
-  courses: "2db834fb-6c55-4cdf-8cb5-7a5d08a1f2b0",
-  faq: "ab467acb-ec80-47d2-9cab-65afa0434cf1",
-  test: "0eeb34ff-8263-41ad-afb5-0f012bd99c35",
-};
 
 export async function getWikiArticles() {
   const response = await queryNotionDatabase(constants.WIKI_DATABASE_ID);
@@ -37,10 +31,10 @@ export async function getWikiArticles() {
     // @ts-ignore
     const title = row.properties["Title"].title[0].plain_text;
     // @ts-ignore
-    const tagIds = row.properties["Tags"].multi_select.map((multi_select) => multi_select.id);
+    const categoryIds = row.properties["Categories"].relation.map((relation) => relation.id);
     // @ts-ignore
     const description = row.properties["Description"].rich_text[0].plain_text;
-    wikiArticles.push({ id: row.id, slug, title, tagIds, description });
+    wikiArticles.push({ id: row.id, slug, title, categoryIds, description });
   });
 
   return wikiArticles;
@@ -66,7 +60,7 @@ export async function getWikiArticleBySlug(slug: string) {
     // @ts-ignore
     title: page.properties["Title"].title[0].plain_text,
     // @ts-ignore
-    tagIds: page.properties["Tags"].multi_select.map((multi_select) => multi_select.id),
+    categoryIds: page.properties["Categories"].relation.map((relation) => relation.id),
     // @ts-ignore
     description: page.properties["Description"].rich_text[0].plain_text,
     metadata,

@@ -21,7 +21,7 @@ export function NotionPage({ blocks, mentions }: { blocks: BlockObjectResponse[]
           (block.type === "bulleted_list_item" && blocks[i + 1]?.type === "bulleted_list_item") ||
           (block.type === "numbered_list_item" && blocks[i + 1]?.type === "numbered_list_item");
         return (
-          <div className={clsx({ "mb-3": !noSpaceBelow && !isTitle, "mb-2": isTitle })}>
+          <div key={block.id} className={clsx({ "mb-3": !noSpaceBelow && !isTitle, "mb-2": isTitle })}>
             {isListItem ? (
               <ul className="list-disc list-outside ml-6">
                 <NotionBlock block={block} mentions={mentions} />

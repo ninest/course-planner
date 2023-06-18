@@ -77,6 +77,7 @@ export function Select({ control, name, options, label, className, ...props }: S
           })}
         </select>
         <label
+          htmlFor={name}
           className={clsx(className, "z-10 block pointer-events-none", "flex justify-between items-center space-x-1")}
         >
           <span>{selectedOption?.title}</span>

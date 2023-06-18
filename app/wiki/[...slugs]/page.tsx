@@ -41,7 +41,7 @@ export default async function WikiPage({ params }: Props) {
         </article>
 
         {metadata && (
-          <div className="mt-10 text-sm p-3 border rounded-md">
+          <div className="my-10 text-sm p-3 border rounded-md">
             <p>Created {formatDate(metadata.createdAt)}</p>
             <p>Last edited {formatDate(metadata.lastEditedAt)}</p>
           </div>
