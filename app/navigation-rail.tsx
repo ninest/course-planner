@@ -9,8 +9,8 @@ import { FaLink, FaRegBookmark, FaSearch, FaTable } from "react-icons/fa";
 export function NavigationRail() {
   const pathname = usePathname();
 
-  const excludedPaths = ["/plan", "/links", "/wiki"];
-  const isOnSearch = pathname === "/" && !excludedPaths.some((path) => pathname.startsWith(path));
+  const excludedPaths = ["/plan", "/hub", "/wiki"];
+  const isOnSearch = pathname.startsWith("/") && !excludedPaths.some((path) => pathname.startsWith(path));
 
   return (
     <div className="w-16 border-r h-full">
@@ -19,7 +19,7 @@ export function NavigationRail() {
       </div>
       <div className="flex justify-center items-center">
         <div className="space-y-2">
-          <RailTabButton href="/links" active={pathname?.startsWith("/links") ?? false} title="Links">
+          <RailTabButton href="/hub" active={pathname?.startsWith("/hub") ?? false} title="Hub">
             <FaLink />
           </RailTabButton>
           <RailTabButton href="/wiki" active={pathname?.startsWith("/wiki") ?? false} title="Wiki">

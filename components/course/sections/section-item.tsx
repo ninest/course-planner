@@ -21,7 +21,6 @@ interface SectionItemProps extends ComponentProps<"div"> {
 export function SectionItem({ termCode, course, crn, className, onHover, onUnhover, buttons }: SectionItemProps) {
   // Get hashes from URL
   const selectedCrns = window.location.hash.substring(1).split(",");
-  console.log(selectedCrns);
 
   const { isLoading, section } = useSection(termCode, crn);
   if (isLoading || !section)

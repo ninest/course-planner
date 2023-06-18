@@ -7,10 +7,10 @@ import { ReactNode, Suspense, useState } from "react";
 export const Providers = ({ children }: { children: ReactNode }) => {
   const [queryClient] = useState(() => new QueryClient());
   return (
-    <Suspense fallback={<></>}>
-      <QueryClientProvider client={queryClient}>
-        <JotaiProvider>{children}</JotaiProvider>
-      </QueryClientProvider>
-    </Suspense>
+    // <Suspense fallback={<>Loading providers ...</>}>
+    <QueryClientProvider client={queryClient}>
+      <JotaiProvider>{children}</JotaiProvider>
+    </QueryClientProvider>
+    // </Suspense>
   );
 };

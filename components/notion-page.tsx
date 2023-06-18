@@ -1,22 +1,18 @@
 "use client";
 
-import { PageMention } from "@/notion/page";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { ExtendedRecordMap } from "notion-types";
-import { NotionRenderer } from "react-notion-x";
-import { UniversalLink } from "./universal-link";
+// import { ExtendedRecordMap } from "notion-types";
+// import { NotionRenderer } from "react-notion-x";
 
 interface NotionPageProps {
-  recordMap: ExtendedRecordMap;
-  pageMentions: PageMention[];
+  // recordMap: ExtendedRecordMap;
+  // pageMentions: PageMention[];
 }
 
-export function NotionPage({ recordMap, pageMentions }: NotionPageProps) {
+export function NotionPage({ /* recordMap ,*/ /* pageMentions */ }: any) {
   const classes = "notion-page notion-h2 notion-h3 notion-hash-link notion-file notion-file-icon notion-file-size";
   return (
     <>
-      <NotionRenderer
+      {/* <NotionRenderer
         recordMap={recordMap}
         components={{
           PageLink: (props: any) => {
@@ -44,7 +40,7 @@ export function NotionPage({ recordMap, pageMentions }: NotionPageProps) {
             );
           },
         }}
-      />
+      /> */}
     </>
   );
 }

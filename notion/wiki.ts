@@ -1,10 +1,9 @@
-import { Client } from "@notionhq/client";
-import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { getBlocksChildrenList, queryNotionDatabase } from "@/api/notion";
+import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { constants } from "./constants";
 
-const notionhq = new Client({ auth: process.env.NOTION_API_KEY });
-
 export interface WikiArticle {
+  id: string;
   slug: string;
   title: string;
   description: string;
@@ -18,36 +17,36 @@ export const wikiTags = {
 };
 
 export async function getWikiArticles() {
-  const response = await notionhq.databases.query({
-    database_id: constants.WIKI_DATABASE_ID,
-  });
-
+  const response = await queryNotionDatabase(constants.WIKI_DATABASE_ID);
   const wikiArticles: WikiArticle[] = [];
 
   const rowProperties = response.results
     .filter((result): result is PageObjectResponse => "properties" in result)
     .map((result) => result.properties);
 
-  rowProperties.forEach((properties) => {
-    const slug = properties["Slug"].rich_text[0].plain_text;
-    const title = properties["Title"].title[0].plain_text;
-    const tagIds = properties["Tags"].multi_select.map((multi_select) => multi_select.id);
-    const description = properties["Description"].rich_text[0].plain_text;
-    wikiArticles.push({ slug, title, tagIds, description });
+  const rows = response.results.filter((result): result is PageObjectResponse => "properties" in result);
+
+  rows.forEach((row) => {
+    // @ts-ignore
+    const slug = row.properties["Slug"].rich_text[0].plain_text;
+    // @ts-ignore
+    const title = row.properties["Title"].title[0].plain_text;
+    // @ts-ignore
+    const tagIds = row.properties["Tags"].multi_select.map((multi_select) => multi_select.id);
+    // @ts-ignore
+    const description = row.properties["Description"].rich_text[0].plain_text;
+    wikiArticles.push({ id: row.id, slug, title, tagIds, description });
   });
 
   return wikiArticles;
 }
 
-export async function getWikiArticleBlocks(slug: string) {
-  const response = await notionhq.databases.query({
-    database_id: constants.WIKI_DATABASE_ID,
+export async function getWikiArticleBySlug(slug: string) {
+  const response = await queryNotionDatabase(constants.WIKI_DATABASE_ID, {
     filter: { property: "Slug", rich_text: { equals: slug } },
   });
-  if (response.results.length < 1) throw new Error(`Invalid wiki slug ${slug}`);
-
-  const pageId = response.results[0].id;
-
-  const blocks = await notionhq.blocks.children.list({ block_id: pageId });
-  return blocks
+  const page = response.results[0];
+  return page;
 }
+
+

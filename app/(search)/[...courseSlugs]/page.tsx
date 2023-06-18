@@ -11,20 +11,7 @@ import { ClientCourseInfo } from "./client-course-info";
 import { CourseNotesExpandable } from "./course-notes-expandable";
 import { MobileCourseSearchBackButton } from "./mobile-back-button";
 
-// export const revalidate = 3600; // revalidate this page every X seconds
-
-// export async function generateStaticParams() {
-//   const subjects = [await getSubject("CS")];
-
-//   const params: { courseSlugs: string[] }[] = [];
-
-//   for await (const subject of subjects) {
-//     const courses = await getCourses(subject.code);
-//     courses.forEach((course) => params.push({ courseSlugs: [`${course.subject}${course.number}`] }));
-//   }
-
-//   return params;
-// }
+export const revalidate = 3600;
 
 interface Props {
   params: { courseSlugs: string[] };
@@ -66,10 +53,13 @@ export default async function CoursePage({ params }: Props) {
                 <SectionTermMatrix className="mt-10" terms={getCourseTerms(courseInfo)} />
 
                 <Suspense
-                  fallback=<>
-                    <Loading className="mt-10" heights={[9]} />
-                  </>
+                  fallback={
+                    <>
+                      <Loading className="mt-10" heights={[9]} />
+                    </>
+                  }
                 >
+                  {/* @ts-ignore */}
                   <CourseNotesExpandable course={course} className="mt-10" />
                 </Suspense>
 
