@@ -1,19 +1,16 @@
-import {
-  BlockObjectResponse,
-  ListBlockChildrenParameters,
-  PartialBlockObjectResponse,
-} from "@notionhq/client/build/src/api-endpoints";
-import { NotionText } from "./text";
-import { Title } from "../title";
-import { Callout } from "../Callout";
-import clsx from "clsx";
-import { ComponentProps, Fragment } from "react";
 import { PageMention } from "@/notion/mentions";
+import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import clsx from "clsx";
+import Image from "next/image";
+import { ComponentProps } from "react";
 import { Blockquote } from "../Blockquote";
+import { Callout } from "../Callout";
+import { Title } from "../title";
+import { NotionText } from "./text";
 
 export function NotionPage({ blocks, mentions }: { blocks: BlockObjectResponse[]; mentions: PageMention[] }) {
   return (
-    <article className="">
+    <article className="leading-relaxed">
       {blocks.map((block, i) => {
         const isListItem = block.type === "bulleted_list_item" || block.type === "numbered_list_item";
         const isTitle = block.type === "heading_1" || block.type === "heading_2" || block.type === "heading_3";
@@ -70,9 +67,9 @@ export function NotionBlock({ block, mentions }: { block: BlockObjectResponse; m
       // @ts-ignore
       const src = block.image.file.url;
       return (
-        <>
-          <img src={src} />
-        </>
+        <figure>
+          <img src={src} alt={"Image"} />
+        </figure>
       );
 
     default:

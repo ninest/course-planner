@@ -8,7 +8,7 @@ import { getWikiArticleBySlug } from "@/notion/wiki";
 import { formatDate } from "@/utils/date/display";
 import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
-export const revalidate = 1000;
+export const revalidate = 100;
 
 interface Props {
   params: { slugs: string[] };
