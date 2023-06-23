@@ -66,6 +66,14 @@ export function NotionBlock({ block, mentions }: { block: BlockObjectResponse; m
       return <></>;
     case "quote":
       return <Blockquote>{notionText}</Blockquote>;
+    case "image":
+      // @ts-ignore
+      const src = block.image.file.url;
+      return (
+        <>
+          <img src={src} />
+        </>
+      );
 
     default:
       return <p className="text-red-500">Warning: {type} is unsupported.</p>;
