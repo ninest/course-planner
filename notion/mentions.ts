@@ -47,7 +47,7 @@ async function getMentionsFromBlocks(blocks: (PartialBlockObjectResponse | Block
           } else if (
             "properties" in fullNotionPage &&
             "Slug" in fullNotionPage.properties &&
-            "Tags" in fullNotionPage.properties &&
+            "Categories" in fullNotionPage.properties &&
             "Description" in fullNotionPage.properties
           ) {
             // @ts-ignore

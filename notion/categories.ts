@@ -5,6 +5,7 @@ import type { PageObjectResponse, QueryDatabaseResponse } from "@notionhq/client
 export interface Category {
   id: string;
   title: string;
+  slug: string;
 }
 
 function transformNotionResponseToCategories(response: QueryDatabaseResponse) {
@@ -16,7 +17,9 @@ function transformNotionResponseToCategories(response: QueryDatabaseResponse) {
     const id = row.id;
     // @ts-ignore
     const title = properties["Title"].title[0].plain_text;
-    categories.push({ id, title });
+    // @ts-ignore
+    const slug = properties["Slug"].rich_text[0].plain_text;
+    categories.push({ id, slug, title });
   });
   return categories;
 }
@@ -24,16 +27,17 @@ function transformNotionResponseToCategories(response: QueryDatabaseResponse) {
 export async function getLinksCategories() {
   const response = await queryNotionDatabase(constants.CATEGORIES_DATABASE_ID, {
     filter: { property: "Is Links Category", checkbox: { equals: true } },
-    sorts: [{ property: "Order", direction: "ascending" }],
+    sorts: [{ property: "Links Order", direction: "ascending" }],
   });
 
   return transformNotionResponseToCategories(response);
 }
 
-export async function getCategories() {
+export async function getWikiCategories() {
   const response = await queryNotionDatabase(constants.CATEGORIES_DATABASE_ID, {
     sorts: [{ property: "Order", direction: "ascending" }],
   });
 
-  return transformNotionResponseToCategories(response);
+  const categories = transformNotionResponseToCategories(response);
+  return categories;
 }

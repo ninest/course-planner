@@ -9,7 +9,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head />
       <Providers>
         <body className="text-gray-500 md:flex">
-          <aside className="hidden md:block flex-none">
+          <aside className="hidden sticky top-0 md:block flex-none h-screen">
             <NavigationRail />
           </aside>
           <div className="flex-1 min-h-[100dvh]">{children}</div>

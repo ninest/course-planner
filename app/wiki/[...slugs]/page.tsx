@@ -37,6 +37,7 @@ export default async function WikiPage({ params }: Props) {
         <hr className="mt-4" />
 
         <article className="mt-4">
+          {/* @ts-ignore */}
           <NotionPage blocks={pageBlocks.results as BlockObjectResponse[]} mentions={pageMentions} />
         </article>
 

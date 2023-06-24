@@ -1,14 +1,14 @@
+import { getBlock } from "@/api/notion";
 import { PageMention } from "@/notion/mentions";
 import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import clsx from "clsx";
-import Image from "next/image";
 import { ComponentProps } from "react";
 import { Blockquote } from "../Blockquote";
 import { Callout } from "../Callout";
 import { Title } from "../title";
 import { NotionText } from "./text";
 
-export function NotionPage({ blocks, mentions }: { blocks: BlockObjectResponse[]; mentions: PageMention[] }) {
+export async function NotionPage({ blocks, mentions }: { blocks: BlockObjectResponse[]; mentions: PageMention[] }) {
   return (
     <article className="leading-relaxed">
       {blocks.map((block, i) => {
@@ -21,9 +21,11 @@ export function NotionPage({ blocks, mentions }: { blocks: BlockObjectResponse[]
           <div key={block.id} className={clsx({ "mb-3": !noSpaceBelow && !isTitle, "mb-2": isTitle })}>
             {isListItem ? (
               <ul className="list-disc list-outside ml-6">
+                {/* @ts-ignore */}
                 <NotionBlock block={block} mentions={mentions} />
               </ul>
             ) : (
+              // @ts-ignore
               <NotionBlock block={block} mentions={mentions} />
             )}
           </div>
@@ -33,7 +35,7 @@ export function NotionPage({ blocks, mentions }: { blocks: BlockObjectResponse[]
   );
 }
 
-export function NotionBlock({ block, mentions }: { block: BlockObjectResponse; mentions: PageMention[] }) {
+export async function NotionBlock({ block, mentions }: { block: BlockObjectResponse; mentions: PageMention[] }) {
   const { type, id } = block;
   // @ts-ignore
   const value = block[type];
@@ -65,7 +67,9 @@ export function NotionBlock({ block, mentions }: { block: BlockObjectResponse; m
       return <Blockquote>{notionText}</Blockquote>;
     case "image":
       // @ts-ignore
-      const src = block.image.file.url;
+      const b = await getBlock(block.id);
+      // @ts-ignore
+      const src = b.image.file.url;
       return (
         <figure>
           <img src={src} alt={"Image"} />

@@ -35,7 +35,7 @@ export function WikiPageLayoutContainer({
       {/* Desktop */}
       <div className="hidden md:flex md:h-screen">
         <div className="md:w-[300px] lg:w-[400px] md:overflow-y-scroll md:border-r">
-          <div className="p-5 space-y-1">
+          <div className="space-y-1">
             <WikiPageList articles={articles} categories={categories} />
           </div>
         </div>

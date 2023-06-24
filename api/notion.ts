@@ -1,4 +1,5 @@
 import type {
+  BlockObjectResponse,
   GetPageResponse,
   ListBlockChildrenResponse,
   QueryDatabaseParameters,
@@ -43,5 +44,18 @@ export async function getBlocksChildrenList(blockId: string) {
     },
   });
   const responseJson = (await response.json()) as ListBlockChildrenResponse;
+  return responseJson;
+}
+
+export async function getBlock(blockId: string) {
+  const response = await fetch(`https://api.notion.com/v1/blocks/${blockId}`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + process.env.NOTION_API_KEY,
+      accept: "application/json",
+      "Notion-Version": "2022-06-28",
+    },
+  });
+  const responseJson = (await response.json()) as BlockObjectResponse;
   return responseJson;
 }
