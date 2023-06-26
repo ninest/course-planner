@@ -1,14 +1,21 @@
-import { getBlock } from "@/api/notion";
+import { getBlock, getBlocksChildrenList, retrieveNotionDatabase } from "@/api/notion";
 import { PageMention } from "@/notion/mentions";
-import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import {
+  BlockObjectResponse,
+  ListBlockChildrenResponse,
+  TextRichTextItemResponse,
+} from "@notionhq/client/build/src/api-endpoints";
 import clsx from "clsx";
-import { ComponentProps } from "react";
+import { ComponentProps, Suspense } from "react";
+import { FaFileAlt } from "react-icons/fa";
 import { Blockquote } from "../Blockquote";
 import { Callout } from "../Callout";
+import { Loading } from "../loading";
 import { Title } from "../title";
 import { NotionText } from "./text";
 
 export async function NotionPage({ blocks, mentions }: { blocks: BlockObjectResponse[]; mentions: PageMention[] }) {
+  if (!blocks) return <></>;
   return (
     <article className="leading-relaxed">
       {blocks.map((block, i) => {
@@ -17,17 +24,17 @@ export async function NotionPage({ blocks, mentions }: { blocks: BlockObjectResp
         const noSpaceBelow =
           (block.type === "bulleted_list_item" && blocks[i + 1]?.type === "bulleted_list_item") ||
           (block.type === "numbered_list_item" && blocks[i + 1]?.type === "numbered_list_item");
+
+        const notionBlock = (
+          <Suspense fallback={<Loading heights={[4]} />}>
+            {/* @ts-ignore */}
+            <NotionBlock block={block} mentions={mentions} />
+          </Suspense>
+        );
+
         return (
           <div key={block.id} className={clsx({ "mb-3": !noSpaceBelow && !isTitle, "mb-2": isTitle })}>
-            {isListItem ? (
-              <ul className="list-disc list-outside ml-6">
-                {/* @ts-ignore */}
-                <NotionBlock block={block} mentions={mentions} />
-              </ul>
-            ) : (
-              // @ts-ignore
-              <NotionBlock block={block} mentions={mentions} />
-            )}
+            {isListItem ? <ul className="list-disc list-outside ml-6">{notionBlock}</ul> : notionBlock}
           </div>
         );
       })}
@@ -43,29 +50,36 @@ export async function NotionBlock({ block, mentions }: { block: BlockObjectRespo
   const notionText = <NotionText text={value} mentions={mentions} />;
 
   switch (type) {
-    case "paragraph":
+    case "paragraph": {
       return <p>{notionText}</p>;
+    }
     case "heading_1":
-    case "heading_2":
+    case "heading_2": {
       return <Title level={2}>{notionText}</Title>;
-    case "heading_3":
+    }
+    case "heading_3": {
       return <Title level={3}>{notionText}</Title>;
+    }
     case "bulleted_list_item":
-    case "numbered_list_item":
+    case "numbered_list_item": {
       return <li>{notionText}</li>;
-    case "callout":
+    }
+    case "callout": {
       // TODO: check emoji for other callout types
       const emoji = block.callout.icon?.type === "emoji" ? block.callout.icon.emoji : null;
       let calloutType: ComponentProps<typeof Callout>["type"] = "default";
       if (emoji === "⚠️") calloutType = "warning";
       if (emoji === "🔴") calloutType = "error";
       return <Callout type={calloutType}>{notionText}</Callout>;
-    case "toggle":
+    }
+    case "toggle": {
       // TODO: need to get block children
       return <></>;
-    case "quote":
+    }
+    case "quote": {
       return <Blockquote>{notionText}</Blockquote>;
-    case "image":
+    }
+    case "image": {
       // @ts-ignore
       const b = await getBlock(block.id);
       // @ts-ignore
@@ -75,7 +89,44 @@ export async function NotionBlock({ block, mentions }: { block: BlockObjectRespo
           <img src={src} alt={"Image"} />
         </figure>
       );
+    }
+    case "synced_block": {
+      let sb: null | ListBlockChildrenResponse;
+      if (block.synced_block.synced_from?.block_id) {
+        sb = await getBlocksChildrenList(block.synced_block.synced_from?.block_id!);
+      } else {
+        sb = await getBlocksChildrenList(block.id);
+      }
+      const blocks = sb.results as BlockObjectResponse[];
 
+      // @ts-ignore
+      return <NotionPage blocks={blocks} mentions={mentions} />;
+    }
+    case "file": {
+      let fileUrl: string;
+      let captionRichTexts: TextRichTextItemResponse[];
+
+      if (block.file.type === "file") {
+        const fileBlock = await getBlock(block.id);
+        // @ts-ignore
+        fileUrl = fileBlock.file.file.url;
+        // @ts-ignore
+        captionRichTexts = fileBlock.file.caption;
+      }
+
+      return (
+        // @ts-ignore
+        <a href={fileUrl} target="_blank" className="flex p-3 bg-gray-100 rounded-md items-center space-x-3">
+          <FaFileAlt />
+          {/* @ts-ignore */}
+          {captionRichTexts ? (
+            <NotionText text={{ rich_text: captionRichTexts }} mentions={mentions} />
+          ) : (
+            <div>File</div>
+          )}
+        </a>
+      );
+    }
     default:
       return <p className="text-red-500">Warning: {type} is unsupported.</p>;
   }

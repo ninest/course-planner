@@ -1,17 +1,17 @@
 import { MinimizedCourse } from "@/.data/types";
 import { Client } from "@notionhq/client";
 import { constants } from "./constants";
+import { queryNotionDatabase, retrieveNotionDatabase } from "@/api/notion";
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 
 export async function getCoursesDatabase() {
-  const response = await notion.databases.retrieve({ database_id: constants.COURSE_DATABASE_ID });
-  return response;
+  const db = await retrieveNotionDatabase(constants.COURSE_DATABASE_ID);
+  return db;
 }
 
 export async function queryCourseDatabase(course: MinimizedCourse) {
-  const response = await notion.databases.query({
-    database_id: constants.COURSE_DATABASE_ID,
+  const response = await queryNotionDatabase(constants.COURSE_DATABASE_ID, {
     filter: {
       and: [
         {

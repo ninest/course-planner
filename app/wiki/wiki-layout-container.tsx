@@ -26,7 +26,7 @@ export function WikiPageLayoutContainer({
         {onWikiPage ? (
           <>{children}</>
         ) : (
-          <div className="p-5 space-y-1">
+          <div className="space-y-1">
             <WikiPageList articles={articles} categories={categories} />
           </div>
         )}

@@ -1,5 +1,6 @@
 import type {
   BlockObjectResponse,
+  GetDatabaseResponse,
   GetPageResponse,
   ListBlockChildrenResponse,
   QueryDatabaseParameters,
@@ -17,6 +18,19 @@ export async function retrieveNotionPage(pageId: string) {
   });
 
   return (await response.json()) as GetPageResponse;
+}
+
+export async function retrieveNotionDatabase(databaseId: string) {
+  const response = await fetch(`https://api.notion.com/v1/databases/${databaseId}`, {
+    method: "GET",
+    headers: {
+      Authorization: "Bearer " + process.env.NOTION_API_KEY,
+      accept: "application/json",
+      "Notion-Version": "2022-06-28",
+    },
+  });
+  const responseJson = (await response.json()) as GetDatabaseResponse;
+  return responseJson;
 }
 
 export async function queryNotionDatabase(databaseId: string, body: Object | QueryDatabaseParameters = {}) {
@@ -55,6 +69,7 @@ export async function getBlock(blockId: string) {
       accept: "application/json",
       "Notion-Version": "2022-06-28",
     },
+    next: { revalidate: 0 },
   });
   const responseJson = (await response.json()) as BlockObjectResponse;
   return responseJson;

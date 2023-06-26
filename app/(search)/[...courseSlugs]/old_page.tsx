@@ -13,7 +13,7 @@ import { useCourses } from "@/hooks/fetching/use-course";
 import { courseToSlug2 } from "@/course";
 import { getCourseTerms } from "@/term";
 import { useQuery } from "@tanstack/react-query";
-import { queryCourseDatabase } from "@/notion/database";
+import { queryCourseDatabase } from "@/notion/courses";
 
 interface Props {
   params: { courseSlugs: string[] };

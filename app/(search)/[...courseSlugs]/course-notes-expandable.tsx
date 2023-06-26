@@ -1,6 +1,10 @@
 import { MinimizedCourse } from "@/.data/types";
+import { getBlocksChildrenList } from "@/api/notion";
 import { Button } from "@/components/button";
-// import { ExtendedRecordMap } from "notion-types";
+import { NotionPage } from "@/components/notion/page";
+import { queryCourseDatabase } from "@/notion/courses";
+import { PageMention, getNotionPageMentions } from "@/notion/mentions";
+import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { ComponentProps } from "react";
 import { CourseNotes } from "./course-notes";
 
@@ -9,14 +13,17 @@ interface CourseNotesExpandableProps extends ComponentProps<"div"> {
 }
 
 export async function CourseNotesExpandable({ course, className }: CourseNotesExpandableProps) {
-  // const { hasNotionPageContent, notionRecordMap, pageMentions } = await getNotionCourseInfo(course);
-  // const hasCourseNotes = hasNotionPageContent && notionRecordMap && pageMentions;
+  const { hasNotionPageContent, blocks, pageMentions } = await getNotionCourseInfo(course);
+  const hasCourseNotes = hasNotionPageContent && blocks && pageMentions;
 
   return (
     <div className={className}>
       <CourseNotes>
-        {/* {hasCourseNotes ? (
-          <NotionPage recordMap={notionRecordMap} pageMentions={pageMentions} />
+        {hasCourseNotes ? (
+          <>
+            {/* @ts-ignore */}
+            <NotionPage blocks={blocks} mentions={pageMentions} />
+          </>
         ) : (
           <a
             href="https://docs.google.com/forms/d/e/1FAIpQLSdIzBLNUhuc1OMyPCPAKwDBo4gpvqcK78OY9yaoCoJ3YMxTkQ/viewform?usp=sf_link"
@@ -28,7 +35,7 @@ export async function CourseNotesExpandable({ course, className }: CourseNotesEx
               <span className="underline">Click here to share syllabi or other information!</span>
             </span>
           </a>
-        )} */}
+        )}
       </CourseNotes>
 
       <div className="mt-3 space-y-2">
@@ -49,24 +56,22 @@ export async function CourseNotesExpandable({ course, className }: CourseNotesEx
 }
 
 type GetNotionCourseInfo =
-  | { hasNotionPageContent: false; notionRecordMap: null; pageMentions: null }
-  // | { hasNotionPageContent: true; notionRecordMap: ExtendedRecordMap; pageMentions: PageMention[] };
-async function getNotionCourseInfo(course: MinimizedCourse)/* : Promise<GetNotionCourseInfo> */ {
-  // const rows = await queryCourseDatabase(course);
-  // if (rows.results.length === 0) {
-  //   return { hasNotionPageContent: false, notionRecordMap: null, pageMentions: null };
-  // }
+  | { hasNotionPageContent: false; blocks: null; pageMentions: null }
+  | { hasNotionPageContent: true; blocks: BlockObjectResponse[]; pageMentions: PageMention[] };
+async function getNotionCourseInfo(course: MinimizedCourse): Promise<GetNotionCourseInfo> {
+  const rows = await queryCourseDatabase(course);
+  if (rows.results.length === 0) {
+    return { hasNotionPageContent: false, blocks: null, pageMentions: null };
+  }
 
-  // const page = rows.results[0];
+  const page = rows.results[0];
+  const blocksResponse = await getBlocksChildrenList(page.id);
+  const mentions = await getNotionPageMentions(page.id);
 
-  // const notionRecordMapPromise = getNotionRecordMap(page.id);
-  // const pageMentionsPromise = getNotionPageMentions(page.id);
-  // const [notionRecordMap, pageMentions] = await Promise.all([notionRecordMapPromise, pageMentionsPromise]);
+  const blocks = blocksResponse.results;
+  if (blocks.length === 0) {
+    return { hasNotionPageContent: false, blocks: null, pageMentions: null };
+  }
 
-  // const hasNotionPageContent = Object.keys(notionRecordMap.block).length > 2;
-  // if (!hasNotionPageContent) {
-  //   return { hasNotionPageContent: false, notionRecordMap: null, pageMentions: null };
-  // }
-
-  // return { hasNotionPageContent: true, notionRecordMap, pageMentions };
+  return { hasNotionPageContent: true, blocks: blocks as BlockObjectResponse[], pageMentions: mentions };
 }

@@ -4,6 +4,8 @@ import clsx from "clsx";
 import Link from "next/link";
 
 export function NotionText({ text, mentions }: { text: any; mentions: PageMention[] }) {
+  console.log(text);
+  
   if (!text) return null;
 
   const richText: TextRichTextItemResponse[] = text["rich_text"];
@@ -24,7 +26,17 @@ export function NotionText({ text, mentions }: { text: any; mentions: PageMentio
     switch (type) {
       case "text": {
         const text = value.text;
-        return <span className={classes}>{text.link ? <a href={text.link.url} className="underline">{text.content}</a> : text.content}</span>;
+        return (
+          <span className={classes}>
+            {text.link ? (
+              <a href={text.link.url} className="underline">
+                {text.content}
+              </a>
+            ) : (
+              text.content
+            )}
+          </span>
+        );
       }
       // @ts-ignore
       case "mention": {
