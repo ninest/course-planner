@@ -4,8 +4,6 @@ import clsx from "clsx";
 import Link from "next/link";
 
 export function NotionText({ text, mentions }: { text: any; mentions: PageMention[] }) {
-  console.log(text);
-  
   if (!text) return null;
 
   const richText: TextRichTextItemResponse[] = text["rich_text"];

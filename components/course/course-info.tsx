@@ -42,13 +42,12 @@ export const CourseInfo = ({ course, courseHrefFn }: CourseInfoProps) => {
       )}
 
       {/* NUPath */}
-      <section>
-        {course.nuPath.length > 0 ? (
+      {course.nuPath.length > 0 && (
+        <section>
           <NUPathTable path={course.nuPath} />
-        ) : (
-          <span className="text-gray-400 text-sm font-medium">No NUPath covered.</span>
-        )}
-      </section>
+        </section>
+      )}
+      {/* <span className="text-gray-400 text-sm font-medium">No NUPath covered.</span> */}
 
       {/* Requisites */}
       <section>

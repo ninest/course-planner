@@ -65,8 +65,9 @@ async function getNotionCourseInfo(course: MinimizedCourse): Promise<GetNotionCo
   }
 
   const page = rows.results[0];
-  const blocksResponse = await getBlocksChildrenList(page.id);
-  const mentions = await getNotionPageMentions(page.id);
+  const blocksResponsePromise = getBlocksChildrenList(page.id);
+  const mentionsPromise = getNotionPageMentions(page.id);
+  const [blocksResponse, mentions] = await Promise.all([blocksResponsePromise, mentionsPromise]);
 
   const blocks = blocksResponse.results;
   if (blocks.length === 0) {

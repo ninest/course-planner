@@ -36,7 +36,6 @@ export function FormField({
 
   return (
     <fieldset className={clsx(wrapperClassName)}>
-      {/* TODO: label */}
       {label && (
         <label htmlFor={name} className="block font-semibold text-gray-600 mb-1">
           {label}
@@ -50,7 +49,6 @@ export function FormField({
         <input type={props.type} className={clsx(inputClassName, "block w-full")} {...props} {...fieldProps} />
       )}
 
-      {/* TODO: error */}
       {error && <div className="mt-2 text-sm text-red-500">{error.message}</div>}
     </fieldset>
   );

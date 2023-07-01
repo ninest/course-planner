@@ -10,6 +10,8 @@ import { Suspense } from "react";
 import { ClientCourseInfo } from "./client-course-info";
 import { CourseNotesExpandable } from "./course-notes-expandable";
 import { MobileCourseSearchBackButton } from "./mobile-back-button";
+import { FaCaretRight } from "react-icons/fa";
+import { CourseNotes } from "./course-notes-new";
 
 export const revalidate = 3600;
 
@@ -23,7 +25,10 @@ export default async function CoursePage({ params }: Props) {
     courseSlugs.map(async (courseSlug) => {
       const course = slugToCourse2(courseSlug);
       const courseInfo = await getCourse(course.subject, course.number);
-      return { course, courseInfo };
+      const googleFormLink = `https://docs.google.com/forms/d/e/1FAIpQLSdIzBLNUhuc1OMyPCPAKwDBo4gpvqcK78OY9yaoCoJ3YMxTkQ/viewform?usp=pp_url&entry.1345775324=${encodeURI(
+        course.subject + " " + course.number
+      )}&entry.1467381516=${encodeURI(courseInfo.title)}`;
+      return { course, courseInfo, googleFormLink };
     })
   );
 
@@ -38,7 +43,7 @@ export default async function CoursePage({ params }: Props) {
 
       <div className="px-5 md:p-5 w-full md:mx-auto md:max-w-[75ch]">
         <div className="mb-2 divide-y">
-          {courses.map(({ course, courseInfo }, index) => {
+          {courses.map(({ course, courseInfo, googleFormLink }, index) => {
             const terms = courseInfo ? getCourseTerms(courseInfo) : [];
             return (
               <div key={index} className="pt-10 first:pt-0 pb-10">
@@ -50,28 +55,47 @@ export default async function CoursePage({ params }: Props) {
                   <ClientCourseInfo course={courseInfo} />
                 </Suspense>
 
-                <SectionTermMatrix className="mt-10" terms={getCourseTerms(courseInfo)} />
+                <section className="mt-10 lg:-mx-2 xl:-mx-5">
+                  <SectionTermMatrix terms={getCourseTerms(courseInfo)} />
+                </section>
 
-                <Suspense
+                {/* <Suspense
                   fallback={
                     <>
                       <Loading className="mt-10" heights={[9]} />
                     </>
                   }
                 >
-                  {/* @ts-ignore */}
                   <CourseNotesExpandable course={course} className="mt-10" />
-                </Suspense>
+                </Suspense> */}
 
-                <Title className="mt-10" level={3}>
-                  Sections
-                </Title>
+                <details className="mt-10" open>
+                  <summary className="list-none flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Title level={3}>Notes</Title>
+                      <FaCaretRight />
+                    </div>
+                    <a href={googleFormLink} target="_blank" className="underline">
+                      contribute
+                    </a>
+                  </summary>
+                  <div className="mt-2 lg:-mx-2 xl:-mx-5 p-3 md:p-5 border rounded-md">
+                    {/* @ts-ignore */}
+                    <CourseNotes course={course} formLink={googleFormLink} />
+                  </div>
+                </details>
 
-                <div className="mt-2 space-y-3">
-                  {terms.map((termCode) => {
-                    return <Sections key={termCode} termCode={termCode} course={courseInfo} />;
-                  })}
-                </div>
+                <details className="mt-10" open>
+                  <summary className="list-none flex items-center space-x-2">
+                    <Title level={3}>Sections</Title>
+                    <FaCaretRight />
+                  </summary>
+                  <div className="mt-2 space-y-3">
+                    {terms.map((termCode) => {
+                      return <Sections key={termCode} termCode={termCode} course={courseInfo} />;
+                    })}
+                  </div>
+                </details>
               </div>
             );
           })}
