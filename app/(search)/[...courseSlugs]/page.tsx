@@ -7,16 +7,26 @@ import { Title } from "@/components/title";
 import { slugToCourse2 } from "@/course";
 import { getCourseTerms } from "@/term";
 import { Suspense } from "react";
-import { ClientCourseInfo } from "./client-course-info";
-import { CourseNotesExpandable } from "./course-notes-expandable";
-import { MobileCourseSearchBackButton } from "./mobile-back-button";
 import { FaCaretRight } from "react-icons/fa";
+import { ClientCourseInfo } from "./client-course-info";
 import { CourseNotes } from "./course-notes-new";
+import { MobileCourseSearchBackButton } from "./mobile-back-button";
 
 export const revalidate = 3600;
 
 interface Props {
   params: { courseSlugs: string[] };
+}
+
+export async function generateMetadata({ params }: Props) {
+  const courseSlugs = params.courseSlugs;
+  const courses = courseSlugs.map((courseSlug) => {
+    const course = slugToCourse2(courseSlug);
+    return course;
+  });
+  return {
+    title: `${courses[0].subject} ${courses[0].number}`,
+  };
 }
 
 export default async function CoursePage({ params }: Props) {

@@ -3,6 +3,14 @@ import "../styles/globals.scss";
 import { NavigationRail } from "./navigation-rail";
 import { Providers } from "./providers";
 
+export const metadata = {
+  title: {
+    template: "%s - Husker",
+    default: "Husker",
+  },
+  description: "Useful resources for Northeastern University",
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">

@@ -11,5 +11,9 @@
   }
 }
 
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
 @import "./notion.scss";
 // @import 'react-notion-x/src/styles.css'

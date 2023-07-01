@@ -1,13 +1,13 @@
 "use client";
 
 import { courseToSlug2 } from "@/course";
-import { useParams, usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { ReactNode } from "react";
 import { CourseSearchBar } from "./course-search-bar";
 import { useUrlCourse } from "./hooks/use-search-url-course";
 
-import { SearchResults } from "./search-results";
 import { TransparentHeader } from "@/components/sticky-transparent-header";
+import { SearchResults } from "./search-results";
 
 export default function SearchLayout({ children }: { children: ReactNode }) {
   // TODO: make this a server component, get pathname somehow https://stackoverflow.com/questions/75362636/how-can-i-get-the-url-pathname-on-a-server-component-next-js-13
