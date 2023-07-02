@@ -3,5 +3,5 @@ interface TermPageProps {
 }
 
 export default function TermPage({ params }: TermPageProps) {
-  return <main className="p-5">Select a plan or crete one.</main>;
+  return <main className="p-5">Select a plan or create one.</main>;
 }

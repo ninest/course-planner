@@ -22,9 +22,10 @@ interface CourseSearchForm {
 
 interface CourseSearchBarProps {
   allowSelectTerm?: boolean;
+  disabled?: boolean;
 }
 
-export function CourseSearchBar({ allowSelectTerm = true }: CourseSearchBarProps) {
+export function CourseSearchBar({ allowSelectTerm = true, disabled = false }: CourseSearchBarProps) {
   const router = useRouter();
   const params = useSearchParams();
   const pathname = usePathname();
@@ -107,6 +108,7 @@ export function CourseSearchBar({ allowSelectTerm = true }: CourseSearchBarProps
           })}
         >
           <FormField
+          disabled={disabled}
             control={control}
             name="search"
             placeholder="Search courses, CRNs, ..."

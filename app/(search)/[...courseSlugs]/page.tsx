@@ -69,29 +69,21 @@ export default async function CoursePage({ params }: Props) {
                   <SectionTermMatrix terms={getCourseTerms(courseInfo)} />
                 </section>
 
-                {/* <Suspense
-                  fallback={
-                    <>
-                      <Loading className="mt-10" heights={[9]} />
-                    </>
-                  }
-                >
-                  <CourseNotesExpandable course={course} className="mt-10" />
-                </Suspense> */}
-
                 <details className="mt-10" open>
                   <summary className="list-none flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                       <Title level={3}>Notes</Title>
                       <FaCaretRight />
                     </div>
-                    <a href={googleFormLink} target="_blank" className="underline">
+                    <a href={googleFormLink} target="_blank" className="underline text-sm">
                       contribute
                     </a>
                   </summary>
                   <div className="mt-2 lg:-mx-2 xl:-mx-5 p-3 md:p-5 border rounded-md">
-                    {/* @ts-ignore */}
-                    <CourseNotes course={course} formLink={googleFormLink} />
+                    <Suspense fallback={<Loading heights={[5]} />}>
+                      {/* @ts-ignore */}
+                      <CourseNotes course={course} formLink={googleFormLink} />
+                    </Suspense>
                   </div>
                 </details>
 

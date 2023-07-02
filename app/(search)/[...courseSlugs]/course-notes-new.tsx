@@ -21,14 +21,12 @@ export async function CourseNotes({
   else
     return (
       <>
-        <a href={formLink} target="_blank">
-          <i className="text-sm">
-            No course notes. If you have any information related to{" "}
-            <b>
-              {course.subject} {course.number}
-            </b>{" "}
-            (syllabus, textbooks, etc.), please <span className="underline">click here to share it</span>!
-          </i>
+        <a href={formLink} target="_blank" className="block text-sm text-gray-400">
+          No course notes. If you have any information related to{" "}
+          <b>
+            {course.subject} {course.number}
+          </b>{" "}
+          (syllabus, textbooks, etc.), please <span className="underline">click here to share it</span>!
         </a>
       </>
     );

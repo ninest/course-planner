@@ -6,6 +6,7 @@ import { TransparentHeader } from "@/components/sticky-transparent-header";
 import { useTerm } from "@/hooks/fetching/use-terms";
 import { courseToSlug2 } from "@/course";
 import { useSearchParams } from "next/navigation";
+import { useBottomSheet } from "./use-bottom-sheet";
 
 interface TermLayoutProps {
   params: { termCode: string; planId: string };
@@ -14,12 +15,13 @@ interface TermLayoutProps {
 export default function PlanPageSidebar({ params }: TermLayoutProps) {
   const { term } = useTerm(params.termCode);
   const searchParams = useSearchParams();
+  const { bottomSheetExpanded } = useBottomSheet();
 
   return (
     <div>
       {/* Mobile: increase top so it doesn't cover the chevron */}
       <TransparentHeader className="sticky top-[var(--bottom-sheet-handle-container-height)] px-3 pb-3 md:top-0 md:p-3">
-        <CourseSearchBar allowSelectTerm={false} />
+        <CourseSearchBar allowSelectTerm={false} disabled={!bottomSheetExpanded} />
       </TransparentHeader>
       <div className="px-3 ">
         <SearchResults
