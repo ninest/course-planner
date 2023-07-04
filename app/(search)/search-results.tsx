@@ -5,9 +5,10 @@ import { CourseDetailList } from "@/components/course/course-detail-list";
 import { useSubjectCodes } from "@/hooks/fetching/use-subjects";
 import { useTerms } from "@/hooks/fetching/use-terms";
 import clsx from "clsx";
-import { useSearchParams } from "next/navigation";
 import { ComponentProps } from "react";
 import { useSearch } from "./hooks/use-search";
+import { Empty } from "@/components/Empty";
+import { SearchNotes } from "./search-notes";
 
 interface SearchResultsProps extends ComponentProps<"div"> {
   selectedCourses?: MinimizedCourse[];
@@ -18,12 +19,12 @@ interface SearchResultsProps extends ComponentProps<"div"> {
 
 export function SearchResults({ selectedCourses, term, courseHrefFn, className }: SearchResultsProps) {
   const { subjectCodes } = useSubjectCodes();
-  const { searchGroups, searchResults, searchIsLoading, searchTermCode } = useSearch({ subjectCodes });
+  const { searchGroups, searchResults, searchIsLoading, searchTermCode, hasSearchResults } = useSearch({
+    subjectCodes,
+  });
 
   const { terms } = useTerms();
   const selectedTerm = term ? term : terms?.find((t) => t.code === searchTermCode);
-
-  const params = useSearchParams();
 
   return (
     <>
@@ -61,16 +62,18 @@ export function SearchResults({ selectedCourses, term, courseHrefFn, className }
           </section>
         )}
 
-        {searchResults.length > 0 && (
-          <section className={clsx("mt-3")}>
-            <CourseDetailList
-              termCode={selectedTerm?.code ?? "all"}
-              courses={searchResults}
-              selectedCourses={selectedCourses}
-              courseHrefFn={courseHrefFn}
-            />
-          </section>
-        )}
+        <section className={clsx("mt-3")}>
+          {!searchIsLoading && !hasSearchResults && (
+            <Empty className="p-5 flex items-center justify-center mb-7">No search results</Empty>
+          )}
+          {searchResults.length === 0 && <SearchNotes searchNotesOpen={!hasSearchResults} />}
+          <CourseDetailList
+            termCode={selectedTerm?.code ?? "all"}
+            courses={searchResults}
+            selectedCourses={selectedCourses}
+            courseHrefFn={courseHrefFn}
+          />
+        </section>
       </div>
     </>
   );

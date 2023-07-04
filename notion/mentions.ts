@@ -21,9 +21,21 @@ async function getMentionsFromBlocks(blocks: (PartialBlockObjectResponse | Block
   for await (const block of blocks) {
     // TODO: improve this code
     if ("paragraph" in block || "bulleted_list_item" in block) {
-      let parts: null | RichTextItemResponse[];
-      if ("paragraph" in block) parts = block.paragraph.rich_text;
-      else if ("bulleted_list_item" in block) parts = block.bulleted_list_item.rich_text;
+      let parts: null | RichTextItemResponse[] = [];
+      if ("paragraph" in block) {
+        parts = block.paragraph.rich_text;
+      } else if ("bulleted_list_item" in block) {
+        parts = block.bulleted_list_item.rich_text;
+        // More parts in block children
+        if (block.has_children) {
+          const childBlocks = await getBlocksChildrenList(block.id);
+          childBlocks.results.forEach((childBlock) => {
+            if ("bulleted_list_item" in childBlock) {
+              parts?.push(...childBlock.bulleted_list_item.rich_text);
+            }
+          });
+        }
+      }
       for await (const part of parts!) {
         const mentions = await getMentionsFromPart(part);
         pageMentions.push(...mentions);

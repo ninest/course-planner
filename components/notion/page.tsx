@@ -62,7 +62,22 @@ export async function NotionBlock({ block, mentions }: { block: BlockObjectRespo
     }
     case "bulleted_list_item":
     case "numbered_list_item": {
-      return <li>{notionText}</li>;
+      let children: null | ListBlockChildrenResponse = null;
+      if (block.has_children) {
+        children = await getBlocksChildrenList(block.id);
+      }
+      return (
+        <>
+          <li>{notionText}</li>
+          <div className="ml-6">
+            {children &&
+              children.results.map((block) => {
+                // @ts-ignore
+                return <NotionBlock block={block as BlockObjectResponse} mentions={mentions} />;
+              })}
+          </div>
+        </>
+      );
     }
     case "callout": {
       // TODO: check emoji for other callout types

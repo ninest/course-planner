@@ -42,6 +42,9 @@ export function useGetNewSearchUrlParam() {
     if (term) newParams.set("term", term);
     if (search) newParams.set("search", search);
 
+    console.log({ newParams });
+    console.log( newParams.get('search'));
+
     return newParams;
   };
 

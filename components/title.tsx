@@ -11,16 +11,12 @@ export function Title({ level = 2, children, ...props }: TitleProps) {
 
   return (
     <H
-      className={clsx(
-        "font-display tracking-normal text-gray-800",
-        {
-          // "text-4xl font-bold": level == 1,
-          "text-4xl font-black": level == 1,
-          "text-2xl font-bold": level == 2,
-          "text-base font-bold": level == 3,
-        },
-        props.className
-      )}
+      className={clsx(props.className, "font-display tracking-normal text-gray-800", {
+        // "text-4xl font-bold": level == 1,
+        "text-4xl font-black": level == 1,
+        "text-2xl font-bold": level == 2,
+        "text-base font-bold": level == 3,
+      })}
     >
       {children}
     </H>

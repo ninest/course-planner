@@ -86,13 +86,13 @@ export function CourseSearchBar({ allowSelectTerm = true, disabled = false }: Co
     if (allowSelectTerm && term && formTerm !== term) setValue("term", term);
     if (searchQuery && formSearch !== searchQuery) setValue("search", searchQuery);
 
-    doSearch(searchQuery);
+    if (searchQuery) doSearch(searchQuery);
   }, [params]);
 
   // Run initial page load search
   useEffect(() => {
     if (!isLoading) {
-      doSearch(searchQuery);
+      if (searchQuery) doSearch(searchQuery);
     }
   }, [isLoading]);
 
@@ -108,7 +108,7 @@ export function CourseSearchBar({ allowSelectTerm = true, disabled = false }: Co
           })}
         >
           <FormField
-          disabled={disabled}
+            disabled={disabled}
             control={control}
             name="search"
             placeholder="Search courses, CRNs, ..."
