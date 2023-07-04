@@ -80,17 +80,25 @@ export function CourseSearchBar({ allowSelectTerm = true, disabled = false }: Co
   const { term, searchQuery } = useGetSearchUrlParamValues();
   const { doSearch, searchIsLoading } = useSearch({ subjectCodes });
   useEffect(() => {
+    if (isLoading) {
+      // Cannot search if subject codes haven't loaded yet
+      return;
+    }
+    console.log("form change");
     // Set form values if changed
     const formTerm = getValues("term");
     const formSearch = getValues("search");
+
     if (allowSelectTerm && term && formTerm !== term) setValue("term", term);
     if (searchQuery && formSearch !== searchQuery) setValue("search", searchQuery);
 
     if (searchQuery) doSearch(searchQuery);
-  }, [params]);
+  }, [params, isLoading]);
 
   // Run initial page load search
   useEffect(() => {
+    console.log("initial load");
+
     if (!isLoading) {
       if (searchQuery) doSearch(searchQuery);
     }

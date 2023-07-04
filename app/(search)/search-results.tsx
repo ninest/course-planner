@@ -1,13 +1,13 @@
 "use client";
 
 import { MinimizedCourse, Term } from "@/.data/types";
+import { Empty } from "@/components/Empty";
 import { CourseDetailList } from "@/components/course/course-detail-list";
 import { useSubjectCodes } from "@/hooks/fetching/use-subjects";
 import { useTerms } from "@/hooks/fetching/use-terms";
 import clsx from "clsx";
 import { ComponentProps } from "react";
 import { useSearch } from "./hooks/use-search";
-import { Empty } from "@/components/Empty";
 import { SearchNotes } from "./search-notes";
 
 interface SearchResultsProps extends ComponentProps<"div"> {
@@ -19,9 +19,10 @@ interface SearchResultsProps extends ComponentProps<"div"> {
 
 export function SearchResults({ selectedCourses, term, courseHrefFn, className }: SearchResultsProps) {
   const { subjectCodes } = useSubjectCodes();
-  const { searchGroups, searchResults, searchIsLoading, searchTermCode, hasSearchResults } = useSearch({
-    subjectCodes,
-  });
+  const { searchGroups, searchResults, searchBarIsLoading, searchIsLoading, searchTermCode, hasSearchResults } =
+    useSearch({
+      subjectCodes,
+    });
 
   const { terms } = useTerms();
   const selectedTerm = term ? term : terms?.find((t) => t.code === searchTermCode);
@@ -63,10 +64,18 @@ export function SearchResults({ selectedCourses, term, courseHrefFn, className }
         )}
 
         <section className={clsx("mt-3")}>
+          {/* <Debug data={{ searchIsLoading, hasSearchResults, searchResults }} /> */}
+
+          {/* Show if no results */}
           {!searchIsLoading && !hasSearchResults && (
             <Empty className="p-5 flex items-center justify-center mb-7">No search results</Empty>
           )}
-          {searchResults.length === 0 && <SearchNotes searchNotesOpen={!hasSearchResults} />}
+
+          {/* Only show if not loading */}
+          {!searchBarIsLoading && !searchIsLoading && (
+            <>{searchResults.length === 0 && <SearchNotes searchNotesOpen={!hasSearchResults} />}</>
+          )}
+
           <CourseDetailList
             termCode={selectedTerm?.code ?? "all"}
             courses={searchResults}

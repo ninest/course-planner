@@ -3,6 +3,8 @@ import { searchCourses } from "@/api/search";
 import { getSearchGroups } from "@/course/search";
 import { atom, useAtom } from "jotai";
 import { useGetSearchUrlParamValues } from "./use-search-url-param";
+import { useSubjectCodes } from "@/hooks/fetching/use-subjects";
+import { useTerms } from "@/hooks/fetching/use-terms";
 
 interface UseSearchParams {
   subjectCodes: string[];
@@ -17,6 +19,13 @@ export function useSearch({ subjectCodes }: UseSearchParams) {
   const [searchGroups, setSearchGroups] = useAtom(searchGroupsAtom);
   const [searchResults, setSearchResults] = useAtom(searchResultsAtom);
   const { term } = useGetSearchUrlParamValues();
+
+  // If search bar is loading and therefore disabled
+  const { subjectCodesIsLoading } = useSubjectCodes();
+  const { isTermsLoading } = useTerms();
+  const searchBarIsLoading = subjectCodesIsLoading || isTermsLoading;
+
+  // Searching is loading
   const [searchIsLoading, setSearchIsLoading] = useAtom(searchIsLoadingAtom);
   const [hasSearchResults, setHasSearchResults] = useAtom(hasSearchResultsAtom);
 
@@ -32,5 +41,13 @@ export function useSearch({ subjectCodes }: UseSearchParams) {
     setHasSearchResults(searchResults.length > 0);
   };
 
-  return { searchGroups, searchResults, searchTermCode: term, searchIsLoading, hasSearchResults, doSearch };
+  return {
+    searchGroups,
+    searchResults,
+    searchTermCode: term,
+    searchBarIsLoading,
+    searchIsLoading,
+    hasSearchResults,
+    doSearch,
+  };
 }
