@@ -4,6 +4,7 @@ import {
   PartialBlockObjectResponse,
   RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";
+import invariant from "tiny-invariant";
 
 export type PageMention = { id: string; type: "course-link" | "wiki-link"; title: string; href: string };
 export async function getNotionPageMentions(pageId: string) {
@@ -69,10 +70,10 @@ async function getMentionsFromPart(part: RichTextItemResponse) {
       "Subject" in fullNotionPage.properties &&
       "Number" in fullNotionPage.properties
     ) {
-      // TODO
-      // @ts-ignore
+      invariant(fullNotionPage.properties["Subject"].type === "rich_text");
       const subject = fullNotionPage.properties["Subject"].rich_text[0].plain_text;
-      // @ts-ignore
+
+      invariant(fullNotionPage.properties["Number"].type === "number");
       const number = fullNotionPage.properties["Number"].number;
       pageMentions.push({
         id: mentionedPageId,

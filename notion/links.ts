@@ -1,11 +1,12 @@
 // import { Client } from "@notionhq/client";
 import { queryNotionDatabase } from "@/api/notion";
-import type { QueryDatabaseResponse, PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { constants } from "./constants";
-
-// const notionhq = new Client({ auth: process.env.NOTION_API_KEY });
+import { NotionIcon } from "./types";
+import invariant from "tiny-invariant";
 
 export interface HuskerLink {
+  icon?: NotionIcon;
   title: string;
   categoryIds: string[];
   description: string;
@@ -24,23 +25,30 @@ export async function getLinks() {
   });
   const links: HuskerLink[] = [];
 
-  const rowProperties = response.results
-    .filter((result): result is PageObjectResponse => "properties" in result)
-    .map((result) => result.properties);
+  const rows = response.results.filter((result): result is PageObjectResponse => "properties" in result);
 
-  rowProperties.forEach((properties) => {
-    // @ts-ignore
+  rows.forEach((row) => {
+    const properties = row.properties;
+    invariant(properties["Title"].type === "title");
     const title = properties["Title"].title[0].plain_text;
-    // @ts-ignore
+
+    invariant(properties["Categories"].type === "relation");
     const categoryIds = properties["Categories"].relation.map((relation) => relation.id);
-    // @ts-ignore
+
+    invariant(properties["Filters"].type === "multi_select");
     const filterIds = properties["Filters"].multi_select.map((multi_select) => multi_select.id);
-    // @ts-ignore
-    const url = properties["URL"].url;
-    // @ts-ignore
+
+    invariant(properties["URL"].type === "url");
+    const url = properties["URL"].url ?? "";
+
+    invariant(properties["Short Description"].type === "rich_text");
     const description = properties["Short Description"].rich_text[0].plain_text;
 
-    links.push({ title, url, description, categoryIds, filterIds });
+    let icon = undefined;
+    if (row.icon) {
+      if (row.icon.type === "external") icon = row.icon;
+    }
+    links.push({ icon, title, url, description, categoryIds, filterIds });
   });
 
   return links;

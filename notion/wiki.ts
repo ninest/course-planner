@@ -1,5 +1,5 @@
-import { getBlocksChildrenList, queryNotionDatabase } from "@/api/notion";
-import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { getBlocksChildrenList, queryNotionDatabase, retrieveNotionPage } from "@/api/notion";
+import type { GetPageResponse, PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { constants } from "./constants";
 
 export interface WikiArticle {
@@ -40,13 +40,8 @@ export async function getWikiArticles() {
   return wikiArticles;
 }
 
-export async function getWikiArticleBySlug(slug: string) {
-  const response = await queryNotionDatabase(constants.WIKI_DATABASE_ID, {
-    filter: { property: "Slug", rich_text: { equals: slug } },
-  });
-  const page = response.results[0];
-
-  if (!("properties" in page)) throw new Error(`In properties in page ${slug}`);
+function transformNotionPageToWikiArticle(page: GetPageResponse) {
+  if (!("properties" in page)) throw new Error(`In properties in page provided for transform`);
 
   const metadata: ArticleMetadata = {
     createdAt: new Date(page.created_time),
@@ -67,4 +62,18 @@ export async function getWikiArticleBySlug(slug: string) {
   };
 
   return article;
+}
+
+export async function getWikiArticleBySlug(slug: string) {
+  const response = await queryNotionDatabase(constants.WIKI_DATABASE_ID, {
+    filter: { property: "Slug", rich_text: { equals: slug } },
+  });
+  const page = response.results[0];
+
+  return transformNotionPageToWikiArticle(page as PageObjectResponse);
+}
+
+export async function getWikiArticle(id: string) {
+  const response = await retrieveNotionPage(id);
+  return transformNotionPageToWikiArticle(response);
 }
