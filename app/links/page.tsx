@@ -5,5 +5,7 @@ import { LinksDisplay } from "./links-display";
 export default async function HubPage() {
   const categories = await getLinksCategories();
   const links = await getLinks();
-  return <LinksDisplay categories={categories} links={links} />;
+
+  const [appCategory, ...otherCategories] = categories;
+  return <LinksDisplay appCategory={appCategory} categories={otherCategories} links={links} />;
 }
