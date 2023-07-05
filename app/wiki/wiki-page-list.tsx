@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 export function WikiPageList({ articles, categories }: { articles: WikiArticle[]; categories: Category[] }) {
   const options = categories.map((cat) => ({
     type: "option" as const,
-    title: `Filter: ${cat.title}`,
+    title: `${cat.title}`,
     value: cat.slug,
   }));
   const { control, watch, getValues } = useForm({
@@ -39,7 +39,8 @@ export function WikiPageList({ articles, categories }: { articles: WikiArticle[]
           <Select
             control={control}
             name="category"
-            options={[{ type: "option", title: "Filter: All", value: "all" }, ...options]}
+            options={[{ type: "option", title: "All", value: "all" }, ...options]}
+            displayPrefix="Filter:"
             className="form-field h-7 rounded text-xs min-w-[3rem]"
           />
         </div>

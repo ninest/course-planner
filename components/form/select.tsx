@@ -21,9 +21,10 @@ interface SelectProps extends HTMLAttributes<HTMLSelectElement> {
   name: string;
   label?: string;
   options: (Option | OptionGroup)[];
+  displayPrefix?: string;
 }
 
-export function Select({ control, name, options, label, className, ...props }: SelectProps) {
+export function Select({ control, name, options, label, displayPrefix, className, ...props }: SelectProps) {
   const {
     field,
     fieldState: { error },
@@ -80,7 +81,10 @@ export function Select({ control, name, options, label, className, ...props }: S
           htmlFor={name}
           className={clsx(className, "z-10 block pointer-events-none", "flex justify-between items-center space-x-1")}
         >
-          <span>{selectedOption?.title}</span>
+          <span>
+            {displayPrefix && <>{displayPrefix} </>}
+            {selectedOption?.title}
+          </span>
           <FaCaretDown />
         </label>
       </div>

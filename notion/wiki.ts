@@ -19,10 +19,6 @@ export async function getWikiArticles() {
   const response = await queryNotionDatabase(constants.WIKI_DATABASE_ID);
   const wikiArticles: WikiArticle[] = [];
 
-  const rowProperties = response.results
-    .filter((result): result is PageObjectResponse => "properties" in result)
-    .map((result) => result.properties);
-
   const rows = response.results.filter((result): result is PageObjectResponse => "properties" in result);
 
   rows.forEach((row) => {
@@ -36,6 +32,8 @@ export async function getWikiArticles() {
     const description = row.properties["Description"].rich_text[0].plain_text;
     wikiArticles.push({ id: row.id, slug, title, categoryIds, description });
   });
+
+  wikiArticles.sort((a, b) => a.title.localeCompare(b.title));
 
   return wikiArticles;
 }
