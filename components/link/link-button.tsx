@@ -16,10 +16,15 @@ export function LinkButton({ href, iconLeft, iconRight, title, size = "base" }: 
   return (
     <UniversalLink
       href={href}
-      className={clsx("rounded-lg bg-gray-50 hover:bg-gray-100 border border-gray-100 flex items-center", {
-        "p-3 space-x-4": size === "base",
-        "p-2 space-x-2": size === "sm",
-      })}
+      className={clsx(
+        "rounded-lg flex items-center",
+        "bg-gray-50 hover:bg-gray-100 border border-gray-100",
+        "dark:bg-gray-900 hover:dark:bg-gray-800 dark:border-gray-900",
+        {
+          "p-3 space-x-4": size === "base",
+          "p-2 space-x-2": size === "sm",
+        }
+      )}
     >
       {iconLeft && <div>{iconLeft}</div>}
       <div

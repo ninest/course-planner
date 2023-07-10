@@ -8,11 +8,13 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./utils/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
         primary: defaultColors.indigo,
         error: defaultColors.red,
+        gray: defaultColors.neutral
       },
       fontSize: { xxs: "0.6rem" },
       gridTemplateColumns: {

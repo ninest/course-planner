@@ -26,7 +26,7 @@ export const MenuButton = ({ children, items }: MenuButtonProps) => {
         <DropdownMenu.Portal>
           <DropdownMenu.Content
             align="end"
-            className="mt-1 ml-2 z-40 shadow-md rounded-xl bg-gray-100 w-52 p-2 border dark:bg-gray-900 dark:border-gray-800"
+            className="mt-1 ml-5 z-40 shadow-md rounded-xl bg-gray-100 w-52 p-2 border dark:bg-gray-900 dark:border-gray-800"
           >
             {items.map((item, index) => {
               if (item === "separator") {

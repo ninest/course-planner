@@ -21,7 +21,15 @@ export default function PlanPageSidebar({ params }: TermLayoutProps) {
     <div>
       {/* Mobile: increase top so it doesn't cover the chevron */}
       <TransparentHeader className="sticky top-[var(--bottom-sheet-handle-container-height)] px-3 pb-3 md:top-0 md:p-3">
-        <CourseSearchBar allowSelectTerm={false} disabled={!bottomSheetExpanded} />
+        {/* Only the mobile search bar can ever be disabled */}
+        {/* Mobile */}
+        <div className="md:hidden">
+          <CourseSearchBar allowSelectTerm={false} disabled={!bottomSheetExpanded} />
+        </div>
+        {/* Desktop */}
+        <div className="hidden md:block">
+          <CourseSearchBar allowSelectTerm={false} />
+        </div>
       </TransparentHeader>
       <div className="px-3 ">
         <SearchResults

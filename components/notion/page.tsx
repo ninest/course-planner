@@ -131,7 +131,7 @@ export async function NotionBlock({ block, mentions }: { block: BlockObjectRespo
 
       return (
         // @ts-ignore
-        <a href={fileUrl} target="_blank" className="flex p-3 bg-gray-100 rounded-md items-center space-x-3">
+        <a href={fileUrl} target="_blank" className="flex p-3 bg-gray-100 dark:bg-gray-900 rounded-md items-center space-x-3">
           <FaFileAlt />
           {/* @ts-ignore */}
           {captionRichTexts ? (

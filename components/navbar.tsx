@@ -1,13 +1,13 @@
 "use client";
 
 import clsx from "clsx";
-import { FaBars, FaBook, FaGripLines, FaList, FaRegBookmark, FaSlidersH } from "react-icons/fa";
+import { FaBook, FaGripLines, FaList, FaRegBookmark } from "react-icons/fa";
 import { MenuButton } from "./menu-button";
 
 export function Navbar({ noBottomPadding = false }: { noBottomPadding?: boolean }) {
   return (
     <>
-      <header className={clsx({ "p-5": !noBottomPadding, "px-5 pt-5": noBottomPadding }, "bg-white")}>
+      <header className={clsx({ "p-5": !noBottomPadding, "px-5 pt-5": noBottomPadding }, "bg-white dark:bg-gray-950")}>
         <MenuButton
           items={[
             { icon: FaList, title: "Links", href: "/links" },

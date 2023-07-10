@@ -37,7 +37,7 @@ export default async function CoursePage({ params }: Props) {
     courseSlugs.map(async (courseSlug) => {
       const course = slugToCourse2(courseSlug);
       const courseInfo = await getCourse(course.subject, course.number);
-      const googleFormLink = getCourseGoogleFormHref(course)
+      const googleFormLink = getCourseGoogleFormHref(courseInfo)
       return { course, courseInfo, googleFormLink };
     })
   );

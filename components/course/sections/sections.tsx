@@ -29,16 +29,16 @@ export function Sections({ termCode, course, className, initiallyOpen = false }:
   const [open, setOpen] = useState(initiallyOpen);
 
   return (
-    <div className={clsx(className, "border rounded-md ")}>
+    <div className={clsx(className, "border rounded-md bg-white dark:bg-gray-900")}>
       <div
         onClick={() => setOpen(!open)}
-        className="cursor-pointer rounded-md p-3 sticky top-0 z-10 bg-white flex items-center justify-between"
+        className="cursor-pointer rounded-md p-3 sticky top-0 z-10  bg-inherit flex items-center justify-between"
       >
         <div className="flex flex-col">
           <Title level={4} className="font-medium">
             {termName}
           </Title>
-          <div className="tabular-nums text-gray-600 text-sm">
+          <div className="tabular-nums text-gray-600 dark:text-gray-500 text-sm">
             {sections.length} sections, {!allLoaded && "at least"} {numSectionsWithSeats} with seats
           </div>
         </div>

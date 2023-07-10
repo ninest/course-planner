@@ -15,7 +15,7 @@ export function CourseDetail({ termCode, course, className }: CourseDetailProps)
   return (
     <div className={className}>
       {/* Course name */}
-      <div className="text-sm truncate text-gray-800">
+      <div className="text-sm truncate text-gray-800 dark:text-gray-500">
         <span className="font-bold tabular-nums">
           {course.subject} {course.number}
         </span>
@@ -23,7 +23,7 @@ export function CourseDetail({ termCode, course, className }: CourseDetailProps)
       </div>
 
       {/* Num sections */}
-      {showSectionCount && <div className="mt-0.5 text-xs text-gray-600">{sectionsDisplay}</div>}
+      {showSectionCount && <div className="mt-0.5 text-xs text-gray-600 ">{sectionsDisplay}</div>}
     </div>
   );
 }

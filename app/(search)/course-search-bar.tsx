@@ -97,8 +97,6 @@ export function CourseSearchBar({ allowSelectTerm = true, disabled = false }: Co
 
   // Run initial page load search
   useEffect(() => {
-    console.log("initial load");
-
     if (!isLoading) {
       if (searchQuery) doSearch(searchQuery);
     }

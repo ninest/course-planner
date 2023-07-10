@@ -34,7 +34,7 @@ export function SectionTermMatrix({ terms, className }: SectionTermMatrixProps) 
                   <div
                     key={term.id}
                     className={clsx("text-sm", {
-                      "bg-green-50 rounded-md flex items-center text-sm text-gray-700 px-1": offerredInTerm,
+                      "bg-green-50 dark:bg-green-950 rounded-md flex items-center text-sm text-gray-700 dark:text-gray-500 px-1": offerredInTerm,
                     })}
                   >
                     {offerredInTerm && "Offerred"}

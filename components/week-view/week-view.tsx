@@ -45,7 +45,7 @@ export const WeekView = ({ events, hrefFn }: WeekViewProps) => {
                 gridRow: `${12 * i + 1} / span 12`,
                 gridColumn: "2 / span 8",
               }}
-              className="bg-gray-50 rounded"
+              className="bg-gray-50 dark:bg-gray-900 rounded"
             />
           ))}
 

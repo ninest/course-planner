@@ -37,7 +37,10 @@ export function SearchResults({ selectedCourses, term, courseHrefFn, className }
             <div className="flex flex-wrap text-gray-800">
               {searchGroups.map((group, index) => {
                 return (
-                  <div key={index} className="text-xs rounded bg-gray-100 py-0.5 px-1 mr-2 mb-2">
+                  <div
+                    key={index}
+                    className="text-xs rounded bg-gray-100 dark:bg-gray-900 dark:text-gray-500 py-0.5 px-1 mr-2 mb-2"
+                  >
                     {group.type === "course" && (
                       <div>
                         {group.subjectCode} {group.courseNumber.padEnd(4, "X")}
@@ -56,7 +59,7 @@ export function SearchResults({ selectedCourses, term, courseHrefFn, className }
                 );
               })}
 
-              <div className="text-xs rounded bg-primary-50 py-0.5 px-1 mr-2 mb-2">
+              <div className="text-xs rounded bg-primary-50 dark:bg-primary-950 dark:text-gray-500 py-0.5 px-1 mr-2 mb-2">
                 {selectedTerm?.description ?? "All terms"}
               </div>
             </div>
@@ -64,8 +67,6 @@ export function SearchResults({ selectedCourses, term, courseHrefFn, className }
         )}
 
         <section className={clsx("mt-3")}>
-          {/* <Debug data={{ searchIsLoading, hasSearchResults, searchResults }} /> */}
-
           {/* Show if no results */}
           {!searchIsLoading && !hasSearchResults && (
             <Empty className="p-5 flex items-center justify-center mb-7">No search results</Empty>

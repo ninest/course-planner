@@ -24,8 +24,8 @@ export function CourseDetailList({ termCode, courses, selectedCourses, courseHre
             key={index}
             href={courseHrefFn(course)}
             className={clsx("block -mx-1 py-1 px-1 rounded-md", {
-              "hover:bg-gray-100": !isSelected,
-              "bg-primary-50": isSelected,
+              "hover:bg-gray-100 dark:hover:bg-gray-900": !isSelected,
+              "bg-primary-50 dark:bg-primary-950": isSelected,
               "opacity-50 hover:opacity-100": !isInTerm
             })}
           >

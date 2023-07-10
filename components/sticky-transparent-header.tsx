@@ -5,7 +5,7 @@ interface TransparentHeader extends ComponentProps<"div"> {}
 
 export function TransparentHeader({ className, children, ...props }: TransparentHeader) {
   return (
-    <div className={clsx(className, "bg-white/90 backdrop-blur-sm z-20")} {...props}>
+    <div className={clsx(className, "bg-white/90 dark:bg-gray-950/90 backdrop-blur-sm z-20")} {...props}>
       {children}
     </div>
   );

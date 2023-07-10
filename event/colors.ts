@@ -51,7 +51,7 @@ export const eventColorsMap: Record<EventColorKey, EventColor> = {
   },
   GRAY: {
     name: "Gray",
-    className: "bg-gray-200 text-gray-800",
+    className: "bg-gray-200 text-gray-800 dark:bg-gray-500 dark:text-gray-950",
   },
 };
 

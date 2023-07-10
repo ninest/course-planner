@@ -6,6 +6,7 @@ import { getCourseGoogleFormHref } from "@/course/functions";
 export async function CourseContributeButton({ course }: { course: Course }) {
   const page = await getNotionCoursePage(course)!;
   const googleFormUrl = getCourseGoogleFormHref(course);
+  // @ts-ignore
   const notionUrl = page!.public_url
   return (
     <>

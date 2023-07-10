@@ -11,7 +11,7 @@ export const DayTable = ({ days }: DayTableProps) => {
   const containsWeekends = days.includes("sunday") || days.includes("saturday");
   const daysOfWeekList = containsWeekends ? daysOfWeek : daysOfWeek.slice(1, 6);
   return (
-    <div className="rounded-md inline-flex items-center border dark:border-gray-800 divide-x dark:divide-gray-800">
+    <div className="rounded-md inline-flex items-center border dark:border-gray-900 divide-x dark:divide-gray-800">
       {daysOfWeekList.map((day, index) => {
         const highlighted = days.includes(day);
         return (

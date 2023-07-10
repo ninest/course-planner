@@ -13,10 +13,11 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    // Default dark theme
+    <html lang="en" className="dark">
       <head />
       <Providers>
-        <body className="text-gray-500 md:flex">
+        <body className="text-gray-500 bg-white dark:bg-gray-950 md:flex">
           <aside className="hidden sticky top-0 md:block flex-none h-screen">
             <NavigationRail />
           </aside>

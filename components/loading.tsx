@@ -11,7 +11,7 @@ export function Loading({ heights, className }: LoadingProps) {
       {heights.map((height, index) => {
         if (typeof height === "number")
           return (
-            <div key={index} style={{ height: `${height}rem` }} className="bg-gray-100 rounded-md animate-pulse"></div>
+            <div key={index} style={{ height: `${height}rem` }} className="bg-gray-100 dark:bg-gray-900 rounded-md animate-pulse"></div>
           );
         else {
           if (height.type === "spacer")
@@ -25,5 +25,5 @@ export function Loading({ heights, className }: LoadingProps) {
 interface SkeletonProps extends ComponentProps<"div"> {}
 
 export function Skeleton({ className }: SkeletonProps) {
-  return <div className={`${className} bg-gray-50 rounded-md animate-pulse`}></div>;
+  return <div className={`${className} bg-gray-50 dark:bg-gray-900 rounded-md animate-pulse`}></div>;
 }

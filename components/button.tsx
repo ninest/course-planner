@@ -8,12 +8,12 @@ import { UniversalLink } from "./universal-link";
 const buttonStyles = cva(["inline-flex tracking-wide font-medium", "rounded-lg", "border-2"], {
   variants: {
     variant: {
-      primary: ["bg-primary-500 text-white hover:bg-primary-500 shadow-sm"],
+      primary: ["bg-primary-500 dark:bg-primary-900 text-white dark:text-gray-500 hover:bg-primary-500 shadow-sm"],
       "primary-danger": ["bg-error-500 text-white hover:bg-error-500 shadow-sm"],
-      secondary: ["bg-gray-100 text-gray-700 hover:bg-gray-300 shadow-sm"],
+      secondary: ["bg-gray-100 text-gray-700 hover:bg-gray-300 dark:bg-gray-900 dark:text-gray-600 shadow-sm"],
       "secondary-success": ["bg-primary-100 text-primary-700 hover:bg-primary-300 shadow-sm"],
       "secondary-danger": ["bg-error-100 text-error-700 hover:bg-error-300 shadow-sm"],
-      ghost: ["bg-transparent text-gray-700 hover:bg-gray-100"],
+      ghost: ["bg-transparent text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-900"],
     },
     outline: {
       true: "",

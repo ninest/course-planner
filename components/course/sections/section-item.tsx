@@ -53,7 +53,7 @@ export function SectionItem({ termCode, course, crn, className, onHover, onUnhov
       id={crn}
       onMouseEnter={() => onHover?.(section, course)}
       onMouseLeave={() => onUnhover?.(section, course)}
-      className={clsx(className, "bg-gray-100 p-3 rounded-md border-2 border-transparent", {
+      className={clsx(className, "bg-gray-100 p-3 rounded-md border-2 border-transparent dark:bg-gray-800", {
         "border-primary-400": selectedCrns.includes(crn),
       })}
     >

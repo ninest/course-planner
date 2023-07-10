@@ -84,15 +84,15 @@ function WikiLink({ wikiArticle, categories }: { wikiArticle: WikiArticle; categ
   return (
     <UniversalLink
       href={`/wiki/${wikiArticle.slug}`}
-      className="block rounded-md -mx-2 px-2 py-1 hover:bg-gray-100 text-sm"
-      activeClassName="bg-primary-50"
+      className="block rounded-md -mx-2 px-2 py-1 hover:bg-gray-100 dark:hover:bg-primary-950/50 text-sm"
+      activeClassName="bg-primary-50 dark:bg-primary-950"
     >
-      <div className="font-bold text-gray-800">{wikiArticle.title}</div>
+      <div className="font-bold text-gray-800 dark:text-gray-400">{wikiArticle.title}</div>
 
       <div className="mt-0.5 flex items-center space-x-2">
         {categories.map((cat) => {
           return (
-            <div key={cat.id} className="px-1 py-0.5 text-xs rounded bg-gray-200">
+            <div key={cat.id} className="px-1 py-0.5 text-xs rounded bg-gray-200 dark:bg-gray-800">
               {cat.title}
             </div>
           );

@@ -48,7 +48,7 @@ export function Select({ control, name, options, label, displayPrefix, className
           {label}
         </label>
       )}
-      <div className="relative rounded focus-within:ring-2 ring-offset-2 ring-primary-100">
+      <div className="relative rounded focus-within:ring-2 ring-offset-2 ring-primary-100 dark:ring-primary-900">
         <select
           id={name}
           name={name}
