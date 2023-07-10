@@ -11,6 +11,8 @@ import { FaCaretRight } from "react-icons/fa";
 import { ClientCourseInfo } from "./client-course-info";
 import { CourseNotes } from "./course-notes-new";
 import { MobileCourseSearchBackButton } from "./mobile-back-button";
+import { CourseContributeButton } from "./course-contribute-button/course-contribute-button";
+import { getCourseGoogleFormHref } from "@/course/functions";
 
 export const revalidate = 3600;
 
@@ -35,9 +37,7 @@ export default async function CoursePage({ params }: Props) {
     courseSlugs.map(async (courseSlug) => {
       const course = slugToCourse2(courseSlug);
       const courseInfo = await getCourse(course.subject, course.number);
-      const googleFormLink = `https://docs.google.com/forms/d/e/1FAIpQLSdIzBLNUhuc1OMyPCPAKwDBo4gpvqcK78OY9yaoCoJ3YMxTkQ/viewform?usp=pp_url&entry.1345775324=${encodeURI(
-        course.subject + " " + course.number
-      )}&entry.1467381516=${encodeURI(courseInfo.title)}`;
+      const googleFormLink = getCourseGoogleFormHref(course)
       return { course, courseInfo, googleFormLink };
     })
   );
@@ -75,9 +75,11 @@ export default async function CoursePage({ params }: Props) {
                       <Title level={3}>Notes</Title>
                       <FaCaretRight />
                     </div>
-                    <a href={googleFormLink} target="_blank" className="underline text-sm">
+                    {/* <a href={googleFormLink} target="_blank" className="underline text-sm">
                       contribute
-                    </a>
+                    </a> */}
+                    {/* @ts-ignore */}
+                    <CourseContributeButton course={course} />
                   </summary>
                   <div className="mt-2 lg:-mx-2 xl:-mx-5 p-3 md:p-5 border rounded-md">
                     <Suspense fallback={<Loading heights={[5]} />}>

@@ -49,7 +49,8 @@ export function SearchNotes({
             href="https://docs.google.com/forms/d/e/1FAIpQLSdIzBLNUhuc1OMyPCPAKwDBo4gpvqcK78OY9yaoCoJ3YMxTkQ/viewform"
             target="_blank"
           >
-            To contribute, please fill out <span className="underline">this form</span>.
+            {/* To contribute, please fill out <span className="underline">this form</span>. */}
+            To contribute, please search for a class, then click on the "contribute" button on the page.
           </a>
         </div>
       </details>

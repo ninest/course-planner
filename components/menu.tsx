@@ -1,11 +1,11 @@
 "use client";
 
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
+import type { IconType } from "react-icons";
 
 type MenuItemDisplay = {
-  icon?: LucideIcon;
+  icon?: IconType;
   href?: string;
   title: string;
 };
@@ -20,13 +20,15 @@ interface MenuButtonProps {
 }
 export const MenuButton = ({ children, items }: MenuButtonProps) => {
   return (
-    <div className="relative z-50 inline-block">
+    <div className="relative inline-block">
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger className="focus:outline-none">{children}</DropdownMenu.Trigger>
+        <DropdownMenu.Trigger className="focus:outline-none">
+          {children}
+        </DropdownMenu.Trigger>
         <DropdownMenu.Portal>
           <DropdownMenu.Content
             align="end"
-            className="mt-1 ml-2 z-40 shadow-md rounded-xl bg-gray-100 w-52 p-2 border dark:bg-gray-900 dark:border-gray-800"
+            className="mt-1 shadow-md rounded-lg bg-gray-100 w-52 p-2 border dark:bg-gray-900 dark:border-gray-800"
           >
             {items.map((item, index) => {
               if (item === "separator") {
@@ -39,9 +41,11 @@ export const MenuButton = ({ children, items }: MenuButtonProps) => {
                   onClick={() => {
                     if (item.action) item.action();
                   }}
-                  className="text-lg font-medium flex items-center px-4 py-2 text-gray-700 focus:outline-none hover:bg-gray-200 rounded-md dark:hover:bg-gray-800"
+                  className="text-sm flex items-center px-2 py-1 text-gray-700 focus:outline-none hover:bg-gray-200 rounded-md dark:hover:bg-gray-800"
                 >
-                  {/* <div className="w-8 text-gray-500 text-xs ">{Icon && <Icon className="text-lg" />}</div> */}
+                  <div className="w-6 text-gray-500 text-xs ">
+                    {Icon && <Icon className="text-current" />}
+                  </div>
                   <div className="dark:text-gray-400">{item.title}</div>
                 </DropdownMenu.Item>
               );

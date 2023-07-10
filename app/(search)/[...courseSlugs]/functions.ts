@@ -2,7 +2,7 @@ import { MinimizedCourse } from "@/.data/types";
 import { getBlocksChildrenList } from "@/api/notion";
 import { queryCourseDatabase } from "@/notion/courses";
 import { PageMention, getNotionPageMentions } from "@/notion/mentions";
-import { BlockObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { BlockObjectResponse, PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 
 type GetNotionCourseInfo =
   | { hasNotionPageContent: false; blocks: null; pageMentions: null }
@@ -24,4 +24,14 @@ export async function getNotionCourseInfo(course: MinimizedCourse): Promise<GetN
   }
 
   return { hasNotionPageContent: true, blocks: blocks as BlockObjectResponse[], pageMentions: mentions };
+}
+
+export async function getNotionCoursePage(course: MinimizedCourse) {
+  const rows = await queryCourseDatabase(course);
+  if (rows.results.length === 0) {
+    return null;
+  }
+
+  const page = rows.results[0] as PageObjectResponse;
+  return page
 }

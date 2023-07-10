@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 import { WikiPageList } from "./wiki-page-list";
 import { Category } from "@/notion/categories";
+import { Navbar } from "@/components/navbar";
 
 export function WikiPageLayoutContainer({
   articles,
@@ -26,9 +27,12 @@ export function WikiPageLayoutContainer({
         {onWikiPage ? (
           <>{children}</>
         ) : (
+          <>
+          <Navbar noBottomPadding/>
           <div className="space-y-1">
             <WikiPageList articles={articles} categories={categories} />
           </div>
+          </>
         )}
       </div>
 

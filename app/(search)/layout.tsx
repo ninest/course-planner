@@ -8,6 +8,7 @@ import { useUrlCourse } from "./hooks/use-search-url-course";
 
 import { TransparentHeader } from "@/components/sticky-transparent-header";
 import { SearchResults } from "./search-results";
+import { Navbar } from "@/components/navbar";
 
 export default function SearchLayout({ children }: { children: ReactNode }) {
   // TODO: make this a server component, get pathname somehow https://stackoverflow.com/questions/75362636/how-can-i-get-the-url-pathname-on-a-server-component-next-js-13
@@ -25,6 +26,7 @@ export default function SearchLayout({ children }: { children: ReactNode }) {
           <>{children}</>
         ) : (
           <>
+            <Navbar noBottomPadding />
             <TransparentHeader className="sticky top-0 p-5">
               <CourseSearchBar />
             </TransparentHeader>

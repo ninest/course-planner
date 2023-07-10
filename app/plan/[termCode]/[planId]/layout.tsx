@@ -44,7 +44,7 @@ export default function PlanPageLayout({ params, children }: TermLayoutProps) {
         <div
           className={clsx(
             // Setting max height so height change can be animated with transition
-            "z-50 border mx-1 rounded-t-xl max-h-[100rem] shadow-md transition-all",
+            "z-30 border mx-1 rounded-t-xl max-h-[100rem] shadow-md transition-all",
             {
               "h-[var(--collapsed-bottom-sheet-height)]": !bottomSheetExpanded,
               "h-[var(--expanded-bottom-sheet-height)]": bottomSheetExpanded,

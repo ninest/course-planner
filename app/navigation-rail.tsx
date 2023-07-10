@@ -4,7 +4,7 @@ import clsx from "clsx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ComponentProps } from "react";
-import { FaLink, FaRegBookmark, FaSearch, FaTable } from "react-icons/fa";
+import { FaBook, FaLink, FaList, FaRegBookmark, FaSearch, FaTable } from "react-icons/fa";
 
 export function NavigationRail() {
   const pathname = usePathname();
@@ -20,17 +20,17 @@ export function NavigationRail() {
       <div className="flex justify-center items-center">
         <div className="space-y-2">
           <RailTabButton href="/links" active={pathname?.startsWith("/links") ?? false} title="Links">
-            <FaLink />
+            <FaList />
           </RailTabButton>
           <RailTabButton href="/wiki" active={pathname?.startsWith("/wiki") ?? false} title="Wiki">
             <FaRegBookmark />
           </RailTabButton>
           <RailTabButton href="/" active={isOnSearch} title="Search">
-            <FaSearch />
+            <FaBook />
           </RailTabButton>
-          <RailTabButton href="/plan" active={pathname?.startsWith("/plan") ?? false} title="Plan">
+          {/* <RailTabButton href="/plan" active={pathname?.startsWith("/plan") ?? false} title="Plan">
             <FaTable />
-          </RailTabButton>
+          </RailTabButton> */}
         </div>
       </div>
     </div>
