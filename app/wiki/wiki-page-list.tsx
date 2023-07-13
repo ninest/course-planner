@@ -41,7 +41,8 @@ export function WikiPageList({ articles, categories }: { articles: WikiArticle[]
             name="category"
             options={[{ type: "option", title: "All", value: "all" }, ...options]}
             displayPrefix="Filter:"
-            className="form-field h-7 rounded text-xs min-w-[3rem]"
+            className="form-field focus-within:form-field-ring h-7 rounded text-xs min-w-[3rem]"
+            // className="focus:ring-0 focus:outline-none"
           />
         </div>
         <div className="space-y-1">

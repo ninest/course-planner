@@ -29,7 +29,7 @@ export function Sections({ termCode, course, className, initiallyOpen = false }:
   const [open, setOpen] = useState(initiallyOpen);
 
   return (
-    <div className={clsx(className, "border rounded-md bg-white dark:bg-gray-900")}>
+    <div className={clsx(className, "border rounded-md bg-white dark:bg-gray-950")}>
       <div
         onClick={() => setOpen(!open)}
         className="cursor-pointer rounded-md p-3 sticky top-0 z-10  bg-inherit flex items-center justify-between"

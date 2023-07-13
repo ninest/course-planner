@@ -7,7 +7,7 @@ export function NotionIconDisplay({ icon, className }: { icon: NotionIcon } & Co
   switch (icon.type) {
     case "external":
       {
-        iconElement = <img src={icon.external.url} className="opacity-80" />;
+        iconElement = <img src={icon.external.url} className="opacity-50" />;
       }
       break;
 

@@ -7,7 +7,7 @@ import { MenuButton } from "./menu-button";
 export function Navbar({ noBottomPadding = false }: { noBottomPadding?: boolean }) {
   return (
     <>
-      <header className={clsx({ "p-5": !noBottomPadding, "px-5 pt-5": noBottomPadding }, "bg-white dark:bg-gray-950")}>
+      <header className={clsx({ "p-5": !noBottomPadding, "px-5 pt-5": noBottomPadding }, "bg-white dark:bg-dark")}>
         <MenuButton
           items={[
             { icon: FaList, title: "Links", href: "/links" },

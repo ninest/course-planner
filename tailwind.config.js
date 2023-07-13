@@ -14,7 +14,9 @@ module.exports = {
       colors: {
         primary: defaultColors.indigo,
         error: defaultColors.red,
-        gray: defaultColors.neutral
+        gray: defaultColors.gray,
+        light: "#fefefe",
+        dark: "#010101",
       },
       fontSize: { xxs: "0.6rem" },
       gridTemplateColumns: {

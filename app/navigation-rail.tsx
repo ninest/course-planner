@@ -46,8 +46,8 @@ function RailTabButton({ href, active, title, children }: RailTabButton) {
   return (
     <Link
       href={href}
-      className={clsx("block text-gray-600 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-primary-950/50", {
-        "bg-gray-100 dark:bg-primary-950": active,
+      className={clsx("block text-gray-600 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-900", {
+        "bg-gray-100 dark:bg-gray-900": active,
       })}
     >
       {children}

@@ -17,7 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="dark">
       <head />
       <Providers>
-        <body className="text-gray-500 bg-white dark:bg-gray-950 md:flex">
+        <body className="text-gray-500 bg-light dark:bg-dark md:flex">
           <aside className="hidden sticky top-0 md:block flex-none h-screen">
             <NavigationRail />
           </aside>

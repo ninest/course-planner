@@ -109,7 +109,7 @@ export function CourseSearchBar({ allowSelectTerm = true, disabled = false }: Co
       ) : (
         <form
           onSubmit={onSubmit}
-          className={clsx("flex group rounded-md focus-within:ring-2 ring-offset-2 ring-primary-200", {
+          className={clsx("flex group rounded-md focus-within:form-field-ring", {
             "animate-pulse": searchIsLoading,
           })}
         >
@@ -119,7 +119,7 @@ export function CourseSearchBar({ allowSelectTerm = true, disabled = false }: Co
             name="search"
             placeholder="Search courses, CRNs, ..."
             wrapperClassName="flex-1"
-            inputClassName="h-10 form-field pr-0 rounded-r-none focus:ring-0"
+            inputClassName="h-10 form-field pr-0 rounded-r-none"
           />
 
           <div className="flex-0 h-10 form-field rounded-l-none flex items-end pl-0">
@@ -128,7 +128,7 @@ export function CourseSearchBar({ allowSelectTerm = true, disabled = false }: Co
                 control={control}
                 name="term"
                 options={[{ type: "option", title: "All", value: "all" }, ...termOptions]}
-                className="form-field bg-gray-200 text-xs rounded p-1 min-w-[3rem]"
+                className="form-field focus:form-field-ring bg-gray-200 dark:bg-gray-900 text-xs rounded p-1 min-w-[3rem]"
               />
             )}
           </div>

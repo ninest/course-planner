@@ -36,7 +36,7 @@ export function LinksDisplay({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search links ..."
-          className="form-field w-full"
+          className="form-field focus:form-field-ring focus: w-full"
         />
       </form>
 
@@ -54,9 +54,9 @@ export function LinksDisplay({
             {appLinks.map((link) => {
               return (
                 <LinkButton
-                size="sm"
+                  size="sm"
                   href={link.url}
-                  iconLeft={link.icon && <NotionIconDisplay icon={link.icon} className="w-4" />}
+                  // iconLeft={link.icon && <NotionIconDisplay icon={link.icon} className="w-4" />}
                   title={link.title}
                 />
               );
@@ -105,7 +105,7 @@ export function LinksDisplay({
                       return (
                         <LinkButton
                           href={courseLink.url}
-                          iconLeft={courseLink.icon && <NotionIconDisplay icon={courseLink.icon} className="w-5" />}
+                          // iconLeft={courseLink.icon && <NotionIconDisplay icon={courseLink.icon} className="w-5" />}
                           title={courseLink.title}
                         />
                       );

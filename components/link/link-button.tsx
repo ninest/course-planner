@@ -18,8 +18,7 @@ export function LinkButton({ href, iconLeft, iconRight, title, size = "base" }: 
       href={href}
       className={clsx(
         "rounded-lg flex items-center",
-        "bg-gray-50 hover:bg-gray-100 border border-gray-100",
-        "dark:bg-gray-900 hover:dark:bg-gray-800 dark:border-gray-900",
+        "bg-gray-50 hover:bg-gray-100 border border-gray-100 dark:border-gray-800 dark:bg-gray-900 dark:hover:bg-gray-800 dark:shadow",
         {
           "p-3 space-x-4": size === "base",
           "p-2 space-x-2": size === "sm",
